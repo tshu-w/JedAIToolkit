@@ -43,12 +43,14 @@ public class ClustersPerformance {
 
     public ClustersPerformance(EquivalenceCluster[] clusters, AbstractDuplicatePropagation adp) {
         abstractDP = adp;
-        abstractDP.resetDuplicates();
+        if (abstractDP != null) {
+            abstractDP.resetDuplicates();
+        }
         entityClusters = clusters;
     }
 
     public int getDetectedDuplicates() {
-        return abstractDP.getNoOfDuplicates();
+        return abstractDP == null ? 0 : abstractDP.getNoOfDuplicates();
     }
 
     public int getEntityClusters() {
@@ -56,7 +58,7 @@ public class ClustersPerformance {
     }
 
     public int getExistingDuplicates() {
-        return abstractDP.getExistingDuplicates();
+        return abstractDP == null ? 0 : abstractDP.getExistingDuplicates();
     }
 
     public float getFMeasure() {
@@ -81,8 +83,10 @@ public class ClustersPerformance {
         System.out.println("Configuration : " + methodConfiguration);
         System.out.println("**************************************************");
         System.out.println("No of clusters\t:\t" + entityClusters.length);
-        System.out.println("Detected duplicates\t:\t" + abstractDP.getNoOfDuplicates());
-        System.out.println("Existing duplicates\t:\t" + abstractDP.getExistingDuplicates());
+        if (abstractDP != null) {
+            System.out.println("Detected duplicates\t:\t" + abstractDP.getNoOfDuplicates());
+            System.out.println("Existing duplicates\t:\t" + abstractDP.getExistingDuplicates());
+        }
         System.out.println("Total matches\t:\t" + totalMatches);
         System.out.println("Precision\t:\t" + precision);
         System.out.println("Recall\t:\t" + recall);
@@ -96,13 +100,18 @@ public class ClustersPerformance {
             return;
         }
 
+        if (abstractDP == null) {
+            Log.error("No groundtruth was given as input!");
+            return;
+        }
+        
         totalMatches = 0;
         final PrintWriter pw = new PrintWriter(new File(outputFile));
         StringBuilder sb = new StringBuilder();
 
         abstractDP.resetDuplicates();
         if (abstractDP instanceof BilateralDuplicatePropagation) { // Clean-Clean ER
-            for (EquivalenceCluster cluster : entityClusters) {                
+            for (EquivalenceCluster cluster : entityClusters) {
                 if (cluster.getEntityIdsD1().size() != 1
                         || cluster.getEntityIdsD2().size() != 1) {
                     continue;
@@ -119,7 +128,7 @@ public class ClustersPerformance {
                 final int originalDuplicates = abstractDP.getNoOfDuplicates();
                 abstractDP.isSuperfluous(entityId1, entityId2);
                 final int newDuplicates = abstractDP.getNoOfDuplicates();
-                
+
                 sb.append(profile1.getEntityUrl()).append(",");
                 sb.append(profile2.getEntityUrl()).append(",");
                 if (originalDuplicates == newDuplicates) {
@@ -206,6 +215,11 @@ public class ClustersPerformance {
             return;
         }
 
+        if (abstractDP == null) {
+            Log.error("No groundtruth was given as input!");
+            return;
+        }
+        
         totalMatches = 0;
         if (abstractDP instanceof BilateralDuplicatePropagation) { // Clean-Clean ER
             for (EquivalenceCluster cluster : entityClusters) {
