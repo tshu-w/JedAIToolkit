@@ -40,6 +40,7 @@ import org.scify.jedai.entitymatching.IEntityMatching;
 import org.scify.jedai.entitymatching.ProfileMatcher;
 import org.scify.jedai.utilities.BlocksPerformance;
 import org.scify.jedai.utilities.ClustersPerformance;
+import org.scify.jedai.utilities.enumerations.WeightingScheme;
 
 /**
  *
@@ -50,10 +51,10 @@ public class ScalabilityBlockingBasedWorkflow {
     public static void main(String[] args) {
         BasicConfigurator.configure();
 
-        String mainDir = "/home/gman/SparkER/data/Experiments/syntheticData/";
+        String mainDir = "/home/gap2/data/JedAIdata/datasets/syntheticDatasets/";
         String[] datasets = {"10K", "50K", "100K", "200K", "300K", "1M", "2M"};
 
-        int datasetId = Integer.parseInt(args[0]);
+        int datasetId = 2;//Integer.parseInt(args[0]);
         String currentDataset = mainDir + datasets[datasetId] + "profiles";
         String currentGroundtruth = mainDir + datasets[datasetId] + "IdDuplicates";
 
@@ -79,7 +80,7 @@ public class ScalabilityBlockingBasedWorkflow {
         IBlockProcessing blockCleaningMethod2 = new BlockFiltering();
         blocks = blockCleaningMethod2.refineBlocks(blocks);
 
-        IBlockProcessing comparisonCleaningMethod = new CardinalityNodePruning();
+        IBlockProcessing comparisonCleaningMethod = new CardinalityNodePruning(WeightingScheme.ARCS);
         blocks = comparisonCleaningMethod.refineBlocks(blocks);
 
         long time2 = System.currentTimeMillis();
