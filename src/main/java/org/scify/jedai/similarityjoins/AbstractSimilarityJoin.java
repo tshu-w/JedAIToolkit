@@ -64,7 +64,7 @@ public abstract class AbstractSimilarityJoin implements ISimilarityJoin {
     protected String getAttributeValue(String attributeName, EntityProfile profile) {
         final StringBuilder sb = new StringBuilder();
         for (Attribute attribute : profile.getAttributes()) {
-            if (attribute.getName().toLowerCase().trim().equals(attributeName)) {
+            if (attribute.getName().toLowerCase().trim().equals(attributeName.toLowerCase())) {
                 final String[] tokens = attribute.getValue().toLowerCase().split("[\\W_]");
                 for (String token : tokens) {
                     if (0 < token.trim().length()) {
