@@ -54,7 +54,7 @@ public class ScalabilityBlockingBasedWorkflow {
         String mainDir = "/home/gap2/data/JedAIdata/datasets/syntheticDatasets/";
         String[] datasets = {"10K", "50K", "100K", "200K", "300K", "1M", "2M"};
 
-        int datasetId = 2;//Integer.parseInt(args[0]);
+        int datasetId = Integer.parseInt(args[0]);
         String currentDataset = mainDir + datasets[datasetId] + "profiles";
         String currentGroundtruth = mainDir + datasets[datasetId] + "IdDuplicates";
 
