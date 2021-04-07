@@ -63,7 +63,9 @@ public class BlocksPerformance {
 
     public BlocksPerformance(List<AbstractBlock> bl, AbstractDuplicatePropagation adp) {
         abstractDP = adp;
-        abstractDP.resetDuplicates();
+        if (abstractDP != null) {
+            abstractDP.resetDuplicates();
+        }
         blocks = bl;
     }
 
@@ -77,7 +79,7 @@ public class BlocksPerformance {
         if (blocks2 == null) {
             return false;
         }
-        
+
         for (int item : blocks1) {
             for (int value : blocks2) {
                 if (value < item) {
@@ -235,6 +237,11 @@ public class BlocksPerformance {
             Log.warn("Empty set of blocks was given as input!");
             return;
         }
+        
+        if (abstractDP == null) {
+            Log.error("No groundtruth was given as input!");
+            return;
+        }
 
         setType();
 
@@ -296,6 +303,11 @@ public class BlocksPerformance {
     public void printFalseNegatives(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String outputFile) throws FileNotFoundException {
         if (blocks.isEmpty()) {
             Log.warn("Empty set of blocks was given as input!");
+            return;
+        }
+        
+        if (abstractDP == null) {
+            Log.error("No groundtruth was given as input!");
             return;
         }
 
@@ -403,10 +415,13 @@ public class BlocksPerformance {
         if (blocks.get(0) instanceof BilateralBlock) {
             getBilateralBlockingCardinality();
         }
-        if (blocks.get(0) instanceof DecomposedBlock) {
-            getDuplicatesOfDecomposedBlocks();
-        } else {
-            getDuplicatesWithEntityIndex();
+
+        if (abstractDP != null) {
+            if (blocks.get(0) instanceof DecomposedBlock) {
+                getDuplicatesOfDecomposedBlocks();
+            } else {
+                getDuplicatesWithEntityIndex();
+            }
         }
     }
 

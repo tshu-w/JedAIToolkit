@@ -17,7 +17,6 @@ package org.scify.jedai.utilities.comparators;
 
 import org.scify.jedai.datamodel.AbstractBlock;
 import java.util.Comparator;
-import org.scify.jedai.datamodel.ComparisonIterator;
 
 /**
  *
@@ -33,23 +32,7 @@ public class IncBlockCardinalityComparator implements Comparator<AbstractBlock> 
      */
     @Override
     public int compare(AbstractBlock block1, AbstractBlock block2) {
-        if (block1.getNoOfComparisons() != block2.getNoOfComparisons()) {
-            return Float.compare(block1.getNoOfComparisons(), block2.getNoOfComparisons());
-        }
-
-        Float totalWeight1 = 0.0f;
-        ComparisonIterator cIterator = block1.getComparisonIterator();
-        while (cIterator.hasNext()) {
-            totalWeight1 += cIterator.next().getUtilityMeasure();
-        }
-
-        Float totalWeight2 = 0.0f;
-        cIterator = block2.getComparisonIterator();
-        while (cIterator.hasNext()) {
-            totalWeight2 += cIterator.next().getUtilityMeasure();
-        }
-        
-        return totalWeight2.compareTo(totalWeight1);
+        return Float.compare(block1.getNoOfComparisons(), block2.getNoOfComparisons());
     }
 
 //    public static void main(String[] args) {

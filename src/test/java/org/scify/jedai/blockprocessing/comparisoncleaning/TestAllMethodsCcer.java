@@ -20,7 +20,6 @@ import java.io.File;
 import org.scify.jedai.blockbuilding.IBlockBuilding;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.blockprocessing.IBlockProcessing;
-import org.scify.jedai.utilities.datastructures.UnilateralDuplicatePropagation;
 import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.datamodel.EntityProfile;
 import org.scify.jedai.datareader.entityreader.IEntityReader;
@@ -31,6 +30,7 @@ import org.scify.jedai.utilities.enumerations.BlockBuildingMethod;
 import org.scify.jedai.utilities.BlocksPerformance;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
+import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
 
 /**
  *
@@ -54,7 +54,7 @@ public class TestAllMethodsCcer {
         System.out.println("Input Entity Profiles D2\t:\t" + profilesD2.size());
         
         IGroundTruthReader gtReader = new GtSerializationReader(groundTruthFilePath);
-        final AbstractDuplicatePropagation duplicatePropagation = new UnilateralDuplicatePropagation(gtReader.getDuplicatePairs(eReader.getEntityProfiles()));
+        final AbstractDuplicatePropagation duplicatePropagation = new BilateralDuplicatePropagation(gtReader.getDuplicatePairs(eReader.getEntityProfiles()));
         System.out.println("Existing Duplicates\t:\t" + duplicatePropagation.getDuplicates().size());
         
         for (BlockBuildingMethod blbuMethod : BlockBuildingMethod.values()) {

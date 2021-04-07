@@ -81,6 +81,9 @@ public class UnilateralDuplicatePropagation extends AbstractDuplicatePropagation
     public Set<IdDuplicates> getFalseNegatives() {
         final Set<IdDuplicates> falseNegatives = new HashSet<>(duplicates);
         falseNegatives.removeAll(detectedDuplicates);
+        for (IdDuplicates pair : detectedDuplicates) {
+            falseNegatives.remove(new IdDuplicates(pair.getEntityId2(), pair.getEntityId1()));
+        }
         return falseNegatives;
     }
 
