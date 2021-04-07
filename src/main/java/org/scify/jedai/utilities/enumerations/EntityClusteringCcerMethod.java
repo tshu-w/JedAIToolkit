@@ -16,10 +16,7 @@
 
 package org.scify.jedai.utilities.enumerations;
 
-import org.scify.jedai.entityclustering.BestAssignmentHeuristic;
-import org.scify.jedai.entityclustering.IEntityClustering;
-import org.scify.jedai.entityclustering.RowColumnClustering;
-import org.scify.jedai.entityclustering.UniqueMappingClustering;
+import org.scify.jedai.entityclustering.*;
 
 /**
  *
@@ -28,7 +25,9 @@ import org.scify.jedai.entityclustering.UniqueMappingClustering;
 public enum EntityClusteringCcerMethod {
 	UNIQUE_MAPPING_CLUSTERING,
 	ROW_COLUMN_ASSIGNMENT_CLUSTERING,
-	BEST_ASSIGNMENT_HEURISTIC_CLUSTERING;
+    BEST_ASSIGNMENT_HEURISTIC_CLUSTERING,
+    MARKOV_CLUSTERING_CCER,
+    RICOCHETSR_CLUSTERING_CCER;
 
     public static IEntityClustering getDefaultConfiguration(EntityClusteringCcerMethod ecMethod) {
         switch (ecMethod) {
@@ -38,6 +37,10 @@ public enum EntityClusteringCcerMethod {
             return new RowColumnClustering();
         case BEST_ASSIGNMENT_HEURISTIC_CLUSTERING:
             return new BestAssignmentHeuristic();
+        case MARKOV_CLUSTERING_CCER:
+            return new MarkovClusteringCCER();
+        case RICOCHETSR_CLUSTERING_CCER:
+            return new RicochetSRClusteringCCER();
         default:
             return new UniqueMappingClustering();
         }

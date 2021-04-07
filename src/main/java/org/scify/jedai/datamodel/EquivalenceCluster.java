@@ -50,8 +50,12 @@ public class EquivalenceCluster {
     public TIntList getEntityIdsD2() {
         return entityIdsD2;
     }
-    
+
     public void loadBulkEntityIdsD1(TIntCollection ids) {
         entityIdsD1.addAll(ids);
+    }
+
+    public void loadBulkEntityIdsD2(TIntCollection ids) {
+        entityIdsD2.addAll(ids);
     }
 }
