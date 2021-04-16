@@ -224,7 +224,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
 
     @Override
     public String getMethodInfo() {
-        return getMethodName() + ": it implements the Richochet Sequential Rippling CCER algorithm.";
+        return getMethodName() + ": it implements the Richochet Sequential Rippling algorithm for CCER.";
     }
 
     @Override

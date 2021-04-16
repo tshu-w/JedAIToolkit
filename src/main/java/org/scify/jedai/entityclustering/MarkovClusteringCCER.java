@@ -160,7 +160,7 @@ public class MarkovClusteringCCER extends AbstractEntityClustering {
 
     @Override
     public String getMethodInfo() {
-        return getMethodName() + ": it implements the Markov Cluster Algorithm.";
+        return getMethodName() + ": it implements the Markov Cluster Algorithm for CCER.";
     }
 
     @Override
