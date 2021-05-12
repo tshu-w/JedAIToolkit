@@ -51,12 +51,15 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
         Random rand = new Random();
         int numRows = matrix.length;
         for (int i = 0; i < numMoves; i++) {
-            int row1 = rand.nextInt(numRows);
-            int row2 = rand.nextInt(numRows);
-            while (row1 == row2) {
-                row2 = rand.nextInt(numRows);
+            int randomint = rand.nextInt(10);
+            for (int numTry = 0; numTry < 150000; numTry++) {
+                int row1 = rand.nextInt(numRows);
+                int row2 = rand.nextInt(numRows);
+                while (row1 == row2) {
+                    row2 = rand.nextInt(numRows);
+                }
+                swapColumns(row1, row2);
             }
-            swapColumns(row1, row2);
         }
     }
 
@@ -143,15 +146,19 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     
     public void init(float[][] matrix) {
         this.matrix = matrix;
+        //System.out.println(this.numMoves);
         this.selectedColumn = new int[matrix.length];
-        this.numMoves = 9999999;
+        this.numMoves = noOfEntities;//9999999
+        //this.numMoves = 1000000000;//9999999
+        /*System.out.println(this.numMoves*150000+" *1");
+        System.out.println(noOfEntities+" noEntities");*/
         getInitialSolution();
     }
     
     public void setNumMoves(int numMoves) {
         this.numMoves = numMoves;
     }
-    
+
     private void swapColumns(int row1, int row2) {
         int col1 = selectedColumn[row1];
         int col2 = selectedColumn[row2];
