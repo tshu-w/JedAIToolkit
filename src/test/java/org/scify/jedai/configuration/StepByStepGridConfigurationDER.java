@@ -48,8 +48,8 @@ import java.util.List;
 public class StepByStepGridConfigurationDER {
 
     static float getTotalComparisons(List<AbstractBlock> blocks) {
-        float originalComparisons = 0;
-        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Float::sum);
+        int originalComparisons = 0;
+        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Integer::sum);
         System.out.println("Original comparisons\t:\t" + originalComparisons);
         return originalComparisons;
     }
