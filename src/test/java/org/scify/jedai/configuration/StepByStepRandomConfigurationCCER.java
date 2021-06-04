@@ -50,8 +50,8 @@ public class StepByStepRandomConfigurationCCER {
     private final static int NO_OF_TRIALS = 100;
 
     static float getTotalComparisons(List<AbstractBlock> blocks) {
-        int originalComparisons = 0;
-        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Integer::sum);
+        long originalComparisons = 0;
+        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Long::sum);
         System.out.println("Original comparisons\t:\t" + originalComparisons);
         return originalComparisons;
     }

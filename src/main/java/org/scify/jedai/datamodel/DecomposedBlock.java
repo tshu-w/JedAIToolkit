@@ -60,7 +60,7 @@ public class DecomposedBlock extends AbstractBlock {
     }
     
     @Override
-    public int getNoOfComparisons() {
+    public long getNoOfComparisons() {
         return entities1.length;
     }
 
