@@ -61,9 +61,8 @@ public class SimilarityPairs implements IConstants, Serializable {
         comparisons = blocks.stream().map((block) -> block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
 
         if (MAX_COMPARISONS < comparisons) {
-            Log.error("Very high number of comparisons to be executed! "
+           throw new RuntimeException("Very high number of comparisons to be executed! "
                     + "Maximum allowed number is : " + MAX_COMPARISONS);
-            System.exit(-1);
         }
         return comparisons;
     }

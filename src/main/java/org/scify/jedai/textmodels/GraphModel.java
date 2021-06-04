@@ -74,9 +74,7 @@ public abstract class GraphModel extends AbstractModel {
                 }
                 return (float)(overallSimilarity / 2);
             default:
-                Log.error("The given similarity metric is incompatible with the n-gram graphs representation model!");
-                System.exit(-1);
-                return -1;
+            	throw new RuntimeException("The given similarity metric is incompatible with the n-gram graphs representation model!");
         }
     }
 }

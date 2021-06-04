@@ -112,9 +112,7 @@ public abstract class BagModel extends AbstractModel {
             case JACCARD_SIMILARITY:
                 return getJaccardSimilarity((BagModel) oModel);
             default:
-                Log.error("The given similarity metric is incompatible with the bag representation model!");
-                System.exit(-1);
-                return -1;
+            	throw new RuntimeException("The given similarity metric is incompatible with the bag representation model!");
         }
     }
 

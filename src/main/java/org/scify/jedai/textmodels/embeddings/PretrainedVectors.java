@@ -92,8 +92,7 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                 elementMap.put(components[0], value);
             }
         } catch (IOException e) {
-            Log.error("Problem loading embedding weights", e);
-            System.exit(-1);
+        	throw new RuntimeException("Problem loading embedding weights", e);
         }
     }
 
@@ -116,8 +115,7 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                dimension = Integer.parseInt(header[0]);
                dataSeparator = header[1].charAt(0);
            }catch (NumberFormatException ex){
-               Log.error("Pretrained header malformed -- expected:<dimension>");
-               System.exit(-1);
+        	   throw new RuntimeException("Pretrained header malformed -- expected:<dimension>");
            }
            Log.info(String.format("Read dimension: [%d], delimiter: [%c]", dimension, dataSeparator));
            Log.info(String.format("Reading embedding mapping file. {%s}", Calendar.getInstance().getTime().toString()));
@@ -141,11 +139,9 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
            }
            Log.info(String.format("Done processing %d-line embedding mapping. {%s}",  counter, Calendar.getInstance().getTime().toString()));
        } catch (FileNotFoundException e) {
-           Log.error("No resource file found:" + fileName, e);
-           System.exit(-1);
+    	   throw new RuntimeException("No resource file found:" + fileName, e);
        } catch (IOException e) {
-           Log.error("IO exception when reading:" + fileName, e);
-           System.exit(-1);
+    	   throw new RuntimeException("IO exception when reading:" + fileName, e);
        }
 
        unkownVector = getZeroVector();

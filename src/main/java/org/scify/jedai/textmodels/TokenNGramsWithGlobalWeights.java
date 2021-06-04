@@ -62,8 +62,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
                 similarity += 1.0f / (Math.log1p(((float) DOC_FREQ[DATASET_1].get(key)) * DOC_FREQ[DATASET_2].get(key)) / Math.log(2));
             }
         } else {
-            Log.error("Both models come from dataset 1!");
-            System.exit(-1);
+        	throw new RuntimeException("Both models come from dataset 1!");
         }
 
         return similarity;
@@ -118,9 +117,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
             case SIGMA_SIMILARITY:
                 return getSigmaSimilarity((TokenNGramsWithGlobalWeights) oModel);
             default:
-                Log.error("The given similarity metric is incompatible with the bag representation model!");
-                System.exit(-1);
-                return -1;
+            	throw new RuntimeException("The given similarity metric is incompatible with the bag representation model!");
         }
     }
 
