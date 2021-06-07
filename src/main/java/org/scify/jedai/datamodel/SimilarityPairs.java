@@ -15,7 +15,6 @@
  */
 package org.scify.jedai.datamodel;
 
-import com.esotericsoftware.minlog.Log;
 import java.io.Serializable;
 
 import java.util.List;
@@ -58,10 +57,10 @@ public class SimilarityPairs implements IConstants, Serializable {
 
     private int countComparisons(List<AbstractBlock> blocks) {
         long comparisons = 0;
-        comparisons = blocks.stream().map((block) -> block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
+        comparisons = blocks.stream().map((block) -> (long) block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
 
         if (MAX_COMPARISONS < comparisons) {
-           throw new RuntimeException("Very high number of comparisons to be executed! "
+            throw new IllegalStateException("Very high number of comparisons to be executed! "
                     + "Maximum allowed number is : " + MAX_COMPARISONS);
         }
         return (int) comparisons;

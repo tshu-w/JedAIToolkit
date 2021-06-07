@@ -57,7 +57,7 @@ public class CharacterNGramsWithGlobalWeights extends CharacterNGrams {
         } else if (datasetId != oModel.getDatasetId()) { // Clean-Clean ER
             similarity = commonKeys.stream().map((key) -> 1.0f / ((float) Math.log1p(((float) DOC_FREQ[DATASET_1].get(key)) * DOC_FREQ[DATASET_2].get(key)) / (float) Math.log(2))).reduce(similarity, (accumulator, _item) -> accumulator + _item);
         } else {
-        	throw new RuntimeException("Both models come from dataset 1!");
+            throw new IllegalStateException("Both models come from dataset 1!");
         }
 
         return similarity;
@@ -112,7 +112,8 @@ public class CharacterNGramsWithGlobalWeights extends CharacterNGrams {
             case SIGMA_SIMILARITY:
                 return getSigmaSimilarity((CharacterNGramsWithGlobalWeights) oModel);
             default:
-            	throw new RuntimeException("The given similarity metric is incompatible with the bag representation model!");
+            throw new IllegalStateException(
+                    "The given similarity metric is incompatible with the bag representation model!");
         }
     }
 

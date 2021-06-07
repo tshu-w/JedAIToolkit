@@ -6,7 +6,6 @@ import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -115,7 +114,7 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                dimension = Integer.parseInt(header[0]);
                dataSeparator = header[1].charAt(0);
            }catch (NumberFormatException ex){
-        	   throw new RuntimeException("Pretrained header malformed -- expected:<dimension>");
+                throw new RuntimeException("Pretrained header malformed -- expected:<dimension>", ex);
            }
            Log.info(String.format("Read dimension: [%d], delimiter: [%c]", dimension, dataSeparator));
            Log.info(String.format("Reading embedding mapping file. {%s}", Calendar.getInstance().getTime().toString()));
@@ -138,10 +137,8 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                elementMap.put(components[0], value);
            }
            Log.info(String.format("Done processing %d-line embedding mapping. {%s}",  counter, Calendar.getInstance().getTime().toString()));
-       } catch (FileNotFoundException e) {
-    	   throw new RuntimeException("No resource file found:" + fileName, e);
-       } catch (IOException e) {
-    	   throw new RuntimeException("IO exception when reading:" + fileName, e);
+        } catch (IOException e) {
+            throw new RuntimeException("Exception when reading: " + fileName, e);
        }
 
        unkownVector = getZeroVector();

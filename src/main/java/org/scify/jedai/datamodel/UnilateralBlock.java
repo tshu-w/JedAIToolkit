@@ -16,8 +16,11 @@
 
 package org.scify.jedai.datamodel;
 
+import static org.scify.jedai.utilities.IConstants.MAX_COMPARISONS;
+
 import java.io.Serializable;
 import java.util.Arrays;
+
 
 /**
  *
@@ -37,7 +40,14 @@ public class UnilateralBlock extends AbstractBlock implements Serializable {
     public UnilateralBlock(float entropy, int[] entities) {
         super(entropy);
         this.entities = entities;
-        comparisons = entities.length * (entities.length - 1)/2;
+        long comparisonNo = entities.length * (entities.length - 1) / 2;
+
+        if (MAX_COMPARISONS < comparisonNo) {
+            throw new IllegalStateException("Very high number of comparisons to be executed! "
+                    + "Maximum allowed number is : " + MAX_COMPARISONS);
+        }
+
+        comparisons = (int) comparisonNo;
     }
     
     @Override

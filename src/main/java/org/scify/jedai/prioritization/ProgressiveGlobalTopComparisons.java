@@ -47,7 +47,7 @@ public class ProgressiveGlobalTopComparisons extends AbstractHashBasedPrioritiza
     @Override
     public void developBlockBasedSchedule(List<AbstractBlock> blocks) {
         if (blocks == null || blocks.isEmpty()) {
-        	throw new RuntimeException("No blocks were given as input!");
+            throw new IllegalArgumentException("No blocks were given as input!");
         }
 
         if (blocks.get(0) instanceof DecomposedBlock) {

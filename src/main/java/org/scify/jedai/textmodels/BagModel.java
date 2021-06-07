@@ -17,7 +17,6 @@ package org.scify.jedai.textmodels;
 
 import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
-import com.esotericsoftware.minlog.Log;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -112,7 +111,8 @@ public abstract class BagModel extends AbstractModel {
             case JACCARD_SIMILARITY:
                 return getJaccardSimilarity((BagModel) oModel);
             default:
-            	throw new RuntimeException("The given similarity metric is incompatible with the bag representation model!");
+            throw new IllegalStateException(
+                    "The given similarity metric is incompatible with the bag representation model!");
         }
     }
 

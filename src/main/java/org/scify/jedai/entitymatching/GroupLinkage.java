@@ -63,8 +63,8 @@ public class GroupLinkage extends AbstractEntityMatching {
     @Override
     protected final void buildModels() {
         if (profilesD1 == null) {
-        	throw new RuntimeException("First list of entity profiles is null! "
-                    + "The first argument should always contain entities.");
+            throw new IllegalStateException(
+                    "First list of entity profiles is null! The first argument should always contain entities.");
         }
 
         if (entityModelsD1 == null) {

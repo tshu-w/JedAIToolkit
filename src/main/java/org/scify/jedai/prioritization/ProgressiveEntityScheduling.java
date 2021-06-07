@@ -15,7 +15,6 @@
  */
 package org.scify.jedai.prioritization;
 
-import com.esotericsoftware.minlog.Log;
 import java.util.Iterator;
 import java.util.List;
 import org.scify.jedai.datamodel.AbstractBlock;
@@ -44,7 +43,7 @@ public class ProgressiveEntityScheduling extends AbstractHashBasedPrioritization
     @Override
     public void developBlockBasedSchedule(List<AbstractBlock> blocks) {
         if (blocks == null || blocks.isEmpty()) {
-        	throw new RuntimeException("No blocks were given as input!");
+            throw new IllegalArgumentException("No blocks were given as input!");
         }
 
         final ProgressiveWNP pwnp = new ProgressiveWNP(wScheme);
