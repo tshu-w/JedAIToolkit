@@ -52,17 +52,17 @@ public class SimilarityPairs implements IConstants, Serializable {
     public void addComparison(Comparison comparison) {
         entityIds1[currentIndex] = comparison.getEntityId1();
         entityIds2[currentIndex] = comparison.getEntityId2();
-        similarities[currentIndex++] = (float) comparison.getUtilityMeasure();
+        similarities[currentIndex++] = comparison.getUtilityMeasure();
     }
 
     private int countComparisons(List<AbstractBlock> blocks) {
-        long comparisons = 0;
-        comparisons = blocks.stream().map((block) -> (long) block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
+        long comparisons = blocks.stream().mapToLong(AbstractBlock::getNoOfComparisons).sum();
 
         if (MAX_COMPARISONS < comparisons) {
             throw new IllegalStateException("Very high number of comparisons to be executed! "
                     + "Maximum allowed number is : " + MAX_COMPARISONS);
         }
+
         return (int) comparisons;
     }
 

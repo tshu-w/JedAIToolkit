@@ -111,7 +111,7 @@ public abstract class BagModel extends AbstractModel {
             case JACCARD_SIMILARITY:
                 return getJaccardSimilarity((BagModel) oModel);
             default:
-            throw new IllegalStateException(
+                throw new IllegalStateException(
                     "The given similarity metric is incompatible with the bag representation model!");
         }
     }
