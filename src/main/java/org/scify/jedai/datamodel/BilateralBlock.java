@@ -21,6 +21,8 @@ import static org.scify.jedai.utilities.IConstants.MAX_COMPARISONS;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import org.scify.jedai.utilities.TooManyComparisonsException;
+
 /**
  *
  * @author G.A.P. II
@@ -44,8 +46,7 @@ public class BilateralBlock extends AbstractBlock implements Serializable {
         long comparisonNo = (long) index1Entities.length * index2Entities.length;
 
         if (MAX_COMPARISONS < comparisonNo) {
-            throw new IllegalStateException("Very high number of comparisons to be executed! "
-                    + "Maximum allowed number is : " + MAX_COMPARISONS);
+            throw new TooManyComparisonsException(comparisonNo);
         }
 
         comparisons = (int) comparisonNo;

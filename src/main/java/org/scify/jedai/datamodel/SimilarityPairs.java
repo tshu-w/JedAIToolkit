@@ -18,6 +18,8 @@ package org.scify.jedai.datamodel;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.scify.jedai.utilities.TooManyComparisonsException;
 import org.scify.jedai.utilities.IConstants;
 
 /**
@@ -59,8 +61,7 @@ public class SimilarityPairs implements IConstants, Serializable {
         long comparisons = blocks.stream().mapToLong(AbstractBlock::getNoOfComparisons).sum();
 
         if (MAX_COMPARISONS < comparisons) {
-            throw new IllegalStateException("Very high number of comparisons to be executed! "
-                    + "Maximum allowed number is : " + MAX_COMPARISONS);
+            throw new TooManyComparisonsException(comparisons);
         }
 
         return (int) comparisons;
