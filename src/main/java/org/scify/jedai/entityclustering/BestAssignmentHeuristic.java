@@ -33,6 +33,10 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
 
     private int[] selectedColumn;
 
+    private int[] selectedRow;
+
+    private boolean dataset2isbigger;
+
     private int numMoves;
 
     public BestAssignmentHeuristic() {
@@ -50,15 +54,27 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     private void execute() {
         Random rand = new Random();
         int numRows = matrix.length;
+        int numColumns = matrix[0].length;
         for (int i = 0; i < numMoves; i++) {
             int randomint = rand.nextInt(10);
-            for (int numTry = 0; numTry < 150000; numTry++) {
-                int row1 = rand.nextInt(numRows);
-                int row2 = rand.nextInt(numRows);
-                while (row1 == row2) {
-                    row2 = rand.nextInt(numRows);
+            for (int numTry = 0; numTry < 1; numTry++) {
+                if (dataset2isbigger)
+                {
+                    int col1 = rand.nextInt(numColumns);
+                    int col2 = rand.nextInt(numColumns);
+                    while (col1 == col2) {
+                        col2 = rand.nextInt(numRows);
+                    }
+                    swapRows(col1, col2);
                 }
-                swapColumns(row1, row2);
+                else {
+                    int row1 = rand.nextInt(numRows);
+                    int row2 = rand.nextInt(numRows);
+                    while (row1 == row2) {
+                        row2 = rand.nextInt(numRows);
+                    }
+                    swapColumns(row1, row2);
+                }
             }
         }
     }
@@ -66,7 +82,7 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         Log.info("Input comparisons\t:\t" + simPairs.getNoOfComparisons());
-        
+
         matchedIds.clear();
         if (simPairs.getNoOfComparisons() == 0) {
             return new EquivalenceCluster[0];
@@ -79,6 +95,8 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
 
         final Iterator<Comparison> iterator = simPairs.getPairIterator();
         int matrixSize = Math.max(noOfEntities - datasetLimit, datasetLimit);
+        dataset2isbigger = false;//do not use it for now
+        //if (noOfEntities - datasetLimit > datasetLimit) dataset2isbigger = true;
         float[][] simMatrix = new float[matrixSize][matrixSize];
         while (iterator.hasNext()) {
             final Comparison comparison = iterator.next();
@@ -90,32 +108,65 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
 
         execute();
 
-        int[] solutionHeuristic = getSolution();
+        if (dataset2isbigger)
+        {
+            int[] solutionHeuristic = getSolution();
 
-        for (int i = 0; i < solutionHeuristic.length; i++) {
-            int e1 = i;
-            int e2 = solutionHeuristic[i];
-            if (simMatrix[e1][e2] < threshold) {
-                continue;
+            for (int i = 0; i < solutionHeuristic.length; i++) {
+                int e2 = i;
+                int e1 = solutionHeuristic[i];
+                if (simMatrix[e1][e2] < threshold) {
+                    continue;
+                }
+                e2 += datasetLimit;
+
+                //skip already matched entities (unique mapping contraint for clean-clean ER)
+                if (matchedIds.contains(e1) || matchedIds.contains(e2)) {
+                    System.err.println("id already in the graph");
+                }
+
+                similarityGraph.addEdge(e1, e2);
+                matchedIds.add(e1);
+                matchedIds.add(e2);
             }
-            e2 += datasetLimit;
 
-            //skip already matched entities (unique mapping contraint for clean-clean ER)
-            if (matchedIds.contains(e1) || matchedIds.contains(e2)) {
-                System.err.println("id already in the graph");
+        }
+        else {
+            int[] solutionHeuristic = getSolution();
+
+            for (int i = 0; i < solutionHeuristic.length; i++) {
+                int e1 = i;
+                int e2 = solutionHeuristic[i];
+                if (simMatrix[e1][e2] < threshold) {
+                    continue;
+                }
+                e2 += datasetLimit;
+
+                //skip already matched entities (unique mapping contraint for clean-clean ER)
+                if (matchedIds.contains(e1) || matchedIds.contains(e2)) {
+                    System.err.println("id already in the graph");
+                }
+
+                similarityGraph.addEdge(e1, e2);
+                matchedIds.add(e1);
+                matchedIds.add(e2);
             }
-
-            similarityGraph.addEdge(e1, e2);
-            matchedIds.add(e1);
-            matchedIds.add(e2);
         }
 
         return getConnectedComponents();
     }
 
     private void getInitialSolution() {
-        for (int i = 0; i < matrix.length; i++) {
-            selectedColumn[i] = i;
+        if (dataset2isbigger)
+        {
+            for (int i = 0; i < matrix[0].length; i++) {
+                selectedRow[i] = i;
+            }
+        }
+        else {
+            for (int i = 0; i < matrix.length; i++) {
+                selectedColumn[i] = i;
+            }
         }
     }
     
@@ -141,15 +192,18 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     }
 
     private int[] getSolution() {
-        return selectedColumn;
+        if (dataset2isbigger) return selectedRow;
+        else return selectedColumn;
     }
     
     public void init(float[][] matrix) {
         this.matrix = matrix;
         //System.out.println(this.numMoves);
-        this.selectedColumn = new int[matrix.length];
-        this.numMoves = noOfEntities;//9999999
-        //this.numMoves = 1000000000;//9999999
+        if (dataset2isbigger) this.selectedRow = new int[matrix[0].length];
+        else this.selectedColumn = new int[matrix.length];
+        //this.numMoves = noOfEntities;//9999999
+        this.numMoves = 9999999;
+        if (noOfEntities>20000) this.numMoves*=100;
         /*System.out.println(this.numMoves*150000+" *1");
         System.out.println(noOfEntities+" noEntities");*/
         getInitialSolution();
@@ -166,6 +220,16 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
         if (acceptSwap(D)) {
             selectedColumn[row1] = col2;
             selectedColumn[row2] = col1;
+        }
+    }
+
+    private void swapRows(int col1, int col2) {
+        int row1 = selectedRow[col1];
+        int row2 = selectedRow[col2];
+        float D = matrix[row1][col2] + matrix[row2][col1] - (matrix[row1][col1] + matrix[row2][col2]);
+        if (acceptSwap(D)) {
+            selectedRow[col1] = row2;
+            selectedRow[col2] = row1;
         }
     }
 
