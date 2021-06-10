@@ -49,9 +49,9 @@ public class StepByStepRandomConfigurationCCER {
 
     private final static int NO_OF_TRIALS = 100;
 
-    static float getTotalComparisons(List<AbstractBlock> blocks) {
-        float originalComparisons = 0;
-        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Float::sum);
+    static int getTotalComparisons(List<AbstractBlock> blocks) {
+        int originalComparisons = 0;
+        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Integer::sum);
         System.out.println("Original comparisons\t:\t" + originalComparisons);
         return originalComparisons;
     }
@@ -106,7 +106,7 @@ public class StepByStepRandomConfigurationCCER {
             // local optimization of Block Building
             float bestA = 0;
             int bestIteration = 0;
-            float originalComparisons = ((float) profiles1.size()) * profiles2.size();
+            int originalComparisons = profiles1.size() * profiles2.size();
             for (int j = 0; j < NO_OF_TRIALS; j++) {
                 bb.setNextRandomConfiguration();
                 final List<AbstractBlock> originalBlocks = bb.getBlocks(profiles1, profiles2);

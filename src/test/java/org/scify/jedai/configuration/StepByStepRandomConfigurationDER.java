@@ -49,9 +49,9 @@ public class StepByStepRandomConfigurationDER {
 
     private final static int NO_OF_TRIALS = 100;
 
-    static float getTotalComparisons(List<AbstractBlock> blocks) {
-        float originalComparisons = 0;
-        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Float::sum);
+    static int getTotalComparisons(List<AbstractBlock> blocks) {
+        int originalComparisons = 0;
+        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Integer::sum);
         System.out.println("Original comparisons\t:\t" + originalComparisons);
         return originalComparisons;
     }
@@ -93,7 +93,7 @@ public class StepByStepRandomConfigurationDER {
             // local optimization of Block Building
             float bestA = 0;
             int bestIteration = 0;
-            float originalComparisons = ((float) profiles.size()) * (profiles.size() - 1.0f) / 2.0f;
+            int originalComparisons = profiles.size() * (profiles.size() - 1) / 2;
             for (int j = 0; j < NO_OF_TRIALS; j++) {
                 bb.setNextRandomConfiguration();
                 final List<AbstractBlock> originalBlocks = bb.getBlocks(profiles);

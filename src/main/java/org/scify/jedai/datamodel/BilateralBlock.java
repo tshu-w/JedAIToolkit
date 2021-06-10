@@ -16,8 +16,12 @@
 
 package org.scify.jedai.datamodel;
 
+import static org.scify.jedai.utilities.IConstants.MAX_COMPARISONS;
+
 import java.io.Serializable;
 import java.util.Arrays;
+
+import org.scify.jedai.utilities.TooManyComparisonsException;
 
 /**
  *
@@ -39,7 +43,13 @@ public class BilateralBlock extends AbstractBlock implements Serializable {
         super(entropy);
         index1Entities = entities1;
         index2Entities = entities2;
-        comparisons = ((float) index1Entities.length) * ((float) index2Entities.length);
+        long comparisonNo = (long) index1Entities.length * index2Entities.length;
+
+        if (MAX_COMPARISONS < comparisonNo) {
+            throw new TooManyComparisonsException(comparisonNo);
+        }
+
+        comparisons = (int) comparisonNo;
     }
 
     @Override
