@@ -27,8 +27,10 @@ public enum EntityClusteringCcerMethod {
 	ROW_COLUMN_ASSIGNMENT_CLUSTERING,
     BEST_ASSIGNMENT_HEURISTIC_CLUSTERING,
     CENTER_CLUSTERING_CCER,
+    CENTER_CLUSTERING_CCERsingleEdge,
     MARKOV_CLUSTERING_CCER,
-    RICOCHETSR_CLUSTERING_CCER;
+    RICOCHETSR_CLUSTERING_CCER,
+    RICOCHETSR_CLUSTERING_CCERsingleEdge;
 
     public static IEntityClustering getDefaultConfiguration(EntityClusteringCcerMethod ecMethod) {
         switch (ecMethod) {
@@ -44,6 +46,10 @@ public enum EntityClusteringCcerMethod {
             return new MarkovClusteringCCER();
         case RICOCHETSR_CLUSTERING_CCER:
             return new RicochetSRClusteringCCER();
+        case RICOCHETSR_CLUSTERING_CCERsingleEdge:
+            return new RicochetSRClusteringCCERsingleEdge();
+        case CENTER_CLUSTERING_CCERsingleEdge:
+            return new CenterClusteringCCERsingleEdge();
         default:
             return new UniqueMappingClustering();
         }

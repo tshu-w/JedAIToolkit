@@ -33,13 +33,13 @@ import java.util.*;
  *
  * @author Manos Thanos
  */
-public class RicochetSRClusteringCCER extends AbstractEntityClustering {
+public class RicochetSRClusteringCCERsingleEdge extends AbstractEntityClustering {
 
-    public RicochetSRClusteringCCER() {
+    public RicochetSRClusteringCCERsingleEdge() {
         this(0.5f);
     }
 
-    public RicochetSRClusteringCCER(float simTh) {
+    public RicochetSRClusteringCCERsingleEdge(float simTh) {
         super(simTh);
     }
 
@@ -101,6 +101,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
             NonCenter.add(v2);
             clusterCenter[v2] = v1;
             simWithCenter[v2] = connect.get(v2);//similarity between v1 and v2
+            if (Clusters.get(v1).size()>1) break; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
             Clusters.get(v1).add(v2);
         }
 
@@ -136,7 +137,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
                     }
                 }
                 toReassign.add(v1);
-
+                if (toReassign.size()>2) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                 Clusters.put(v1, toReassign);
                 Center.add(v1);
             }
@@ -182,7 +183,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
                         }
                     }
                 }
-
+                if (Clusters.get(newCenter).size()>1) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                 Clusters.get(newCenter).add(ctr);
                 NonCenter.add(ctr);
                 clusterCenter[ctr] = newCenter;

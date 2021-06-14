@@ -52,7 +52,6 @@ public class RicochetSRClustering extends AbstractEntityClustering {
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);
         similarityGraph = null;
-
         final Queue<VertexWeight> VWqueue = new PriorityQueue<>(noOfEntities, new DecVertexWeightComparator());
         final float[] edgesWeight = new float[noOfEntities];
         final int[] edgesAttached = new int[noOfEntities];

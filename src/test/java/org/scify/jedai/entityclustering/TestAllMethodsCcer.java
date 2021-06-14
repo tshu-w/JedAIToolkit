@@ -1,17 +1,17 @@
 /*
-* Copyright [2016-2020] [George Papadakis (gpapadis@yahoo.gr)]
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
+ * Copyright [2016-2020] [George Papadakis (gpapadis@yahoo.gr)]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.scify.jedai.entityclustering;
 
@@ -46,15 +46,19 @@ public class TestAllMethodsCcer {
 
     public static void main(String[] args) throws FileNotFoundException {
         BasicConfigurator.configure();
-        
+
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
-        String[] entitiesFilePaths = { mainDirectory + "abtProfiles", mainDirectory +  "buyProfiles" };
-        String groundTruthFilePath = mainDirectory + "abtBuyIdDuplicates";
+        String[] entitiesFilePaths = { mainDirectory + "dblpProfiles2", mainDirectory +  "scholarProfiles" };
+        String groundTruthFilePath = mainDirectory + "dblpScholarIdDuplicates";
+
+        /*String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
+        String[] entitiesFilePaths = { mainDirectory + "restaurant1Profiles", mainDirectory +  "restaurant2Profiles" };
+        String groundTruthFilePath = mainDirectory + "restaurantsIdDuplicates";*/
 
         IEntityReader eReader = new EntitySerializationReader(entitiesFilePaths[0]);
         List<EntityProfile> profilesD1 = eReader.getEntityProfiles();
         System.out.println("Input Entity Profiles D1\t:\t" + profilesD1.size());
-        
+
         eReader = new EntitySerializationReader(entitiesFilePaths[1]);
         List<EntityProfile> profilesD2 = eReader.getEntityProfiles();
         System.out.println("Input Entity Profiles D2\t:\t" + profilesD2.size());
@@ -97,6 +101,7 @@ public class TestAllMethodsCcer {
         blp.printStatistics(time2 - time1, blockingWorkflowConf.toString(), blockingWorkflowName.toString());
 
         for (EntityMatchingMethod emMethod : EntityMatchingMethod.values()) {
+            if (emMethod!=EntityMatchingMethod.PROFILE_MATCHER) continue;
 
             float time3 = System.currentTimeMillis();
 
@@ -106,31 +111,52 @@ public class TestAllMethodsCcer {
             float time4 = System.currentTimeMillis();
 
             for (EntityClusteringCcerMethod ecMethod : EntityClusteringCcerMethod.values()) {
-            	
-            	//if (ecMethod.toString().contains("UNIQUE")) continue;
-            	//System.out.println("meth "+ecMethod.toString());
-            	
+
+                if (ecMethod!=EntityClusteringCcerMethod.UNIQUE_MAPPING_CLUSTERING
+                        &&ecMethod!=EntityClusteringCcerMethod.CENTER_CLUSTERING_CCER) continue;
+                //System.out.println("meth "+ecMethod.toString());
+
                 float time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringCcerMethod.getDefaultConfiguration(ecMethod);
-                ec.setSimilarityThreshold(0.25f);
+                ec.setSimilarityThreshold(0.55f);
                 EquivalenceCluster[] entityClusters = ec.getDuplicates(simPairs);
 
                 float time6 = System.currentTimeMillis();
 
+                System.out.println("Time for clustering: "+(time6-time5)+" msec");
+
+                for (EquivalenceCluster ecluster : entityClusters)
+                {
+                    /*System.out.println(ecluster.getEntityIdsD1().size());
+                    System.out.println(ecluster.getEntityIdsD2().size());*/
+                    if (ecluster.getEntityIdsD1().size()<2&&ecluster.getEntityIdsD2().size()<2) continue;
+                    for( int i =0;i<ecluster.getEntityIdsD1().size();i++)
+                    {
+                        System.out.print(ecluster.getEntityIdsD1().get(i)+"\t");
+                    }
+                    System.out.print(" and"+"\t");
+
+                    for( int i =0;i<ecluster.getEntityIdsD2().size();i++)
+                    {
+                        System.out.print(ecluster.getEntityIdsD2().get(i)+"\t");
+                    }
+                    System.out.println();
+
+                }
                 StringBuilder matchingWorkflowConf = new StringBuilder();
                 StringBuilder matchingWorkflowName = new StringBuilder();
                 matchingWorkflowConf.append(em.getMethodConfiguration());
                 matchingWorkflowName.append(em.getMethodName());
                 matchingWorkflowConf.append("\n").append(ec.getMethodConfiguration());
                 matchingWorkflowName.append("->").append(ec.getMethodName());
-                
+
 
                 ClustersPerformance clp = new ClustersPerformance(entityClusters, duplicatePropagation);
                 clp.setStatistics();
                 clp.printStatistics(time6 - time5 + time4 - time3, matchingWorkflowName.toString(), matchingWorkflowConf.toString());
                 clp.printDetailedResults(profilesD1, profilesD2, "data" + File.separator + "test.csv");
-                
+
                 //System.exit(-1);
             }
         }
