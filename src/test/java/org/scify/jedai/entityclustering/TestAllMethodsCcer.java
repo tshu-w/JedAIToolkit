@@ -47,13 +47,13 @@ public class TestAllMethodsCcer {
     public static void main(String[] args) throws FileNotFoundException {
         BasicConfigurator.configure();
 
+        /*String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
+        String[] entitiesFilePaths = { mainDirectory + "dblpProfiles2", mainDirectory +  "scholarProfiles" };
+        String groundTruthFilePath = mainDirectory + "dblpScholarIdDuplicates";*/
+
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
         String[] entitiesFilePaths = { mainDirectory + "dblpProfiles2", mainDirectory +  "scholarProfiles" };
         String groundTruthFilePath = mainDirectory + "dblpScholarIdDuplicates";
-
-        /*String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
-        String[] entitiesFilePaths = { mainDirectory + "restaurant1Profiles", mainDirectory +  "restaurant2Profiles" };
-        String groundTruthFilePath = mainDirectory + "restaurantsIdDuplicates";*/
 
         IEntityReader eReader = new EntitySerializationReader(entitiesFilePaths[0]);
         List<EntityProfile> profilesD1 = eReader.getEntityProfiles();
@@ -113,13 +113,13 @@ public class TestAllMethodsCcer {
             for (EntityClusteringCcerMethod ecMethod : EntityClusteringCcerMethod.values()) {
 
                 if (ecMethod!=EntityClusteringCcerMethod.UNIQUE_MAPPING_CLUSTERING
-                        &&ecMethod!=EntityClusteringCcerMethod.CENTER_CLUSTERING_CCER) continue;
+                        &&ecMethod!=EntityClusteringCcerMethod.RICOCHETSR_CLUSTERING_CCERsingleEdge) continue;
                 //System.out.println("meth "+ecMethod.toString());
 
                 float time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringCcerMethod.getDefaultConfiguration(ecMethod);
-                ec.setSimilarityThreshold(0.55f);
+                ec.setSimilarityThreshold(0.19999984f);
                 EquivalenceCluster[] entityClusters = ec.getDuplicates(simPairs);
 
                 float time6 = System.currentTimeMillis();
