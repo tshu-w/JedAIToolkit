@@ -185,7 +185,7 @@ public class RicochetSRClusteringCCERsingleEdge extends AbstractEntityClustering
                         }
                     }
                 }
-                if (Clusters.get(newCenter).size()>1) continue;
+                if (Clusters.get(newCenter).size()>1) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                 Clusters.get(newCenter).add(ctr);
                 NonCenter.add(ctr);
                 clusterCenter[ctr] = newCenter;
