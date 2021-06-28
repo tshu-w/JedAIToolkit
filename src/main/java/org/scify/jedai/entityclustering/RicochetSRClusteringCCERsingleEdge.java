@@ -94,7 +94,7 @@ public class RicochetSRClusteringCCERsingleEdge extends AbstractEntityClustering
         clusterCenter[v1] = v1;
         TIntHashSet tinths = new TIntHashSet();
         tinths.add(v1);
-        Clusters.put(v1, tinths);//initialize v1 Cluster with its own value        
+        Clusters.put(v1, tinths);//initialize v1 Cluster with its own value
         simWithCenter[v1] = 1.0f;
         TIntFloatMap connect = vw.Connections();
         for (int v2 : connect.keys()) {
@@ -185,6 +185,7 @@ public class RicochetSRClusteringCCERsingleEdge extends AbstractEntityClustering
                         }
                     }
                 }
+                if (Clusters.get(newCenter).size()>1) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                 Clusters.get(newCenter).add(ctr);
                 NonCenter.add(ctr);
                 clusterCenter[ctr] = newCenter;
