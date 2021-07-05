@@ -26,6 +26,7 @@ public enum EntityClusteringCcerMethod {
 	UNIQUE_MAPPING_CLUSTERING,
 	ROW_COLUMN_ASSIGNMENT_CLUSTERING,
     BEST_ASSIGNMENT_HEURISTIC_CLUSTERING,
+    BEST_ASSIGNMENT_HEURISTIC_CLUSTERINGTO,
     CENTER_CLUSTERING_CCER,
     CENTER_CLUSTERING_CCERsingleEdge,
     MARKOV_CLUSTERING_CCER,
@@ -40,6 +41,8 @@ public enum EntityClusteringCcerMethod {
             return new RowColumnClustering();
         case BEST_ASSIGNMENT_HEURISTIC_CLUSTERING:
             return new BestAssignmentHeuristic();
+        case BEST_ASSIGNMENT_HEURISTIC_CLUSTERINGTO:
+            return new BestAssignmentHeuristicWithTO();
         case CENTER_CLUSTERING_CCER:
             return new CenterClusteringCCER();
         case MARKOV_CLUSTERING_CCER:
