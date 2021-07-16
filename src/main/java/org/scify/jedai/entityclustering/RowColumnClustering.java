@@ -87,7 +87,6 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
         }
 
         final Iterator<Comparison> iterator = simPairs.getPairIterator();
-        int matrixSize = Math.max(noOfEntities - datasetLimit, datasetLimit);
         float[][] simMatrix = new float[datasetLimit][noOfEntities - datasetLimit];
         while (iterator.hasNext()) {
             final Comparison comparison = iterator.next();
