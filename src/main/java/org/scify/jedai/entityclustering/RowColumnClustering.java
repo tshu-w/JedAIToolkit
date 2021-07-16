@@ -63,9 +63,12 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
         costColumnScan = 0;
         for (int col = 0; col < matrix[0].length; col++) {
             selectedRow[col] = rowWithMin(col);
+            if (selectedRow[col]==-1) break;
             columnsFromSelectedRow[selectedRow[col]] = col;
             isRowCovered[selectedRow[col]] = true;
             costColumnScan += matrix[selectedRow[col]][col];
+
+
         }
     }
     
@@ -85,7 +88,7 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
 
         final Iterator<Comparison> iterator = simPairs.getPairIterator();
         int matrixSize = Math.max(noOfEntities - datasetLimit, datasetLimit);
-        float[][] simMatrix = new float[matrixSize][matrixSize];
+        float[][] simMatrix = new float[datasetLimit][noOfEntities - datasetLimit];
         while (iterator.hasNext()) {
             final Comparison comparison = iterator.next();
             if (threshold < comparison.getUtilityMeasure()) {
@@ -130,7 +133,7 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
     //inverts the input to 1.0-simMatrix in order to apply the minimization problem
     private float[][] getNegative(float[][] initMatrix) {
         int N = initMatrix.length;
-        float[][] negMatrix = new float[N][N];
+        float[][] negMatrix = new float[N][initMatrix[0].length];
         for (int i = 0; i < initMatrix.length; i++) {
             for (int j = 0; j < initMatrix[i].length; j++) {
                 negMatrix[i][j] = 1.0f - initMatrix[i][j];
@@ -143,6 +146,8 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
         costRowScan = 0;
         for (int row = 0; row < matrix.length; row++) {
             selectedColumn[row] = columnWithMin(row);
+            if (selectedColumn[row]==-1) break;
+
             isColumnCovered[selectedColumn[row]] = true;
             costRowScan += matrix[row][selectedColumn[row]];
         }
