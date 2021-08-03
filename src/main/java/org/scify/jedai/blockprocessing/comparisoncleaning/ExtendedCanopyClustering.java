@@ -15,6 +15,7 @@
  */
 package org.scify.jedai.blockprocessing.comparisoncleaning;
 
+import com.esotericsoftware.minlog.Log;
 import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.datamodel.Comparison;
 import org.scify.jedai.utilities.enumerations.WeightingScheme;
@@ -59,7 +60,8 @@ public class ExtendedCanopyClustering extends CardinalityNodePruning {
         exclusiveThreshold = outThr;
         inclusiveThreshold = inThr;
         if (inclusiveThreshold < exclusiveThreshold) {
-            throw new IllegalStateException("The Exclusive Threshold cannot be larger than the Inclusive one.");
+            Log.error(getMethodName(), "The Exclusive Threshold cannot be larger than the Inclusive one.");
+            System.exit(-1);
         }
     }
 

@@ -77,7 +77,6 @@ public class AllPairs extends AbstractTokenBasedJoin {
     }
 
     private void init() {
-
         int counter = 0;
         final List<Pair<String, Integer>> idIdentifier = new ArrayList<>();
         for (EntityProfile profile : profilesD1) {
@@ -89,29 +88,25 @@ public class AllPairs extends AbstractTokenBasedJoin {
             for (EntityProfile profile : profilesD2) {
                 final String nextValue = getAttributeValue(attributeNameD2, profile);
                 idIdentifier.add(new ImmutablePair<>(nextValue, counter++));
-
             }
         }
 
-        if (this.SetVersion)
-        {
+        if (this.SetVersion) {
             int[] setversionsizes = new int[idIdentifier.size()];
-            for (int i=0;i<idIdentifier.size();i++)
-            {
+            for (int i = 0; i < idIdentifier.size(); i++) {
                 String togetSize = idIdentifier.get(i).getKey();
                 String[] split = togetSize.split(" ");
-                Set<String> settogetsize=  new HashSet<>();
-                for (String s:split) settogetsize.add(s);
+                Set<String> settogetsize = new HashSet<>();
+                for (String s : split) {
+                    settogetsize.add(s);
+                }
                 setversionsizes[idIdentifier.get(i).getValue()] = settogetsize.size();
-
             }
             idIdentifier.sort((s1, s2) -> setversionsizes[s1.getValue()] - setversionsizes[s2.getValue()]);
-        }
-        else
-        {
+        } else {
             idIdentifier.sort(Comparator.comparingInt(s -> s.getKey().split(" ").length));
-
         }
+        
         attributeValues.clear();
         originalId = new int[noOfEntities];
         records = new TIntList[noOfEntities];
@@ -132,7 +127,9 @@ public class AllPairs extends AbstractTokenBasedJoin {
             String[] split = s.split(" ");
             for (String value : split) {
                 int token = djbHash(value);
-                if (this.SetVersion&&(records[sIndex].contains(token))) continue; //case where Set is used instead of Bag
+                if (this.SetVersion && (records[sIndex].contains(token))) {
+                    continue; //case where Set is used instead of Bag
+                }
                 records[sIndex].add(token);
             }
             records[sIndex].sort();

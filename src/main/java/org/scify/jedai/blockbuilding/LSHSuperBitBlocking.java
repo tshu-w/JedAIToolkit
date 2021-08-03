@@ -53,7 +53,7 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
     protected ITextModel[][] models;
 
     public LSHSuperBitBlocking() {
-        this(5, 30);
+        this(5, 5);
     }
 
     public LSHSuperBitBlocking(int bSize, int bandsNo) {
@@ -62,9 +62,9 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         bandSize = bSize;
         bandsNumber = bandsNo;
 
-        gridBndNumber = new IntGridSearchConfiguration(100, 10, 10);
-        gridBndSize = new IntGridSearchConfiguration(10, 2, 1);
-        randomBndNumber = new IntRandomSearchConfiguration(100, 10);
+        gridBndNumber = new IntGridSearchConfiguration(100, 20, 10);
+        gridBndSize = new IntGridSearchConfiguration(10, 3, 1);
+        randomBndNumber = new IntRandomSearchConfiguration(100, 20);
         randomBndSize = new IntRandomSearchConfiguration(10, 2);
     }
 
@@ -106,11 +106,11 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         boolean[] signatures = superbit.signature(model.getVector());
 
         final Set<String> allKeys = new HashSet<>();
-        for (int i = 0; i < signatures.length - bandSize; i += bandSize) {
-            final StringBuilder band = new StringBuilder(Integer.toString(i));
+        for (int i = 0; i < bandsNumber; i++) {
+            final StringBuilder band = new StringBuilder();
             for (int j = 0; j < bandSize; j++) {
                 band.append("-");
-                if (signatures[i + j]) {
+                if (signatures[i * bandSize + j]) {
                     band.append("T");
                 } else {
                     band.append("F");
@@ -121,7 +121,7 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         }
         return allKeys;
     }
-    
+
     protected ITextModel getModel(String instanceName) {
         return new SuperBitUnigrams(instanceName);
     }
@@ -147,12 +147,12 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
             }
         }
     }
-    
+
     protected void initializeLshFunctions() {
         Log.info("Dimensionality\t:\t" + SuperBitUnigrams.getCorpusDimensionality());
         superbit = new SuperBit(SuperBitUnigrams.getCorpusDimensionality(), bandsNumber, bandSize);
     }
-    
+
     protected void resetModel() {
         SuperBitUnigrams.resetGlobalValues(DATASET_1);
     }
@@ -207,7 +207,7 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         obj1.put("class", "java.lang.Integer");
         obj1.put("name", getParameterName(0));
         obj1.put("defaultValue", "5");
-        obj1.put("minValue", "2");
+        obj1.put("minValue", "3");
         obj1.put("maxValue", "10");
         obj1.put("stepValue", "1");
         obj1.put("description", getParameterDescription(0));
@@ -216,7 +216,7 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         obj2.put("class", "java.lang.Integer");
         obj2.put("name", getParameterName(1));
         obj2.put("defaultValue", "30");
-        obj2.put("minValue", "10");
+        obj2.put("minValue", "20");
         obj2.put("maxValue", "100");
         obj2.put("stepValue", "10");
         obj2.put("description", getParameterDescription(1));

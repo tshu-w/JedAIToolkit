@@ -78,6 +78,11 @@ public abstract class AbstractComparisonCleaning implements IBlockProcessing {
     public List<AbstractBlock> refineBlocks(List<AbstractBlock> blocks) {
         Log.info("Applying " + getMethodName() + " with the following configuration : " + getMethodConfiguration());
         
+        if (blocks.isEmpty()) {
+            Log.warn("Empty set of blocks was given as input!");
+            return blocks;
+        }
+        
         entityIndex = new EntityIndex(blocks);
         
         cleanCleanER = entityIndex.isCleanCleanER();

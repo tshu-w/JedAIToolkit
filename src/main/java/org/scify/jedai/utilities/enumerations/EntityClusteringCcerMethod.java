@@ -13,7 +13,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-
 package org.scify.jedai.utilities.enumerations;
 
 import org.scify.jedai.entityclustering.*;
@@ -23,38 +22,35 @@ import org.scify.jedai.entityclustering.*;
  * @author GAP2
  */
 public enum EntityClusteringCcerMethod {
-	UNIQUE_MAPPING_CLUSTERING,
-	ROW_COLUMN_ASSIGNMENT_CLUSTERING,
+    UNIQUE_MAPPING_CLUSTERING,
+    ROW_COLUMN_ASSIGNMENT_CLUSTERING,
     BEST_ASSIGNMENT_HEURISTIC_CLUSTERING,
-    BEST_ASSIGNMENT_HEURISTIC_CLUSTERINGTO,
-    CENTER_CLUSTERING_CCER,
-    CENTER_CLUSTERING_CCERsingleEdge,
-    MARKOV_CLUSTERING_CCER,
+    CONNECTED_COMPONENTS_CCER,
+    BEST_MATCH_CLUSTERING,
+    SYMMETRIC_BEST_MATCH_CLUSTERING,
     RICOCHETSR_CLUSTERING_CCER,
-    RICOCHETSR_CLUSTERING_CCERsingleEdge;
+    KIRALY_CLUSTERING;
 
     public static IEntityClustering getDefaultConfiguration(EntityClusteringCcerMethod ecMethod) {
         switch (ecMethod) {
-        case UNIQUE_MAPPING_CLUSTERING:
-            return new UniqueMappingClustering();
-        case ROW_COLUMN_ASSIGNMENT_CLUSTERING:
-            return new RowColumnClustering();
-        case BEST_ASSIGNMENT_HEURISTIC_CLUSTERING:
-            return new BestAssignmentHeuristic();
-        case BEST_ASSIGNMENT_HEURISTIC_CLUSTERINGTO:
-            return new BestAssignmentHeuristicWithTO();
-        case CENTER_CLUSTERING_CCER:
-            return new CenterClusteringCCER();
-        case MARKOV_CLUSTERING_CCER:
-            return new MarkovClusteringCCER();
-        case RICOCHETSR_CLUSTERING_CCER:
-            return new RicochetSRClusteringCCER();
-        case RICOCHETSR_CLUSTERING_CCERsingleEdge:
-            return new RicochetSRClusteringCCERsingleEdge();
-        case CENTER_CLUSTERING_CCERsingleEdge:
-            return new CenterClusteringCCERsingleEdge();
-        default:
-            return new UniqueMappingClustering();
+            case UNIQUE_MAPPING_CLUSTERING:
+                return new UniqueMappingClustering();
+            case ROW_COLUMN_ASSIGNMENT_CLUSTERING:
+                return new RowColumnClustering();
+            case BEST_ASSIGNMENT_HEURISTIC_CLUSTERING:
+                return new BestAssignmentHeuristic();
+            case CONNECTED_COMPONENTS_CCER:
+                return new ConnectedComponentsClusteringCCER();
+            case BEST_MATCH_CLUSTERING:
+                return new BestMatchClustering();
+            case SYMMETRIC_BEST_MATCH_CLUSTERING:
+                return new ExactClustering();
+            case RICOCHETSR_CLUSTERING_CCER:
+                return new RicochetSRClusteringCCER();
+            case KIRALY_CLUSTERING:
+                return new KiralyMSMApproxClustering();
+            default:
+                return new UniqueMappingClustering();
         }
     }
 }

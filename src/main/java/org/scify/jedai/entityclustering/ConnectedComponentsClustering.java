@@ -38,7 +38,7 @@ public class ConnectedComponentsClustering extends AbstractEntityClustering {
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);
         
-        // add an edge for every pair of entities with a weight higher than the thrshold
+        // add an edge for every pair of entities with a weight higher than the threshold
         final Iterator<Comparison> iterator = simPairs.getPairIterator();
         while (iterator.hasNext()) {
             final Comparison comparison = iterator.next();

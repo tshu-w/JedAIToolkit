@@ -33,7 +33,7 @@ public class LSHMinHashBlocking extends LSHSuperBitBlocking {
     protected MinHash minhash;
 
     public LSHMinHashBlocking() {
-        this(5, 30);
+        this(5, 5);
     }
 
     public LSHMinHashBlocking(int bSize, int bandsNo) {
@@ -47,14 +47,14 @@ public class LSHMinHashBlocking extends LSHSuperBitBlocking {
     protected Set<String> getBlockingKeys(int datasetId, int profileId) {
         final MinHashUnigrams model = (MinHashUnigrams) models[datasetId][profileId];
 
-        final Set<Integer> termIds = model.getTermIds();
+        final Set<Integer> termIds = model.getTermIds();       
         int[] signature = minhash.signature(termIds);
 
         final Set<String> allKeys = new HashSet<>();
-        for (int i = 0; i < signature.length - bandSize; i += bandSize) {
-            final StringBuilder band = new StringBuilder(Integer.toString(i));
+        for (int i = 0; i < bandsNumber; i++) {
+            final StringBuilder band = new StringBuilder();
             for (int j = 0; j < bandSize; j++) {
-                band.append("-").append(signature[i + j]);
+                band.append("-").append(signature[i * bandSize + j]);
             }
             band.append("BND").append(i);
             allKeys.add(band.toString());

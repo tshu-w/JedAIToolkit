@@ -41,7 +41,8 @@ public class ProgressiveLocalTopComparisons extends AbstractHashBasedPrioritizat
     @Override
     public void developBlockBasedSchedule(List<AbstractBlock> blocks) {
         if (blocks == null || blocks.isEmpty()) {
-            throw new IllegalArgumentException("No blocks were given as input!");
+            Log.error("No blocks were given as input!");
+            System.exit(-1);
         }
 
         if (blocks.get(0) instanceof DecomposedBlock) {

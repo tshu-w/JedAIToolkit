@@ -1,5 +1,6 @@
 package org.scify.jedai.textmodels.embeddings;
 
+import com.esotericsoftware.minlog.Log;
 import org.scify.jedai.textmodels.AbstractModel;
 import org.scify.jedai.textmodels.ITextModel;
 import org.scify.jedai.utilities.enumerations.RepresentationModel;
@@ -28,8 +29,9 @@ public abstract class VectorSpaceModel extends AbstractModel {
             case COSINE_SIMILARITY:
                 return getCosineSimilarity((VectorSpaceModel) oModel);
             default:
-                throw new IllegalStateException(
-                    "The given similarity metric is incompatible with the bag representation model!");
+                Log.error("The given similarity metric is incompatible with the bag representation model!");
+                System.exit(-1);
+                return -1;
         }
     }
 

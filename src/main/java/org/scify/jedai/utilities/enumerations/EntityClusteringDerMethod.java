@@ -23,7 +23,7 @@ import org.scify.jedai.entityclustering.CutClustering;
 import org.scify.jedai.entityclustering.IEntityClustering;
 import org.scify.jedai.entityclustering.MarkovClustering;
 import org.scify.jedai.entityclustering.MergeCenterClustering;
-import org.scify.jedai.entityclustering.RicochetSRClustering;
+import org.scify.jedai.entityclustering.RicochetSRClusteringCCER;
 
 /**
  *
@@ -51,7 +51,7 @@ public enum EntityClusteringDerMethod {
             case MERGE_CENTER_CLUSTERING:
                 return new MergeCenterClustering();
             case RICOCHET_SR_CLUSTERING:
-                return new RicochetSRClustering();
+                return new RicochetSRClusteringCCER();
             case CORRELATION_CLUSTERING:
                 return new CorrelationClustering();
             default:

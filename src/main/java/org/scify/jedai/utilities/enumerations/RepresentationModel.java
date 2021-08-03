@@ -93,7 +93,7 @@ public enum RepresentationModel {
             case PRETRAINED_WORD_VECTORS:
                 return new PretrainedWordVectors(dId, 1, model, simMetric, instanceName);
             case PRETRAINED_CHARACTER_VECTORS:
-            return new PretrainedCharacterVectors(dId, 1, model, simMetric, instanceName);
+                return new PretrainedCharacterVectors(dId, 1, model, simMetric, instanceName);
             default:
                 return null;
         }

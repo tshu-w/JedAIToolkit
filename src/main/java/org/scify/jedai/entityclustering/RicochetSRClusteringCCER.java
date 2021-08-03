@@ -94,7 +94,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
         clusterCenter[v1] = v1;
         TIntHashSet tinths = new TIntHashSet();
         tinths.add(v1);
-        Clusters.put(v1, tinths);//initialize v1 Cluster with its own value        
+        Clusters.put(v1, tinths);//initialize v1 Cluster with its own value
         simWithCenter[v1] = 1.0f;
         TIntFloatMap connect = vw.Connections();
         for (int v2 : connect.keys()) {
@@ -102,6 +102,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
             clusterCenter[v2] = v1;
             simWithCenter[v2] = connect.get(v2);//similarity between v1 and v2
             Clusters.get(v1).add(v2);
+            break; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
         }
 
         while (!VWqueue.isEmpty()) {
@@ -124,6 +125,8 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
 
                 //Since we reach this point, v2 has to be put in v1's cluster
                 toReassign.add(v2);
+                break;//TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
+
             }
 
             if (!toReassign.isEmpty()) {
@@ -136,7 +139,6 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
                     }
                 }
                 toReassign.add(v1);
-
                 Clusters.put(v1, toReassign);
                 Center.add(v1);
             }
@@ -176,13 +178,14 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
                     final TIntFloatMap currentConnections = connections.get(center);
                     float newSim = currentConnections.get(ctr);
                     if (0 < newSim) {
+                        if (Clusters.get(center).size()>1) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                         if (newSim > max) {
                             max = newSim;
                             newCenter = center;
                         }
                     }
                 }
-
+                if (Clusters.get(newCenter).size()>1) continue; //TODO DON"T ALLOW >1 PAIRS FOR EACH ENTITY PROFILE
                 Clusters.get(newCenter).add(ctr);
                 NonCenter.add(ctr);
                 clusterCenter[ctr] = newCenter;
@@ -223,11 +226,11 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
 
     @Override
     public String getMethodInfo() {
-        return getMethodName() + ": it implements the Richochet Sequential Rippling algorithm for CCER.";
+        return getMethodName() + ": it implements the Richochet Sequential Rippling algorithm for CCER Single-edge.";
     }
 
     @Override
     public String getMethodName() {
-        return "Ricochet Sequential Rippling Clustering CCER";
+        return "Ricochet Sequential Rippling Clustering CCER Single-edge";
     }
 }

@@ -17,6 +17,7 @@ package org.scify.jedai.textmodels;
 
 import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
+import com.esotericsoftware.minlog.Log;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -85,8 +86,8 @@ public abstract class BagModel extends AbstractModel {
         final Set<String> commonKeys = new HashSet<>(itemsFrequency.keySet());
         commonKeys.retainAll(oModel.getItemsFrequency().keySet());
 
-        float numerator = commonKeys.size();
-        float denominator = itemsFrequency.size() + oModel.getItemsFrequency().size() - numerator;
+        int numerator = commonKeys.size();
+        int denominator = itemsFrequency.size() + oModel.getItemsFrequency().size() - numerator;
         return numerator / denominator;
     }
 
@@ -111,8 +112,9 @@ public abstract class BagModel extends AbstractModel {
             case JACCARD_SIMILARITY:
                 return getJaccardSimilarity((BagModel) oModel);
             default:
-                throw new IllegalStateException(
-                    "The given similarity metric is incompatible with the bag representation model!");
+                Log.error("The given similarity metric is incompatible with the bag representation model!");
+                System.exit(-1);
+                return -1;
         }
     }
 

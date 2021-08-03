@@ -13,7 +13,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-
 package org.scify.jedai.similarityjoins.tokenbased;
 
 import gnu.trove.list.TIntList;
@@ -39,7 +38,7 @@ import java.util.*;
 public class PPJoin extends AbstractTokenBasedJoin {
 
     private final static int PRUNE_FLAG = -7;
-    
+
     private int[] originalId;
     private final List<String> attributeValues;
     private TIntList[] records;
@@ -68,7 +67,7 @@ public class PPJoin extends AbstractTokenBasedJoin {
     public String getMethodName() {
         return "PPJoin";
     }
-    
+
     private int getOverlap(int x, int y, int requireOverlap, int... poslen) {
         int posx = poslen.length > 0 ? poslen[0] : 0;
         int posy = poslen.length > 1 ? poslen[1] : 0;
@@ -91,7 +90,7 @@ public class PPJoin extends AbstractTokenBasedJoin {
         }
         return currentOverlap;
     }
-    
+
     private void init() {
         int counter = 0;
         final List<Pair<String, Integer>> idIdentifier = new ArrayList<>();
@@ -107,22 +106,20 @@ public class PPJoin extends AbstractTokenBasedJoin {
             }
         }
 
-        if (this.SetVersion)
-        {
+        if (this.SetVersion) {
             int[] setversionsizes = new int[idIdentifier.size()];
-            for (int i=0;i<idIdentifier.size();i++)
-            {
+            for (int i = 0; i < idIdentifier.size(); i++) {
                 String togetSize = idIdentifier.get(i).getKey();
                 String[] split = togetSize.split(" ");
-                Set<String> settogetsize=  new HashSet<>();
-                for (String s:split) settogetsize.add(s);
+                Set<String> settogetsize = new HashSet<>();
+                for (String s : split) {
+                    settogetsize.add(s);
+                }
                 setversionsizes[idIdentifier.get(i).getValue()] = settogetsize.size();
 
             }
             idIdentifier.sort((s1, s2) -> setversionsizes[s1.getValue()] - setversionsizes[s2.getValue()]);
-        }
-        else
-        {
+        } else {
             idIdentifier.sort(Comparator.comparingInt(s -> s.getKey().split(" ").length));
         }
         attributeValues.clear();
@@ -138,12 +135,16 @@ public class PPJoin extends AbstractTokenBasedJoin {
         for (int sIndex = 0; sIndex < noOfEntities; sIndex++) {
 
             final String s = attributeValues.get(sIndex).trim();
-            if (s.length()<1) continue;
+            if (s.length() < 1) {
+                continue;
+            }
 
             String[] split = s.split(" ");
             for (String value : split) {
                 int token = djbHash(value);
-                if (this.SetVersion&&(records[sIndex].contains(token))) continue; //case where Set is used instead of Bag
+                if (this.SetVersion && (records[sIndex].contains(token))) {
+                    continue; //case where Set is used instead of Bag
+                }
                 records[sIndex].add(token);
             }
             records[sIndex].sort();
@@ -179,7 +180,7 @@ public class PPJoin extends AbstractTokenBasedJoin {
                     item = new ListItemPPJ();
                     index.put(token, item);
                 }
-                
+
                 int pos = item.getPos();
                 final List<IntPair> list = item.getIds();
                 int noOfIds = list.size();
@@ -218,7 +219,7 @@ public class PPJoin extends AbstractTokenBasedJoin {
                     }
                     occurances.put(candId, value);//was replace before
                 }
-                
+
                 if (t < indexLength) {
                     list.add(new IntPair(k, t));
                 }
@@ -256,16 +257,12 @@ public class PPJoin extends AbstractTokenBasedJoin {
                         continue;
                     }
                 }
-                
+
                 int realOverlap = getOverlap(k, cand, requireOverlaps[candidateSize]);
 
                 if (realOverlap != -1) {
-
-
                     float jaccardSim = calcSimilarity(currentSize, candidateSize, realOverlap);
-
                     if (jaccardSim >= threshold) {
-
                         final Comparison currentComp = getComparison(originalId[k], originalId[cand]);
                         currentComp.setUtilityMeasure(jaccardSim);
                         executedComparisons.add(currentComp);

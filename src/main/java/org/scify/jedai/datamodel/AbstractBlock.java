@@ -31,7 +31,7 @@ public abstract class AbstractBlock implements Serializable {
     
     protected int blockIndex;
     
-    protected int comparisons;
+    protected float comparisons;
     protected float entropy;
     protected float utilityMeasure;
             
@@ -53,7 +53,7 @@ public abstract class AbstractBlock implements Serializable {
         return entropy;
     }
 
-    public int getNoOfComparisons() {
+    public float getNoOfComparisons() {
         return comparisons;
     }
     

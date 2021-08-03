@@ -6,6 +6,7 @@ import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -91,7 +92,8 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                 elementMap.put(components[0], value);
             }
         } catch (IOException e) {
-        	throw new RuntimeException("Problem loading embedding weights", e);
+            Log.error("Problem loading embedding weights", e);
+            System.exit(-1);
         }
     }
 
@@ -114,7 +116,8 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                dimension = Integer.parseInt(header[0]);
                dataSeparator = header[1].charAt(0);
            }catch (NumberFormatException ex){
-                throw new RuntimeException("Pretrained header malformed -- expected:<dimension>", ex);
+               Log.error("Pretrained header malformed -- expected:<dimension>");
+               System.exit(-1);
            }
            Log.info(String.format("Read dimension: [%d], delimiter: [%c]", dimension, dataSeparator));
            Log.info(String.format("Reading embedding mapping file. {%s}", Calendar.getInstance().getTime().toString()));
@@ -137,8 +140,12 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                elementMap.put(components[0], value);
            }
            Log.info(String.format("Done processing %d-line embedding mapping. {%s}",  counter, Calendar.getInstance().getTime().toString()));
-        } catch (IOException e) {
-            throw new RuntimeException("Exception when reading: " + fileName, e);
+       } catch (FileNotFoundException e) {
+           Log.error("No resource file found:" + fileName, e);
+           System.exit(-1);
+       } catch (IOException e) {
+           Log.error("IO exception when reading:" + fileName, e);
+           System.exit(-1);
        }
 
        unkownVector = getZeroVector();

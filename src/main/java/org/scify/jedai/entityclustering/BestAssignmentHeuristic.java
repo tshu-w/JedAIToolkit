@@ -52,22 +52,23 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     }
 
     private void execute() {
+        long timeout = 120;//IN SECONDS
         Random rand = new Random();
         int numRows = matrix.length;
         int numColumns = matrix[0].length;
+        long time2 = System.currentTimeMillis();
+        long time3;
         for (int i = 0; i < numMoves; i++) {
-            int randomint = rand.nextInt(10);
+//            int randomint = rand.nextInt(10);
             for (int numTry = 0; numTry < 1; numTry++) {
-                if (dataset2isbigger)
-                {
+                if (dataset2isbigger) {
                     int col1 = rand.nextInt(numColumns);
                     int col2 = rand.nextInt(numColumns);
                     while (col1 == col2) {
                         col2 = rand.nextInt(numRows);
                     }
                     swapRows(col1, col2);
-                }
-                else {
+                } else {
                     int row1 = rand.nextInt(numRows);
                     int row2 = rand.nextInt(numRows);
                     while (row1 == row2) {
@@ -75,6 +76,10 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
                     }
                     swapColumns(row1, row2);
                 }
+            }
+            time3 = System.currentTimeMillis();
+            if ((time3 - time2) > 1000 * timeout) {
+                break;
             }
         }
     }
@@ -87,7 +92,7 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
         if (simPairs.getNoOfComparisons() == 0) {
             return new EquivalenceCluster[0];
         }
-
+//        long time0 = System.currentTimeMillis();
         initializeData(simPairs);
         if (!isCleanCleanER) {
             return null; //the method is only applicable to Clean-Clean ER
@@ -105,11 +110,12 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
             }
         }
         init(getNegative(simMatrix));
+//        long time1 = System.currentTimeMillis();
+        //System.out.println( ((double)time1-(double)time0)/1000.0+" s");
 
         execute();
 
-        if (dataset2isbigger)
-        {
+        if (dataset2isbigger) {
             int[] solutionHeuristic = getSolution();
 
             for (int i = 0; i < solutionHeuristic.length; i++) {
@@ -130,8 +136,7 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
                 matchedIds.add(e2);
             }
 
-        }
-        else {
+        } else {
             int[] solutionHeuristic = getSolution();
 
             for (int i = 0; i < solutionHeuristic.length; i++) {
@@ -157,19 +162,17 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     }
 
     private void getInitialSolution() {
-        if (dataset2isbigger)
-        {
+        if (dataset2isbigger) {
             for (int i = 0; i < matrix[0].length; i++) {
                 selectedRow[i] = i;
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < matrix.length; i++) {
                 selectedColumn[i] = i;
             }
         }
     }
-    
+
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": it creates clusters after heuristically solving the assignment problem. ";
@@ -177,9 +180,9 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
 
     @Override
     public String getMethodName() {
-        return "Assignment Problem Heuristic Clustering";
+        return "Assignment Problem Heuristic Clustering w TO";
     }
-    
+
     private float[][] getNegative(float[][] initMatrix) {
         int N = initMatrix.length;
         float[][] negMatrix = new float[N][N];
@@ -192,23 +195,31 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     }
 
     private int[] getSolution() {
-        if (dataset2isbigger) return selectedRow;
-        else return selectedColumn;
+        if (dataset2isbigger) {
+            return selectedRow;
+        } else {
+            return selectedColumn;
+        }
     }
-    
+
     public void init(float[][] matrix) {
         this.matrix = matrix;
         //System.out.println(this.numMoves);
-        if (dataset2isbigger) this.selectedRow = new int[matrix[0].length];
-        else this.selectedColumn = new int[matrix.length];
+        if (dataset2isbigger) {
+            this.selectedRow = new int[matrix[0].length];
+        } else {
+            this.selectedColumn = new int[matrix.length];
+        }
         //this.numMoves = noOfEntities;//9999999
         this.numMoves = 9999999;
-        if (noOfEntities>20000) this.numMoves*=100;
+        if (noOfEntities > 20000) {
+            this.numMoves *= 100;
+        }
         /*System.out.println(this.numMoves*150000+" *1");
         System.out.println(noOfEntities+" noEntities");*/
         getInitialSolution();
     }
-    
+
     public void setNumMoves(int numMoves) {
         this.numMoves = numMoves;
     }

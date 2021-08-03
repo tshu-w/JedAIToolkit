@@ -15,6 +15,7 @@
  */
 package org.scify.jedai.prioritization;
 
+import com.esotericsoftware.minlog.Log;
 import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.datamodel.Comparison;
 import org.scify.jedai.datamodel.ComparisonIterator;
@@ -48,7 +49,8 @@ public class ProgressiveBlockScheduling extends AbstractHashBasedPrioritization 
     @Override
     public void developBlockBasedSchedule(List<AbstractBlock> blocks) {
         if (blocks == null || blocks.isEmpty()) {
-            throw new IllegalArgumentException("No blocks were given as input!");
+            Log.error("No blocks were given as input!");
+            System.exit(-1);
         }
 
         blocks.sort(new IncBlockCardinalityComparator());

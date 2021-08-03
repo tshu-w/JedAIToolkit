@@ -50,9 +50,8 @@ public class TestAllMethodsCcer {
         /*String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
         String[] entitiesFilePaths = { mainDirectory + "dblpProfiles2", mainDirectory +  "scholarProfiles" };
         String groundTruthFilePath = mainDirectory + "dblpScholarIdDuplicates";*/
-
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
-        String[] entitiesFilePaths = { mainDirectory + "dblpProfiles2", mainDirectory +  "scholarProfiles" };
+        String[] entitiesFilePaths = {mainDirectory + "dblpProfiles2", mainDirectory + "scholarProfiles"};
         String groundTruthFilePath = mainDirectory + "dblpScholarIdDuplicates";
 
         IEntityReader eReader = new EntitySerializationReader(entitiesFilePaths[0]);
@@ -101,7 +100,9 @@ public class TestAllMethodsCcer {
         blp.printStatistics(time2 - time1, blockingWorkflowConf.toString(), blockingWorkflowName.toString());
 
         for (EntityMatchingMethod emMethod : EntityMatchingMethod.values()) {
-            if (emMethod!=EntityMatchingMethod.PROFILE_MATCHER) continue;
+            if (emMethod != EntityMatchingMethod.PROFILE_MATCHER) {
+                continue;
+            }
 
             float time3 = System.currentTimeMillis();
 
@@ -111,11 +112,6 @@ public class TestAllMethodsCcer {
             float time4 = System.currentTimeMillis();
 
             for (EntityClusteringCcerMethod ecMethod : EntityClusteringCcerMethod.values()) {
-
-                if (ecMethod!=EntityClusteringCcerMethod.UNIQUE_MAPPING_CLUSTERING
-                        &&ecMethod!=EntityClusteringCcerMethod.RICOCHETSR_CLUSTERING_CCERsingleEdge) continue;
-                //System.out.println("meth "+ecMethod.toString());
-
                 float time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringCcerMethod.getDefaultConfiguration(ecMethod);
@@ -124,22 +120,19 @@ public class TestAllMethodsCcer {
 
                 float time6 = System.currentTimeMillis();
 
-                System.out.println("Time for clustering: "+(time6-time5)+" msec");
+                System.out.println("Time for clustering: " + (time6 - time5) + " msec");
 
-                for (EquivalenceCluster ecluster : entityClusters)
-                {
-                    /*System.out.println(ecluster.getEntityIdsD1().size());
-                    System.out.println(ecluster.getEntityIdsD2().size());*/
-                    if (ecluster.getEntityIdsD1().size()<2&&ecluster.getEntityIdsD2().size()<2) continue;
-                    for( int i =0;i<ecluster.getEntityIdsD1().size();i++)
-                    {
-                        System.out.print(ecluster.getEntityIdsD1().get(i)+"\t");
+                for (EquivalenceCluster ecluster : entityClusters) {
+                    if (ecluster.getEntityIdsD1().size() < 2 && ecluster.getEntityIdsD2().size() < 2) {
+                        continue;
                     }
-                    System.out.print(" and"+"\t");
+                    for (int i = 0; i < ecluster.getEntityIdsD1().size(); i++) {
+                        System.out.print(ecluster.getEntityIdsD1().get(i) + "\t");
+                    }
+                    System.out.print(" and" + "\t");
 
-                    for( int i =0;i<ecluster.getEntityIdsD2().size();i++)
-                    {
-                        System.out.print(ecluster.getEntityIdsD2().get(i)+"\t");
+                    for (int i = 0; i < ecluster.getEntityIdsD2().size(); i++) {
+                        System.out.print(ecluster.getEntityIdsD2().get(i) + "\t");
                     }
                     System.out.println();
 
@@ -150,7 +143,6 @@ public class TestAllMethodsCcer {
                 matchingWorkflowName.append(em.getMethodName());
                 matchingWorkflowConf.append("\n").append(ec.getMethodConfiguration());
                 matchingWorkflowName.append("->").append(ec.getMethodName());
-
 
                 ClustersPerformance clp = new ClustersPerformance(entityClusters, duplicatePropagation);
                 clp.setStatistics();

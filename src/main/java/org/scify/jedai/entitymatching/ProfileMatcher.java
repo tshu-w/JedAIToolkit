@@ -55,8 +55,9 @@ public class ProfileMatcher extends AbstractEntityMatching {
     @Override
     protected final void buildModels() {
         if (profilesD1 == null) {
-            throw new IllegalArgumentException(
-                    "First list of entity profiles is null! The first argument should always contain entities.");
+            Log.error("First list of entity profiles is null! "
+                    + "The first argument should always contain entities.");
+            System.exit(-1);
         }
 
         Log.info("Applying " + getMethodName() + " with the following configuration : " + getMethodConfiguration());

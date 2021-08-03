@@ -37,15 +37,13 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
     private final static int MAX_LEN = 3300;
     private final static int MAX_CATEGORY = 100;
     
-    private Category[] helper;
-    private long cand_num;
-    private long res_num;
-    private List<Comparison> executedComparisons;
-
     private int categoryN;
     private float categoryTHRESHOLD;
 
     private int[] originalId;
+    
+    private Category[] helper;
+    private List<Comparison> executedComparisons;
     private final List<String> attributeValues;
     private TIntList[] records;
 
@@ -58,15 +56,9 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
     public SimilarityPairs applyJoin() {
         init();
 
-        /*try {
-            token = getdatafromfile("C:\\Users\\Manos\\Documents\\UOA\\SimilarityJoins\\Similarity-Search-and-Join\\Zinp\\test02int.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         helper = new Category[MAX_CATEGORY];
         int len = 1;
         this.categoryTHRESHOLD = threshold;
-        System.out.println(categoryTHRESHOLD + " catthres");
         for (int k = 0; k < MAX_CATEGORY; k++) {
             helper[k] = new Category(len, threshold, categoryN);
             len = helper[k].e_len + 1;
@@ -77,21 +69,18 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
 
         convert_to_signature();
 
-        System.out.println(res_num + "\t" + cand_num);
         final List<Comparison> comparisons = performJoin();
         return getSimilarityPairs(comparisons);
     }
 
     @Override
     public String getMethodInfo() {
-        return getMethodName() + ": it sorts the tokens of every attribute value in increasing global order of frequency across all "
-                + "values and then it combines Prefix Filtering with Positional Filtering, which estimates a tighter upper "
-                + "bound for the overlap between the two sets of tokens, based on the positions where the common tokens in the prefix occur.";
+        return getMethodName() + ": TO BE ADDED!.";
     }
 
     @Override
     public String getMethodName() {
-        return "PPJoin";
+        return "Part Enum Join";
     }
 
     private void init() {
@@ -122,7 +111,6 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
         }
 
         for (int sIndex = 0; sIndex < noOfEntities; sIndex++) {
-
             final String s = attributeValues.get(sIndex).trim();
             if (s.length() < 1) {
                 continue;
@@ -172,7 +160,6 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
     }
 
     void perform_join(int k, int id, boolean[] checked_flag) {
-
         int index = -1;
         for (int i = 0; i < helper[k].N1; i++) {
             for (TIntList sub : helper[k].subs) {
@@ -225,20 +212,17 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
                         }
                     }
                     if (!checked_flag[candidate.get(cand_id)]) {
-                        cand_num++;
-                        //System.out.println("cand "+cand_id);
                         checked_flag[candidate.get(cand_id)] = true;
                         float jacsim = verify(records[cand_id], records[id]);
                         if (jacsim >= threshold) {
-                            res_num++;
                             final Comparison currentComp = getComparison(originalId[cand_id], originalId[id]);
                             currentComp.setUtilityMeasure(jacsim);
                             executedComparisons.add(currentComp);
                         }
                     }
                 }
-                if (candidate.size() == 0
-                        || candidate.get(candidate.size() - 1) != id) {
+                if (candidate.size() == 0 || 
+                        candidate.get(candidate.size() - 1) != id) {
                     candidate.add(id);
                 }
                 helper[k].sig_map[index].put(hash_value, candidate);

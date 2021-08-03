@@ -209,6 +209,11 @@ public class BlockFiltering extends AbstractBlockProcessing {
     public List<AbstractBlock> refineBlocks(List<AbstractBlock> blocks) {
         Log.info("Applying " + getMethodName() + " with the following configuration : " + getMethodConfiguration());
 
+        if (blocks.isEmpty()) {
+            Log.warn("Empty set of blocks was given as input!");
+            return blocks;
+        }
+        
         printOriginalStatistics(blocks);
         countEntities(blocks);
         sortBlocks(blocks);

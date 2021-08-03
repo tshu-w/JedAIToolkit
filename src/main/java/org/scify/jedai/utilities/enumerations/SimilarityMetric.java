@@ -71,10 +71,11 @@ public enum SimilarityMetric {
                 simMetrics.add(GRAPH_OVERALL_SIMILARITY);
                 simMetrics.add(GRAPH_VALUE_SIMILARITY);
                 break;
-            case PRETRAINED_WORD_VECTORS:
-            case PRETRAINED_CHARACTER_VECTORS:
-                simMetrics.add(COSINE_SIMILARITY);
-                break;
+//            case PRETRAINED_WORD_VECTORS:
+//            case PRETRAINED_CHARACTER_VECTORS:
+//                simMetrics.add(COSINE_SIMILARITY);
+//                try euclidean distance, too!
+//                break;
             default:
                 return null;
         }
@@ -119,10 +120,11 @@ public enum SimilarityMetric {
                 return COSINE_SIMILARITY;
             case TOKEN_UNIGRAM_GRAPHS:
                 return GRAPH_VALUE_SIMILARITY;
-            case PRETRAINED_WORD_VECTORS:
-                return COSINE_SIMILARITY;
-            case PRETRAINED_CHARACTER_VECTORS:
-                return COSINE_SIMILARITY;
+//            case PRETRAINED_WORD_VECTORS:
+//                return COSINE_SIMILARITY;
+//            case PRETRAINED_CHARACTER_VECTORS:
+//                return COSINE_SIMILARITY;
+//                try euclidean distance, too!
 
             default:
                 return null;

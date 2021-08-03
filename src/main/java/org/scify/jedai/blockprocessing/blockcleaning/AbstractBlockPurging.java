@@ -39,6 +39,11 @@ public abstract class AbstractBlockPurging extends AbstractBlockProcessing {
     public List<AbstractBlock> refineBlocks(List<AbstractBlock> blocks) {
         Log.info("Applying " + getMethodName() + " with the following configuration : " + getMethodConfiguration());
         
+        if (blocks.isEmpty()) {
+            Log.warn("Empty set of blocks was given as input!");
+            return blocks;
+        }
+        
         List<AbstractBlock> newBlocks = new ArrayList<>(blocks);
         printOriginalStatistics(newBlocks);
         setThreshold(newBlocks);

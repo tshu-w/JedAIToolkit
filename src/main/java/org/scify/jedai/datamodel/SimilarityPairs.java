@@ -15,11 +15,10 @@
  */
 package org.scify.jedai.datamodel;
 
+import com.esotericsoftware.minlog.Log;
 import java.io.Serializable;
 
 import java.util.List;
-
-import org.scify.jedai.utilities.TooManyComparisonsException;
 import org.scify.jedai.utilities.IConstants;
 
 /**
@@ -45,26 +44,28 @@ public class SimilarityPairs implements IConstants, Serializable {
     public SimilarityPairs(boolean ccer, List<AbstractBlock> blocks) {
         currentIndex = 0;
         isCleanCleanER = ccer;
-        int totalComparisons = countComparisons(blocks);
-        entityIds1 = new int[totalComparisons];
-        entityIds2 = new int[totalComparisons];
-        similarities = new float[totalComparisons];
+        float totalComparisons = countComparisons(blocks);
+        entityIds1 = new int[(int) totalComparisons];
+        entityIds2 = new int[(int) totalComparisons];
+        similarities = new float[(int) totalComparisons];
     }
 
     public void addComparison(Comparison comparison) {
         entityIds1[currentIndex] = comparison.getEntityId1();
         entityIds2[currentIndex] = comparison.getEntityId2();
-        similarities[currentIndex++] = comparison.getUtilityMeasure();
+        similarities[currentIndex++] = (float) comparison.getUtilityMeasure();
     }
 
-    private int countComparisons(List<AbstractBlock> blocks) {
-        long comparisons = blocks.stream().mapToLong(AbstractBlock::getNoOfComparisons).sum();
+    private float countComparisons(List<AbstractBlock> blocks) {
+        float comparisons = 0;
+        comparisons = blocks.stream().map((block) -> block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
 
         if (MAX_COMPARISONS < comparisons) {
-            throw new TooManyComparisonsException(comparisons);
+            Log.error("Very high number of comparisons to be executed! "
+                    + "Maximum allowed number is : " + MAX_COMPARISONS);
+            System.exit(-1);
         }
-
-        return (int) comparisons;
+        return comparisons;
     }
 
     public int[] getEntityIds1() {

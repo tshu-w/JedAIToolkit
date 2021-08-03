@@ -15,6 +15,7 @@
  */
 package org.scify.jedai.blockprocessing.comparisoncleaning;
 
+import com.esotericsoftware.minlog.Log;
 import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.utilities.enumerations.WeightingScheme;
 import gnu.trove.iterator.TIntIterator;
@@ -55,8 +56,8 @@ public class CanopyClustering extends CardinalityNodePruning {
         exclusiveThreshold = outThr;
         inclusiveThreshold = inThr;
         if (exclusiveThreshold < inclusiveThreshold) {
-            throw new IllegalStateException(
-                    "The " + getParameterName(1) + " cannot be smaller than the " + getParameterName(0));
+            Log.error(getMethodName(), "The " + getParameterName(1) + " cannot be smaller than the " + getParameterName(0));
+            System.exit(-1);
         }
     }
 

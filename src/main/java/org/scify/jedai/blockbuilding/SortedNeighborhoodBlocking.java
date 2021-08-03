@@ -53,6 +53,7 @@ public class SortedNeighborhoodBlocking extends StandardBlocking {
         windowSize = w;
         
         random = new Random();
+        gridWindow = new IntGridSearchConfiguration(100, 2, 1);
         randomWindow = new IntRandomSearchConfiguration(100, 1);
     }
 

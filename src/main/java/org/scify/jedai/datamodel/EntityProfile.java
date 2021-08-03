@@ -17,9 +17,6 @@
 package org.scify.jedai.datamodel;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,83 +41,6 @@ public class EntityProfile implements Serializable {
 
     public void addAttribute(String propertyName, String propertyValue) {
         attributes.add(new Attribute(propertyName, propertyValue));
-    }
-
-    /**
-     * Add an integer attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue value of the attribute
-     * @see String#valueOf(int)
-     */
-    public void addAttribute(String propertyName, int propertyValue) {
-        attributes.add(new Attribute(propertyName, String.valueOf(propertyValue)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue value of the attribute
-     * @see String#valueOf(long)
-     */
-    public void addAttribute(String propertyName, long propertyValue) {
-        attributes.add(new Attribute(propertyName, String.valueOf(propertyValue)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue value of the attribute
-     * @see String#valueOf(float)
-     */
-    public void addAttribute(String propertyName, float propertyValue) {
-        attributes.add(new Attribute(propertyName, String.valueOf(propertyValue)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue value of the attribute
-     * @see String#valueOf(double)
-     */
-    public void addAttribute(String propertyName, double propertyValue) {
-        attributes.add(new Attribute(propertyName, String.valueOf(propertyValue)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue value of the attribute
-     * @see String#valueOf(Object)
-     */
-    public void addAttribute(String propertyName, Date propertyValue) {
-        attributes.add(new Attribute(propertyName, String.valueOf(propertyValue)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue local date value of the attribute
-     * @see LocalDate#format(DateTimeFormatter)
-     */
-    public void addAttribute(String propertyName, LocalDate propertyValue) {
-        attributes.add(new Attribute(propertyName, propertyValue.format(DateTimeFormatter.ISO_DATE)));
-    }
-
-    /**
-     * Add an attribute to the profile
-     *
-     * @param propertyName name of the attribute
-     * @param propertyValue local date value of the attribute
-     * @see LocalDate#format(DateTimeFormatter)
-     */
-    public void addAttribute(String propertyName, LocalDate propertyValue, DateTimeFormatter formatter) {
-        attributes.add(new Attribute(propertyName, propertyValue.format(formatter)));
     }
 
     public String getEntityUrl() {

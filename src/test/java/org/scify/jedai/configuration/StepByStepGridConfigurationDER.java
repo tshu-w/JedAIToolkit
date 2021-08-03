@@ -49,7 +49,9 @@ public class StepByStepGridConfigurationDER {
 
     static int getTotalComparisons(List<AbstractBlock> blocks) {
         int originalComparisons = 0;
-        originalComparisons = blocks.stream().map(AbstractBlock::getNoOfComparisons).reduce(originalComparisons, Integer::sum);
+        for (AbstractBlock block : blocks) {
+            originalComparisons += block.getNoOfComparisons();
+        }
         System.out.println("Original comparisons\t:\t" + originalComparisons);
         return originalComparisons;
     }
