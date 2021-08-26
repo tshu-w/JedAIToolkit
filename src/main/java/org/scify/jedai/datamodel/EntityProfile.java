@@ -16,6 +16,8 @@
 
 package org.scify.jedai.datamodel;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +37,7 @@ public class EntityProfile implements Serializable {
     private final String entityUrl;
 
     public EntityProfile(String url) {
+        requireNonNull(url, "url cannot be null");
         entityUrl = url;
         attributes = new HashSet<>();
     }
@@ -56,12 +59,34 @@ public class EntityProfile implements Serializable {
     }
     
     @Override
+    public boolean equals (Object another) {
+        if (this == another) {
+            return true;
+        }
+        if (!(another instanceof EntityProfile)) {
+            return false;
+        }
+        EntityProfile other = (EntityProfile) another;
+        return entityUrl.equals(other.entityUrl)
+            && attributes.equals(other.attributes);
+    }
+
+    @Override
+    public int hashCode() {
+        int h = 5381;
+        h += (h << 5) + entityUrl.hashCode();
+        h += (h << 5) + attributes.hashCode();
+        return h;
+    }
+    
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        attributes.forEach((attribute) -> {
-            sb.append(attribute.getName()).append(":").append(attribute.getValue()).append(",");
-        });
-        sb.setLength(sb.length()-1);
+        attributes.forEach(attribute -> 
+            sb.append(attribute.getName()).append(":").append(attribute.getValue()).append(","));
+        if (sb.length() > 0) {
+          sb.setLength(sb.length()-1);
+        }
         return sb.toString();
     }
 }
