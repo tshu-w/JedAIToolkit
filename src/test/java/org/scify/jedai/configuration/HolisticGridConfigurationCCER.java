@@ -164,7 +164,7 @@ public class HolisticGridConfigurationCCER {
             System.out.println("\nBest Loop 5\t:\t" + bestLoop5);
             System.out.println("Best FMeasure\t:\t" + bestFMeasure);
 
-            float time1 = System.currentTimeMillis();
+            long time1 = System.currentTimeMillis();
 
             bb.setNumberedRandomConfiguration(bestLoop0);
             final List<AbstractBlock> blocks = bb.getBlocks(profiles1, profiles2);
@@ -184,7 +184,7 @@ public class HolisticGridConfigurationCCER {
             ec.setNumberedGridConfiguration(bestLoop5);
             final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-            float time2 = System.currentTimeMillis();
+            long time2 = System.currentTimeMillis();
 
             final StringBuilder matchingWorkflowConf = new StringBuilder();
             matchingWorkflowConf.append(bb.getMethodConfiguration());

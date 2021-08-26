@@ -73,7 +73,7 @@ public class TestAllMethodsCleanCleanER {
             System.out.println("Existing Duplicates\t:\t" + duplicatePropagation.getDuplicates().size());
 
             for (SchemaClusteringMethod scm : SchemaClusteringMethod.values()) {
-                float time1 = System.currentTimeMillis();
+                long time1 = System.currentTimeMillis();
 
                 final ISchemaClustering sc = SchemaClusteringMethod.getModel(RepresentationModel.CHARACTER_TRIGRAMS, SimilarityMetric.ENHANCED_JACCARD_SIMILARITY, scm);
                 final AttributeClusters[] clusters = sc.getClusters(profilesD1, profilesD2);
@@ -89,7 +89,7 @@ public class TestAllMethodsCleanCleanER {
                 final IBlockBuilding bb = BlockBuildingMethod.getDefaultConfiguration(BlockBuildingMethod.STANDARD_BLOCKING);
                 final List<AbstractBlock> blocks = bb.getBlocks(profilesD1, profilesD2, clusters);
 
-                float time2 = System.currentTimeMillis();
+                long time2 = System.currentTimeMillis();
 
                 BlocksPerformance blStats = new BlocksPerformance(blocks, duplicatePropagation);
                 blStats.setStatistics();

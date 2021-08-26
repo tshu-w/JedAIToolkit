@@ -39,7 +39,7 @@ public class BilateralBlock extends AbstractBlock implements Serializable {
         super(entropy);
         index1Entities = entities1;
         index2Entities = entities2;
-        comparisons = ((float) index1Entities.length) * ((float) index2Entities.length);
+        comparisons = ((long) index1Entities.length) * index2Entities.length;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class BilateralBlock extends AbstractBlock implements Serializable {
     }
 
     @Override
-    public float getTotalBlockAssignments() {
+    public int getTotalBlockAssignments() {
         return index1Entities.length+index2Entities.length;
     }
         

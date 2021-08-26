@@ -28,7 +28,9 @@ import org.scify.jedai.utilities.IConstants;
 public class SimilarityPairs implements IConstants, Serializable {
 
     private final boolean isCleanCleanER;
+    
     private int currentIndex;
+    
     private final float[] similarities;
     private final int[] entityIds1;
     private final int[] entityIds2;
@@ -44,7 +46,7 @@ public class SimilarityPairs implements IConstants, Serializable {
     public SimilarityPairs(boolean ccer, List<AbstractBlock> blocks) {
         currentIndex = 0;
         isCleanCleanER = ccer;
-        float totalComparisons = countComparisons(blocks);
+        long totalComparisons = countComparisons(blocks);
         entityIds1 = new int[(int) totalComparisons];
         entityIds2 = new int[(int) totalComparisons];
         similarities = new float[(int) totalComparisons];
@@ -53,12 +55,14 @@ public class SimilarityPairs implements IConstants, Serializable {
     public void addComparison(Comparison comparison) {
         entityIds1[currentIndex] = comparison.getEntityId1();
         entityIds2[currentIndex] = comparison.getEntityId2();
-        similarities[currentIndex++] = (float) comparison.getUtilityMeasure();
+        similarities[currentIndex++] = comparison.getUtilityMeasure();
     }
 
-    private float countComparisons(List<AbstractBlock> blocks) {
-        float comparisons = 0;
-        comparisons = blocks.stream().map((block) -> block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
+    private long countComparisons(List<AbstractBlock> blocks) {
+        long comparisons = 0;
+        for (AbstractBlock block : blocks) {
+            comparisons += block.getNoOfComparisons();
+        }
 
         if (MAX_COMPARISONS < comparisons) {
             Log.error("Very high number of comparisons to be executed! "

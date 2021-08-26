@@ -86,8 +86,8 @@ public abstract class BagModel extends AbstractModel {
         final Set<String> commonKeys = new HashSet<>(itemsFrequency.keySet());
         commonKeys.retainAll(oModel.getItemsFrequency().keySet());
 
-        int numerator = commonKeys.size();
-        int denominator = itemsFrequency.size() + oModel.getItemsFrequency().size() - numerator;
+        float numerator = commonKeys.size();
+        float denominator = itemsFrequency.size() + oModel.getItemsFrequency().size() - numerator;
         return numerator / denominator;
     }
 

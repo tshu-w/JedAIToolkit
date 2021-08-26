@@ -30,8 +30,8 @@ public abstract class AbstractBlockBuilding implements IBlockBuilding {
 
     protected boolean isUsingEntropy;
 
-    protected float noOfEntitiesD1;
-    protected float noOfEntitiesD2;
+    protected int noOfEntitiesD1;
+    protected int noOfEntitiesD2;
 
     protected List<AbstractBlock> blocks;
     protected List<EntityProfile> entityProfilesD1;
@@ -96,14 +96,14 @@ public abstract class AbstractBlockBuilding implements IBlockBuilding {
         return readBlocks();
     }
 
-    public float getBruteForceComparisons() {
+    public long getBruteForceComparisons() {
         if (entityProfilesD2 == null) {
             return noOfEntitiesD1 * (noOfEntitiesD1 - 1) / 2;
         }
         return noOfEntitiesD1 * noOfEntitiesD2;
     }
 
-    public float getTotalNoOfEntities() {
+    public int getTotalNoOfEntities() {
         if (entityProfilesD2 == null) {
             return noOfEntitiesD1;
         }

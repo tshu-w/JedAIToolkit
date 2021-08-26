@@ -50,8 +50,8 @@ public class OptimizeDirtyMoviesDataset {
 
     private final static int NO_OF_TRIALS = 100;
 
-    static int getTotalComparisons(List<AbstractBlock> blocks) {
-        int originalComparisons = 0;
+    static long getTotalComparisons(List<AbstractBlock> blocks) {
+        long originalComparisons = 0;
         for (AbstractBlock block : blocks) {
             originalComparisons += block.getNoOfComparisons();
         }
@@ -122,7 +122,7 @@ public class OptimizeDirtyMoviesDataset {
         System.out.println("\nBest Iteration\t:\t" + bestIteration);
         System.out.println("Best FMeasure\t:\t" + bestFMeasure);
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         em.setNumberedRandomConfiguration(bestIteration);
         final SimilarityPairs sims = em.executeComparisons(finalBlocks);
@@ -130,7 +130,7 @@ public class OptimizeDirtyMoviesDataset {
         ec.setNumberedRandomConfiguration(bestIteration);
         final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         final StringBuilder matchingWorkflowConf = new StringBuilder();
         matchingWorkflowConf.append(bb.getMethodConfiguration());

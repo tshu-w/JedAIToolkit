@@ -32,7 +32,6 @@ import org.scify.jedai.utilities.ClustersPerformance;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
 import org.scify.jedai.utilities.enumerations.BlockBuildingMethod;
-import org.scify.jedai.utilities.enumerations.EntityClusteringCcerMethod;
 import org.scify.jedai.utilities.enumerations.EntityClusteringDerMethod;
 import org.scify.jedai.utilities.enumerations.EntityMatchingMethod;
 
@@ -48,15 +47,15 @@ public class TestAllMethodsDer {
 
     public static void main(String[] args) throws FileNotFoundException {
         BasicConfigurator.configure();
-        
+
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;
-        String[] entitiesFilePaths = { mainDirectory + "abtProfiles", mainDirectory +  "buyProfiles" };
+        String[] entitiesFilePaths = {mainDirectory + "abtProfiles", mainDirectory + "buyProfiles"};
         String groundTruthFilePath = mainDirectory + "abtBuyIdDuplicates";
 
         IEntityReader eReader = new EntitySerializationReader(entitiesFilePaths[0]);
         List<EntityProfile> profilesD1 = eReader.getEntityProfiles();
         System.out.println("Input Entity Profiles D1\t:\t" + profilesD1.size());
-        
+
         eReader = new EntitySerializationReader(entitiesFilePaths[1]);
         List<EntityProfile> profilesD2 = eReader.getEntityProfiles();
         System.out.println("Input Entity Profiles D2\t:\t" + profilesD2.size());
@@ -66,7 +65,7 @@ public class TestAllMethodsDer {
         System.out.println("Existing Duplicates\t:\t" + duplicatePropagation.getDuplicates().size());
         BlockBuildingMethod blockingWorkflow = BlockBuildingMethod.STANDARD_BLOCKING;
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         IBlockBuilding blockBuildingMethod = BlockBuildingMethod.getDefaultConfiguration(blockingWorkflow);
         List<AbstractBlock> blocks = blockBuildingMethod.getBlocks(profilesD1, profilesD2);
@@ -91,7 +90,7 @@ public class TestAllMethodsDer {
             blockingWorkflowName.append("->").append(comparisonCleaningMethod.getMethodName());
         }
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         BlocksPerformance blp = new BlocksPerformance(blocks, duplicatePropagation);
 //        blp.printFalseNegatives(profilesD1, profilesD2, "data" + File.separator + "falseNegatives.csv");
@@ -99,27 +98,30 @@ public class TestAllMethodsDer {
         blp.printStatistics(time2 - time1, blockingWorkflowConf.toString(), blockingWorkflowName.toString());
 
         for (EntityMatchingMethod emMethod : EntityMatchingMethod.values()) {
-            if (emMethod!=EntityMatchingMethod.PROFILE_MATCHER) continue;
+            if (emMethod != EntityMatchingMethod.PROFILE_MATCHER) {
+                continue;
+            }
 
-            float time3 = System.currentTimeMillis();
+            long time3 = System.currentTimeMillis();
 
             IEntityMatching em = EntityMatchingMethod.getDefaultConfiguration(profilesD1, profilesD2, emMethod);
             SimilarityPairs simPairs = em.executeComparisons(blocks);
 
-            float time4 = System.currentTimeMillis();
+            long time4 = System.currentTimeMillis();
 
             for (EntityClusteringDerMethod ecMethod : EntityClusteringDerMethod.values()) {
 
-                if (ecMethod!=EntityClusteringDerMethod.CENTER_CLUSTERING) continue;
-            	//System.out.println("meth "+ecMethod.toString());
-            	
-                float time5 = System.currentTimeMillis();
+                if (ecMethod != EntityClusteringDerMethod.CENTER_CLUSTERING) {
+                    continue;
+                }
+
+                long time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringDerMethod.getDefaultConfiguration(ecMethod);
                 ec.setSimilarityThreshold(0.25f);
                 EquivalenceCluster[] entityClusters = ec.getDuplicates(simPairs);
 
-                float time6 = System.currentTimeMillis();
+                long time6 = System.currentTimeMillis();
 
                 StringBuilder matchingWorkflowConf = new StringBuilder();
                 StringBuilder matchingWorkflowName = new StringBuilder();
@@ -127,14 +129,10 @@ public class TestAllMethodsDer {
                 matchingWorkflowName.append(em.getMethodName());
                 matchingWorkflowConf.append("\n").append(ec.getMethodConfiguration());
                 matchingWorkflowName.append("->").append(ec.getMethodName());
-                
 
                 ClustersPerformance clp = new ClustersPerformance(entityClusters, duplicatePropagation);
                 clp.setStatistics();
                 clp.printStatistics(time6 - time5 + time4 - time3, matchingWorkflowName.toString(), matchingWorkflowConf.toString());
-                clp.printDetailedResults(profilesD1, profilesD2, "data" + File.separator + "test.csv");
-                
-                //System.exit(-1);
             }
         }
     }

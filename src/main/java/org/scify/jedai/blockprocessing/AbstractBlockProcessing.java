@@ -30,10 +30,12 @@ import java.util.List;
 public abstract class AbstractBlockProcessing implements IBlockProcessing {
     
     protected void printOriginalStatistics(List<AbstractBlock> inputBlocks) {
-        float comparisons = 0;
-        comparisons = inputBlocks.stream().map((block) -> block.getNoOfComparisons()).reduce(comparisons, (accumulator, _item) -> accumulator + _item);
+        long comparisons = 0;
+        for (AbstractBlock block : inputBlocks) {
+            comparisons += block.getNoOfComparisons();
+        }
         
         Log.info("Original blocks\t:\t" + inputBlocks.size());
-        Log.info("Original comparisons\t:\t" + comparisons);
+        Log.info("Original comparisons\t:\t" + ((long)comparisons));
     }
 }

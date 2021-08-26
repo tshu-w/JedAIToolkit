@@ -85,7 +85,7 @@ public class ClustersPerformance {
         return false;
     }
 
-    public void printStatistics(float overheadTime, String methodName, String methodConfiguration) {
+    public void printStatistics(long overheadTime, String methodName, String methodConfiguration) {
         System.out.println("\n\n\n**************************************************");
         System.out.println("Performance of : " + methodName);
         System.out.println("Configuration : " + methodConfiguration);

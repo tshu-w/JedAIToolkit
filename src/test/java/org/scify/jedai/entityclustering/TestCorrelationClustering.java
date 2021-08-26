@@ -54,7 +54,7 @@ public class TestCorrelationClustering {
         final AbstractDuplicatePropagation duplicatePropagation = new UnilateralDuplicatePropagation(gtReader.getDuplicatePairs(eReader.getEntityProfiles()));
         System.out.println("Existing Duplicates\t:\t" + duplicatePropagation.getDuplicates().size());
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         IBlockBuilding blockBuildingMethod = BlockBuildingMethod.getDefaultConfiguration(BlockBuildingMethod.STANDARD_BLOCKING);
         List<AbstractBlock> blocks = blockBuildingMethod.getBlocks(profiles, null);
@@ -79,7 +79,7 @@ public class TestCorrelationClustering {
             blockingWorkflowName.append("->").append(comparisonCleaningMethod.getMethodName());
         }
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         BlocksPerformance blp = new BlocksPerformance(blocks, duplicatePropagation);
 //        blp.printFalseNegatives(profiles, null, "data" + File.separator + "falseNegatives.csv");
@@ -89,21 +89,21 @@ public class TestCorrelationClustering {
 
         EntityMatchingMethod emMethod = EntityMatchingMethod.PROFILE_MATCHER;
 
-        float time3 = System.currentTimeMillis();
+        long time3 = System.currentTimeMillis();
 
         IEntityMatching em = EntityMatchingMethod.getDefaultConfiguration(profiles, null, emMethod);
         SimilarityPairs simPairs = em.executeComparisons(blocks);
 
-        float time4 = System.currentTimeMillis();
+        long time4 = System.currentTimeMillis();
 
         EntityClusteringDerMethod ecMethod =EntityClusteringDerMethod.CORRELATION_CLUSTERING;
-        float time5 = System.currentTimeMillis();
+        long time5 = System.currentTimeMillis();
 
         IEntityClustering ec = EntityClusteringDerMethod.getDefaultConfiguration(ecMethod);
         //ec.setSimilarityThreshold(0.1);
         EquivalenceCluster[] entityClusters = ec.getDuplicates(simPairs);
 
-        float time6 = System.currentTimeMillis();
+        long time6 = System.currentTimeMillis();
 
         StringBuilder matchingWorkflowConf = new StringBuilder();
         StringBuilder matchingWorkflowName = new StringBuilder();
@@ -111,8 +111,6 @@ public class TestCorrelationClustering {
         matchingWorkflowName.append(em.getMethodName());
         matchingWorkflowConf.append("\n").append(ec.getMethodConfiguration());
         matchingWorkflowName.append("->").append(ec.getMethodName());
-        
-
 
         ClustersPerformance clp = new ClustersPerformance(entityClusters, duplicatePropagation);
 //        clp.printDetailedResults(profiles, null, "D:\\temp.csv");

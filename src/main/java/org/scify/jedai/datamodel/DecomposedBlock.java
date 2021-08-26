@@ -60,12 +60,12 @@ public class DecomposedBlock extends AbstractBlock {
     }
     
     @Override
-    public float getNoOfComparisons() {
+    public long getNoOfComparisons() {
         return entities1.length;
     }
 
     @Override
-    public float getTotalBlockAssignments() {
+    public int getTotalBlockAssignments() {
         return 2*entities1.length;
     }
     

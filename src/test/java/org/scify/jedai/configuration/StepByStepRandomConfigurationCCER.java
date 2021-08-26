@@ -49,8 +49,8 @@ public class StepByStepRandomConfigurationCCER {
 
     private final static int NO_OF_TRIALS = 100;
 
-    static int getTotalComparisons(List<AbstractBlock> blocks) {
-        int originalComparisons = 0;
+    static long getTotalComparisons(List<AbstractBlock> blocks) {
+        long originalComparisons = 0;
         for (AbstractBlock block : blocks) {
             originalComparisons += block.getNoOfComparisons();
         }
@@ -108,7 +108,7 @@ public class StepByStepRandomConfigurationCCER {
             // local optimization of Block Building
             float bestA = 0;
             int bestIteration = 0;
-            int originalComparisons = profiles1.size() * profiles2.size();
+            long originalComparisons = profiles1.size() * profiles2.size();
             for (int j = 0; j < NO_OF_TRIALS; j++) {
                 bb.setNextRandomConfiguration();
                 final List<AbstractBlock> originalBlocks = bb.getBlocks(profiles1, profiles2);
@@ -246,7 +246,7 @@ public class StepByStepRandomConfigurationCCER {
             System.out.println("\nBest Iteration\t:\t" + bestIteration);
             System.out.println("Best FMeasure\t:\t" + bestFMeasure);
 
-            float time1 = System.currentTimeMillis();
+            long time1 = System.currentTimeMillis();
 
             em.setNumberedRandomConfiguration(bestIteration);
             final SimilarityPairs sims = em.executeComparisons(finalBlocks);
@@ -254,7 +254,7 @@ public class StepByStepRandomConfigurationCCER {
             ec.setNumberedRandomConfiguration(bestIteration);
             final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-            float time2 = System.currentTimeMillis();
+            long time2 = System.currentTimeMillis();
 
             final StringBuilder matchingWorkflowConf = new StringBuilder();
             matchingWorkflowConf.append(bb.getMethodConfiguration());

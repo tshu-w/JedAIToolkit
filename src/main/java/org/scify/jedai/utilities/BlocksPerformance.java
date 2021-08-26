@@ -345,7 +345,7 @@ public class BlocksPerformance {
         pw.close();
     }
 
-    public void printStatistics(float overheadTime, String methodConfiguration, String methodName) {
+    public void printStatistics(long overheadTime, String methodConfiguration, String methodName) {
         if (blocks.isEmpty()) {
             return;
         }

@@ -41,7 +41,7 @@ public class SimPairsPerformance {
     private int noOfD2Entities;
     private int detectedDuplicates;
 
-    private final float aggregateCardinality;
+    private final long aggregateCardinality;
     private float fMeasure;
     private float pc;
     private float pq;
@@ -59,7 +59,7 @@ public class SimPairsPerformance {
         aggregateCardinality = simPairs.getNoOfComparisons();
     }
 
-    public float getAggregateCardinality() {
+    public long getAggregateCardinality() {
         return aggregateCardinality;
     }
     
@@ -85,7 +85,7 @@ public class SimPairsPerformance {
 
         detectedDuplicates = abstractDP.getNoOfDuplicates();
         pc = ((float) abstractDP.getNoOfDuplicates()) / abstractDP.getExistingDuplicates();
-        pq = abstractDP.getNoOfDuplicates() / aggregateCardinality;
+        pq = ((float) abstractDP.getNoOfDuplicates()) / aggregateCardinality;
 
         if (0 < pc && 0 < pq) {
             fMeasure = 2 * pc * pq / (pc + pq);
@@ -175,7 +175,7 @@ public class SimPairsPerformance {
 
         detectedDuplicates = abstractDP.getNoOfDuplicates();
         pc = ((float) abstractDP.getNoOfDuplicates()) / abstractDP.getExistingDuplicates();
-        pq = abstractDP.getNoOfDuplicates() / aggregateCardinality;
+        pq = ((float) abstractDP.getNoOfDuplicates()) / aggregateCardinality;
         if (0 < pc && 0 < pq) {
             fMeasure = 2 * pc * pq / (pc + pq);
         } else {
@@ -223,7 +223,7 @@ public class SimPairsPerformance {
         pw.close();
     }
 
-    public void printStatistics(float overheadTime, String methodConfiguration, String methodName) {
+    public void printStatistics(long overheadTime, String methodConfiguration, String methodName) {
         if (similarityPairs.getNoOfComparisons() == 0) {
             return;
         }

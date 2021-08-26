@@ -77,14 +77,14 @@ public class MultipleBlockingMethods {
             blbuMethods.add(BlockBuildingMethod.SUFFIX_ARRAYS);
             blbuMethods.add(BlockBuildingMethod.Q_GRAMS_BLOCKING);
 
-            float totalTime = 0;
+            long totalTime = 0;
             final List<AbstractBlock> blocks = new ArrayList<>();
             for (BlockBuildingMethod blbuMethod : blbuMethods) {
                 IBlockBuilding blockBuildingMethod = BlockBuildingMethod.getDefaultConfiguration(blbuMethod);
 
-                float time1 = System.currentTimeMillis();
+                long time1 = System.currentTimeMillis();
                 blocks.addAll(blockBuildingMethod.getBlocks(profiles1, profiles2));
-                float time2 = System.currentTimeMillis();
+                long time2 = System.currentTimeMillis();
                 totalTime += time2 - time1;
             }
 

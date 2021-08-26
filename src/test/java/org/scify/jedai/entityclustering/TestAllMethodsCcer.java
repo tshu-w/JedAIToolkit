@@ -67,7 +67,7 @@ public class TestAllMethodsCcer {
         System.out.println("Existing Duplicates\t:\t" + duplicatePropagation.getDuplicates().size());
         BlockBuildingMethod blockingWorkflow = BlockBuildingMethod.STANDARD_BLOCKING;
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         IBlockBuilding blockBuildingMethod = BlockBuildingMethod.getDefaultConfiguration(blockingWorkflow);
         List<AbstractBlock> blocks = blockBuildingMethod.getBlocks(profilesD1, profilesD2);
@@ -92,7 +92,7 @@ public class TestAllMethodsCcer {
             blockingWorkflowName.append("->").append(comparisonCleaningMethod.getMethodName());
         }
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         BlocksPerformance blp = new BlocksPerformance(blocks, duplicatePropagation);
 //        blp.printFalseNegatives(profilesD1, profilesD2, "data" + File.separator + "falseNegatives.csv");
@@ -104,21 +104,21 @@ public class TestAllMethodsCcer {
                 continue;
             }
 
-            float time3 = System.currentTimeMillis();
+            long time3 = System.currentTimeMillis();
 
             IEntityMatching em = EntityMatchingMethod.getDefaultConfiguration(profilesD1, profilesD2, emMethod);
             SimilarityPairs simPairs = em.executeComparisons(blocks);
 
-            float time4 = System.currentTimeMillis();
+            long time4 = System.currentTimeMillis();
 
             for (EntityClusteringCcerMethod ecMethod : EntityClusteringCcerMethod.values()) {
-                float time5 = System.currentTimeMillis();
+                long time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringCcerMethod.getDefaultConfiguration(ecMethod);
                 ec.setSimilarityThreshold(0.19999984f);
                 EquivalenceCluster[] entityClusters = ec.getDuplicates(simPairs);
 
-                float time6 = System.currentTimeMillis();
+                long time6 = System.currentTimeMillis();
 
                 System.out.println("Time for clustering: " + (time6 - time5) + " msec");
 

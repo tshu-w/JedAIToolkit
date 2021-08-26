@@ -26,9 +26,6 @@ import org.scify.jedai.similarityjoins.tokenbased.PartEnumJoin;
  */
 public enum TokenBasedSimilarityJoinMethod {
     ALL_PAIRS,
-    //    ED_JOIN,
-    //    FAST_SS,
-    //        PASS_JOIN,
     PART_ENUM_JOIN,
     PP_JOIN;
 

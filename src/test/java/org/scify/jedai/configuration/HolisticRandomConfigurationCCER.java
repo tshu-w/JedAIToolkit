@@ -99,7 +99,7 @@ public class HolisticRandomConfigurationCCER {
             int bestIteration = 0;
             float bestFMeasure = 0;
             for (int j = 0; j < NO_OF_TRIALS; j++) {
-                float time1 = System.currentTimeMillis();
+                long time1 = System.currentTimeMillis();
 
                 bb.setNextRandomConfiguration();
                 final List<AbstractBlock> blocks = bb.getBlocks(profiles1, profiles2);
@@ -128,7 +128,7 @@ public class HolisticRandomConfigurationCCER {
                 ec.setNextRandomConfiguration();
                 final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-                float time2 = System.currentTimeMillis();
+                long time2 = System.currentTimeMillis();
 
                 final StringBuilder matchingWorkflowConf = new StringBuilder();
                 matchingWorkflowConf.append(bb.getMethodConfiguration());
@@ -152,7 +152,7 @@ public class HolisticRandomConfigurationCCER {
             System.out.println("\nBest Iteration\t:\t" + bestIteration);
             System.out.println("Best FMeasure\t:\t" + bestFMeasure);
 
-            float time1 = System.currentTimeMillis();
+            long time1 = System.currentTimeMillis();
 
             bb.setNumberedRandomConfiguration(bestIteration);
             final List<AbstractBlock> blocks = bb.getBlocks(profiles1, profiles2);
@@ -172,7 +172,7 @@ public class HolisticRandomConfigurationCCER {
             ec.setNumberedRandomConfiguration(bestIteration);
             final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-            float time2 = System.currentTimeMillis();
+            long time2 = System.currentTimeMillis();
 
             final StringBuilder matchingWorkflowConf = new StringBuilder();
             matchingWorkflowConf.append(bb.getMethodConfiguration());

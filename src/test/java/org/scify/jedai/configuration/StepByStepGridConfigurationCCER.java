@@ -47,8 +47,8 @@ import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
  */
 public class StepByStepGridConfigurationCCER {
 
-    static int getTotalComparisons(List<AbstractBlock> blocks) {
-        int originalComparisons = 0;
+    static long getTotalComparisons(List<AbstractBlock> blocks) {
+        long originalComparisons = 0;
         for (AbstractBlock block : blocks) {
             originalComparisons += block.getNoOfComparisons();
         }
@@ -106,7 +106,7 @@ public class StepByStepGridConfigurationCCER {
             // local optimization of Block Building 
             float bestA = 0;
             int bestIteration = 0;
-            int originalComparisons = profiles1.size() * profiles2.size();
+            long originalComparisons = profiles1.size() * profiles2.size();
             for (int j = 0; j < bb.getNumberOfGridConfigurations(); j++) {
                 bb.setNumberedGridConfiguration(j);
                 final List<AbstractBlock> originalBlocks = bb.getBlocks(profiles1, profiles2);
@@ -251,7 +251,7 @@ public class StepByStepGridConfigurationCCER {
             System.out.println("\nBest Outer Iteration\t:\t" + bestOuterIteration);
             System.out.println("Best FMeasure\t:\t" + bestFMeasure);
 
-            float time1 = System.currentTimeMillis();
+            long time1 = System.currentTimeMillis();
 
             em.setNumberedGridConfiguration(bestOuterIteration);
             final SimilarityPairs sims = em.executeComparisons(finalBlocks);
@@ -259,7 +259,7 @@ public class StepByStepGridConfigurationCCER {
             ec.setNumberedGridConfiguration(bestInnerIteration);
             final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-            float time2 = System.currentTimeMillis();
+            long time2 = System.currentTimeMillis();
 
             final StringBuilder matchingWorkflowConf = new StringBuilder();
             matchingWorkflowConf.append(bb.getMethodConfiguration());

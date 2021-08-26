@@ -37,7 +37,7 @@ public class UnilateralBlock extends AbstractBlock implements Serializable {
     public UnilateralBlock(float entropy, int[] entities) {
         super(entropy);
         this.entities = entities;
-        comparisons = entities.length*(entities.length-1.0f)/2.0f;
+        comparisons = ((long)entities.length)*(entities.length-1)/2;
     }
     
     @Override
@@ -57,7 +57,7 @@ public class UnilateralBlock extends AbstractBlock implements Serializable {
     }
     
     @Override
-    public float getTotalBlockAssignments() {
+    public int getTotalBlockAssignments() {
         return entities.length;
     }
 

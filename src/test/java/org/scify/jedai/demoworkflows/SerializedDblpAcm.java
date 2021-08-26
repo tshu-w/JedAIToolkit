@@ -68,7 +68,7 @@ public class SerializedDblpAcm {
         StringBuilder workflowConf = new StringBuilder();
         StringBuilder workflowName = new StringBuilder();
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         IBlockBuilding tokenBlocking = new StandardBlocking();
         List<AbstractBlock> blocks = tokenBlocking.getBlocks(serializedDBLP, serializedACM);
@@ -85,13 +85,13 @@ public class SerializedDblpAcm {
         workflowConf.append("\n").append(comparisonCleaning.getMethodConfiguration());
         workflowName.append("->").append(comparisonCleaning.getMethodName());
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         BlocksPerformance blStats = new BlocksPerformance(ccBlocks, duplicatePropagation);
         blStats.setStatistics();
         blStats.printStatistics(time2 - time1, workflowConf.toString(), workflowName.toString());
 
-        float time3 = System.currentTimeMillis();
+        long time3 = System.currentTimeMillis();
 
         IEntityMatching entityMatching = new ProfileMatcher(serializedDBLP, serializedACM);
         SimilarityPairs simPairs = entityMatching.executeComparisons(blocks);
@@ -103,7 +103,7 @@ public class SerializedDblpAcm {
         workflowConf.append("\n").append(entityClusttering.getMethodConfiguration());
         workflowName.append("->").append(entityClusttering.getMethodName());
 
-        float time4 = System.currentTimeMillis();
+        long time4 = System.currentTimeMillis();
 
         ClustersPerformance clp = new ClustersPerformance(entityClusters, duplicatePropagation);
         clp.setStatistics();

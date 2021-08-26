@@ -117,7 +117,7 @@ public class StepByStepGridConfigurationCCER {
         matchingWorkflowConf.append("\n").append(em.getMethodConfiguration());
         matchingWorkflowConf.append("\n").append(ec.getMethodConfiguration());
 
-        float time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
 
         final List<AbstractBlock> blocks = bb.getBlocks(profiles1, profiles2);
         final List<AbstractBlock> purgedBlocks = bp1.refineBlocks(blocks);
@@ -126,7 +126,7 @@ public class StepByStepGridConfigurationCCER {
         final SimilarityPairs sims = em.executeComparisons(finalBlocks);
         final EquivalenceCluster[] clusters = ec.getDuplicates(sims);
 
-        float time2 = System.currentTimeMillis();
+        long time2 = System.currentTimeMillis();
 
         System.out.println(clusters.length);
         final ClustersPerformance clp = new ClustersPerformance(clusters, duplicatePropagation);
