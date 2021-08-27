@@ -131,8 +131,8 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
 
     private int check_overlap(TIntList a, TIntList b, int overlap) {
         int posa = 0, posb = 0, count = 0;
-        while (posa < (int) a.size() && posb < (int) b.size()) {
-            if (count + Math.min((int) a.size() - posa, (int) b.size() - posb) < overlap) {
+        while (posa < a.size() && posb < b.size()) {
+            if (count + Math.min(a.size() - posa, b.size() - posb) < overlap) {
                 return -1;
             }
             if (a.get(posa) == b.get(posb)) {
@@ -236,11 +236,11 @@ public class PartEnumJoin extends AbstractTokenBasedJoin {
         for (int i = 0; i < checked_flag.length; i++) {
             checked_flag[i] = true;
         }
-        for (int id = 0; id < (int) records.length; id++) {
+        for (int id = 0; id < records.length; id++) {
             int k;
             for (k = 0; k < MAX_CATEGORY; k++) {
-                if (helper[k].s_len <= (int) records[id].size()
-                        && helper[k].e_len >= (int) records[id].size()) {
+                if (helper[k].s_len <= records[id].size()
+                        && helper[k].e_len >= records[id].size()) {
                     break;
                 }
             }

@@ -90,7 +90,7 @@ public class GomoryHuTree<V, E> {
             
             final Set<V> sourcePartition = minSourceSinkCut.getSourcePartition();
 //            float flowValue = minSourceSinkCut.getCutWeight();
-            DefaultWeightedEdge e = (DefaultWeightedEdge) returnGraphClone.addEdge(vertex, predecessor);
+            DefaultWeightedEdge e = returnGraphClone.addEdge(vertex, predecessor);
             returnGraph.addEdge(Integer.parseInt(vertex + ""), Integer.parseInt(predecessor + ""));
             returnGraphClone.setEdgeWeight(e, flowValue);
 

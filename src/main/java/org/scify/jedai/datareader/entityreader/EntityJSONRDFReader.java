@@ -19,10 +19,8 @@ import com.esotericsoftware.minlog.Log;
 import org.apache.jena.atlas.json.JSON;
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
-import org.rdfhdt.hdt.exceptions.NotFoundException;
 import org.scify.jedai.datamodel.EntityProfile;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -57,11 +55,9 @@ public class EntityJSONRDFReader extends AbstractEntityReader {
         //load the rdf model from the input file
         try {
             readModel(inputFilePath);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Log.error("Error in entities reading!", ex);
             return null;
-        } catch (NotFoundException e) {
-            Log.error(e.getMessage());
         }
 
         return entityProfiles;
@@ -145,7 +141,7 @@ public class EntityJSONRDFReader extends AbstractEntityReader {
         }
     }
 
-    private void readModel(String inpFIle) throws IOException, NotFoundException {
+    private void readModel(String inpFIle) {
         //read each ntriples
         JsonObject jsonObject = JSON.read(inpFIle);
         String key = jsonObject.keys().toArray()[0].toString();

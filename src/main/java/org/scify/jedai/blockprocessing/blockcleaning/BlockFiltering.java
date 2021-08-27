@@ -105,10 +105,10 @@ public class BlockFiltering extends AbstractBlockProcessing {
         });
 
         for (int i = 0; i < limitsD1.length; i++) {
-            limitsD1[i] = (int) Math.round(ratio * limitsD1[i]);
+            limitsD1[i] = Math.round(ratio * limitsD1[i]);
         }
         for (int i = 0; i < limitsD2.length; i++) {
-            limitsD2[i] = (int) Math.round(ratio * limitsD2[i]);
+            limitsD2[i] = Math.round(ratio * limitsD2[i]);
         }
     }
 
@@ -193,7 +193,7 @@ public class BlockFiltering extends AbstractBlockProcessing {
         });
 
         for (int i = 0; i < limitsD1.length; i++) {
-            limitsD1[i] = (int) Math.round(ratio * limitsD1[i]);
+            limitsD1[i] = Math.round(ratio * limitsD1[i]);
         }
     }
 

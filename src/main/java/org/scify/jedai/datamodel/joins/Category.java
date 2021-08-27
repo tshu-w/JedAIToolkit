@@ -50,8 +50,8 @@ public class Category {
         Category.THRESHOLD = threshold;
         Category.N = categoryN;
         s_len = len;
-        e_len = (int) ((float) (s_len / THRESHOLD));
-        K = (int) (2 * (1 - THRESHOLD) / (1 + THRESHOLD) * (float) e_len);
+        e_len = (int) (s_len / THRESHOLD);
+        K = (int) (2 * (1 - THRESHOLD) / (1 + THRESHOLD) * e_len);
         N1 = K + 1;
         N2 = 2;
 

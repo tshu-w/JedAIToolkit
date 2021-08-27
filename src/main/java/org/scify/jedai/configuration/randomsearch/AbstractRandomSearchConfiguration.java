@@ -27,10 +27,10 @@ public abstract class AbstractRandomSearchConfiguration implements IRandomSearch
     
     protected final static Random RANDOM_GEN = new Random();
     
-    protected final List selectedRandomValues;
+    protected final List<Object> selectedRandomValues;
     
     public AbstractRandomSearchConfiguration() {
-        selectedRandomValues = new ArrayList();
+        selectedRandomValues = new ArrayList<>();
     }
     
     @Override

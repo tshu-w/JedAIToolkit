@@ -257,7 +257,7 @@ public class AllPairs extends AbstractCharacterBasedJoin {
                 }
             }
         }
-        final TIntObjectMap<IntListPair> index = new TIntObjectHashMap();
+        final TIntObjectMap<IntListPair> index = new TIntObjectHashMap<>();
         for (int k = rangeBound; k < noOfEntities; k++) {
             int count = 0;
             int lastToken = -1;

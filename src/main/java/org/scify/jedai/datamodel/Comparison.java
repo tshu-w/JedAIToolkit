@@ -65,7 +65,6 @@ public class Comparison implements Serializable {
     /**
      * Returns the measure of the weight or similarity between two entities.
      * Higher utility measures correspond to greater weight or stronger similarity.
-     * @return 
      */
     public float getUtilityMeasure() {
         return utilityMeasure;

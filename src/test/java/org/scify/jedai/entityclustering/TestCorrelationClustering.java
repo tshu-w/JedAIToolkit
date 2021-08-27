@@ -16,7 +16,6 @@
 package org.scify.jedai.entityclustering;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import org.scify.jedai.blockbuilding.IBlockBuilding;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.blockprocessing.IBlockProcessing;
@@ -40,7 +39,7 @@ import org.apache.log4j.BasicConfigurator;
 
 public class TestCorrelationClustering {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         BasicConfigurator.configure();
         
         String entitiesFilePath = "data" + File.separator + "dirtyErDatasets" + File.separator + "coraProfiles";

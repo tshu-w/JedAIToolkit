@@ -91,7 +91,7 @@ public class ProgressiveCNPDecomponsedBlocks extends AbstractDecomposedBlocksPro
     private void processEntityComparison(int entityId, Comparison c) {
         if (minimumWeight[entityId] < c.getUtilityMeasure()) {
             if (topComsPerEntity[entityId] == null) {
-                topComsPerEntity[entityId] = new PriorityQueue<>((int) (2 * maxComsPerEntity), new IncComparisonWeightComparator());
+                topComsPerEntity[entityId] = new PriorityQueue<>(2 * maxComsPerEntity, new IncComparisonWeightComparator());
             }
 
             topComsPerEntity[entityId].add(c);

@@ -17,7 +17,6 @@ package org.scify.jedai.textmodels;
 
 import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
-import com.esotericsoftware.minlog.Log;
 import gr.demokritos.iit.jinsect.documentModel.comparators.NGramCachedGraphComparator;
 import gr.demokritos.iit.jinsect.documentModel.representations.DocumentNGramGraph;
 import gr.demokritos.iit.jinsect.structs.GraphSimilarity;
@@ -70,13 +69,12 @@ public abstract class GraphModel extends AbstractModel {
                 overallSimilarity += graphSimilarity.ValueSimilarity;
                 if (0 < graphSimilarity.SizeSimilarity) {
                     overallSimilarity += graphSimilarity.ValueSimilarity / graphSimilarity.SizeSimilarity;
-                    return (float)(overallSimilarity / 3);
+                    return overallSimilarity / 3;
                 }
-                return (float)(overallSimilarity / 2);
+                return overallSimilarity / 2;
             default:
-                Log.error("The given similarity metric is incompatible with the n-gram graphs representation model!");
-                System.exit(-1);
-                return -1;
+                throw new IllegalStateException(
+                    "The given similarity metric is incompatible with the n-gram graphs representation model.");
         }
     }
 }

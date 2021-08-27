@@ -148,8 +148,6 @@ public class TestAllMethodsCcer {
                 clp.setStatistics();
                 clp.printStatistics(time6 - time5 + time4 - time3, matchingWorkflowName.toString(), matchingWorkflowConf.toString());
                 clp.printDetailedResults(profilesD1, profilesD2, "data" + File.separator + "test.csv");
-
-                //System.exit(-1);
             }
         }
     }

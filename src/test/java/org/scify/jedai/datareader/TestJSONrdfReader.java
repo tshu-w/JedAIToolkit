@@ -15,12 +15,10 @@
  */
 package org.scify.jedai.datareader;
 
-import org.rdfhdt.hdt.exceptions.ParserException;
 import org.scify.jedai.datamodel.Attribute;
 import org.scify.jedai.datamodel.EntityProfile;
 import org.scify.jedai.datareader.entityreader.EntityJSONRDFReader;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,7 +27,7 @@ import java.util.List;
  */
 public class TestJSONrdfReader {
 
-    public static void main(String[] args) throws IOException, ParserException {
+    public static void main(String[] args) {
 
         String filePath = "data/statsToFile.json";
         EntityJSONRDFReader n3reader = new EntityJSONRDFReader(filePath);

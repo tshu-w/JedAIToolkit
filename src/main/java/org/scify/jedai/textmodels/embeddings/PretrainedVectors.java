@@ -6,7 +6,6 @@ import org.scify.jedai.utilities.enumerations.RepresentationModel;
 import org.scify.jedai.utilities.enumerations.SimilarityMetric;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -69,11 +68,8 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
         String fileName = Objects.requireNonNull(classLoader.getResource("embeddings/weights.txt")).getFile();
         elementMap = new HashMap<>();
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-
-            CSVReader reader = new CSVReader(new FileReader(fileName), dataSeparator, CSVParser.NULL_CHARACTER, 0);
-
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName));
+            CSVReader reader = new CSVReader(new FileReader(fileName), dataSeparator, CSVParser.NULL_CHARACTER, 0);) {
             String[] components;
             int counter = 0;
             while ((components = reader.readNext()) != null) {
@@ -92,8 +88,7 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
                 elementMap.put(components[0], value);
             }
         } catch (IOException e) {
-            Log.error("Problem loading embedding weights", e);
-            System.exit(-1);
+            throw new RuntimeException("Problem loading embedding weights.", e);
         }
     }
 
@@ -108,44 +103,38 @@ public abstract class PretrainedVectors extends VectorSpaceModel {
        Log.info("Loading weights from " + fileName);
        elementMap = new HashMap<>();
 
-       try {
-           BufferedReader br = new BufferedReader(new FileReader(fileName));
+       try (BufferedReader br = new BufferedReader(new FileReader(fileName));) {
            // first read parsing metadata, split by commas
            String [] header = br.readLine().split(",");
            try {
                dimension = Integer.parseInt(header[0]);
                dataSeparator = header[1].charAt(0);
-           }catch (NumberFormatException ex){
-               Log.error("Pretrained header malformed -- expected:<dimension>");
-               System.exit(-1);
+           } catch (NumberFormatException ex) {
+               throw new RuntimeException("Pretrained header malformed -- expected:<dimension>", ex);
            }
            Log.info(String.format("Read dimension: [%d], delimiter: [%c]", dimension, dataSeparator));
            Log.info(String.format("Reading embedding mapping file. {%s}", Calendar.getInstance().getTime().toString()));
-           CSVReader reader = new CSVReader(new FileReader(fileName), dataSeparator, CSVParser.NULL_CHARACTER, 1);
-           // List<String[]> vectors = reader.readAll();
-           Log.info(String.format("Done reading embedding mapping file. {%s}",  Calendar.getInstance().getTime().toString()));
-
-           String[] components;
-           int counter=0;
-           while((components = reader.readNext()) != null){
-               Log.debug(String.format("Read csv entry # %d: %s",  counter, Arrays.toString(components)));
-               counter++;
-               if (components.length != dimension + 1)
-                   throw new IOException(String.format("Mismatch in embedding vector #%d length : %d.",
-                           counter, components.length));
-               float [] value = new float[dimension];
-               for (int i=1; i<=dimension; ++i){
-                   value[i-1] = Float.parseFloat(components[i]);
-               }
-               elementMap.put(components[0], value);
+           try (CSVReader reader = new CSVReader(new FileReader(fileName), dataSeparator, CSVParser.NULL_CHARACTER, 1);) {
+             Log.info(String.format("Done reading embedding mapping file. {%s}",  Calendar.getInstance().getTime().toString()));
+  
+             String[] components;
+             int counter=0;
+             while((components = reader.readNext()) != null){
+                 Log.debug(String.format("Read csv entry # %d: %s",  counter, Arrays.toString(components)));
+                 counter++;
+                 if (components.length != dimension + 1)
+                     throw new IOException(String.format("Mismatch in embedding vector #%d length : %d.",
+                             counter, components.length));
+                 float [] value = new float[dimension];
+                 for (int i=1; i<=dimension; ++i){
+                     value[i-1] = Float.parseFloat(components[i]);
+                 }
+                 elementMap.put(components[0], value);
+             }
+             Log.info(String.format("Done processing %d-line embedding mapping. {%s}",  counter, Calendar.getInstance().getTime().toString()));
            }
-           Log.info(String.format("Done processing %d-line embedding mapping. {%s}",  counter, Calendar.getInstance().getTime().toString()));
-       } catch (FileNotFoundException e) {
-           Log.error("No resource file found:" + fileName, e);
-           System.exit(-1);
        } catch (IOException e) {
-           Log.error("IO exception when reading:" + fileName, e);
-           System.exit(-1);
+           throw new RuntimeException("Exception when reading: " + fileName, e);
        }
 
        unkownVector = getZeroVector();

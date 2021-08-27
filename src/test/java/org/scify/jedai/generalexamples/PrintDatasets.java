@@ -23,8 +23,6 @@ import org.scify.jedai.datareader.entityreader.EntitySerializationReader;
 import org.scify.jedai.datareader.entityreader.IEntityReader;
 import org.scify.jedai.datareader.groundtruthreader.GtSerializationReader;
 import org.scify.jedai.datareader.groundtruthreader.IGroundTruthReader;
-import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
-import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
 
 import java.util.List;
 import java.util.Set;

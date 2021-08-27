@@ -22,7 +22,6 @@ import org.scify.jedai.datareader.entityreader.EntityCSVReader;
 import org.scify.jedai.datareader.entityreader.EntityRDFReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class CompareXmlRdfProfiles {
 
     private final static String prefix = "cleanCleanErDatasets/";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         BasicConfigurator.configure();
 
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator + "DBLP-ACM" + File.separator;

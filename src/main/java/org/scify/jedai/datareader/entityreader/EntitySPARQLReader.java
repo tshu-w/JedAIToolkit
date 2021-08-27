@@ -19,7 +19,6 @@ import org.scify.jedai.datamodel.EntityProfile;
 
 import com.esotericsoftware.minlog.Log;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,7 +68,7 @@ public class EntitySPARQLReader extends AbstractEntityReader {
         //load the rdf model from the input file
         try {
             readEndpoint(inputFilePath);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Log.error("Error in data reading", ex);
             return null;
         }
@@ -189,7 +188,7 @@ public class EntitySPARQLReader extends AbstractEntityReader {
         }
     }
 
-    private void readEndpoint(String endpointUrl) throws IOException {
+    private void readEndpoint(String endpointUrl) {
         //read each ntriples
         //get spo, create a separate profile for each separate subject,
         //with Attribute=predicate and Value=object

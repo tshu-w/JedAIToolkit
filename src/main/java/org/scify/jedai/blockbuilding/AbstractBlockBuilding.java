@@ -107,7 +107,7 @@ public abstract class AbstractBlockBuilding implements IBlockBuilding {
         if (entityProfilesD2 == null) {
             return noOfEntitiesD1;
         }
-        return noOfEntitiesD1 + noOfEntitiesD2;
+        return Math.addExact(noOfEntitiesD1, noOfEntitiesD2);
     }
 
     protected void indexEntities(Map<String, TIntList> index, List<EntityProfile> entities) {

@@ -113,7 +113,7 @@ public class TestDirtyERBaseline {
             float originalRecall = clp.getRecall();
 
             final IEntityMatching em = new ProfileMatcher(profiles, bestModels[i], bestMetrics[i]);
-            SimilarityPairs sims = new SimilarityPairs(false, (int) allComparisons.size());
+            SimilarityPairs sims = new SimilarityPairs(false, allComparisons.size());
 
             int counter = 0;
 //            int missingComparisons = 0;

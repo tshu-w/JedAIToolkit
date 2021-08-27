@@ -19,8 +19,7 @@ import com.esotericsoftware.minlog.Log;
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
 import org.scify.jedai.datamodel.EntityProfile;
-
-import java.io.IOException;
+import org.scify.jedai.utilities.DBUtils;
 import java.sql.*;
 import java.util.*;
 
@@ -60,33 +59,25 @@ public class EntityDBReader extends AbstractEntityReader {
             return null;
         }
 
+        if (user == null) {
+            Log.error("Database user has not been set!");
+            return null;
+        }
+        if (password == null) {
+            Log.error("Database password has not been set!");
+            return null;
+        }
+        if (table == null) {
+            Log.error("Database table has not been set!");
+            return null;
+        }
+
         //inputFilePath is assigned the Database URL
-        try {
-            if (user == null) {
-                Log.error("Database user has not been set!");
-                return null;
-            }
-            if (password == null) {
-                Log.error("Database password has not been set!");
-                return null;
-            }
-            if (table == null) {
-                Log.error("Database table has not been set!");
-                return null;
-            }
-
-            Connection conn;
-            if (inputFilePath.startsWith("mysql")) {
-                conn = getMySQLconnection(inputFilePath);
-            } else if (inputFilePath.startsWith("postgresql")) {
-                conn = getPostgreSQLconnection(inputFilePath);
-            } else {
-                Log.error("Only MySQL and PostgreSQL are supported for the time being!");
-                return null;
-            }
-
-            final Statement stmt = conn.createStatement();
-            final ResultSet rs = stmt.executeQuery("SELECT * FROM " + table);//retrieve the appropriate table
+        try (Connection conn = DBUtils.getDBConnection(inputFilePath, user, password, ssl);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + table);//retrieve the appropriate table
+            ) {
+          
             final ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNum = rsmd.getColumnCount();
             String[] columns = new String[columnsNum];
@@ -113,7 +104,7 @@ public class EntityDBReader extends AbstractEntityReader {
                 }
             }
             rs.close();
-        } catch (IOException | SQLException ex) {
+        } catch (SQLException ex) {
             Log.error("Error in entities reading!", ex);
             return null;
         }
@@ -155,16 +146,6 @@ public class EntityDBReader extends AbstractEntityReader {
                 + "4)" + getParameterDescription(3) + ".\n"
                 + "5)" + getParameterDescription(4) + ".\n"
                 + "6)" + getParameterDescription(5) + ".";
-    }
-
-    private Connection getMySQLconnection(String dbURL) throws IOException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:" + dbURL + "?user=" + user + "&password=" + password);
-        } catch (Exception ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
-        }
     }
 
     @Override
@@ -270,25 +251,6 @@ public class EntityDBReader extends AbstractEntityReader {
                 return "SSL";
             default:
                 return "invalid parameter id";
-        }
-    }
-
-    private Connection getPostgreSQLconnection(String dbURL) throws IOException {
-        try {
-            final Properties props = new Properties();
-            if (!(user == null)) {
-                props.setProperty("user", user);
-            }
-            if (!(password == null)) {
-                props.setProperty("password", password);
-            }
-            if (ssl) {
-                props.setProperty("ssl", "true");
-            }
-            return DriverManager.getConnection("jdbc:" + dbURL, props);
-        } catch (SQLException ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
         }
     }
 

@@ -29,6 +29,7 @@ import org.rdfhdt.hdt.hdt.HDTManager;
 import org.rdfhdt.hdt.options.HDTSpecification;
 import org.scify.jedai.blockprocessing.comparisoncleaning.ComparisonPropagation;
 import org.scify.jedai.datamodel.*;
+import org.scify.jedai.utilities.DBUtils;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.utilities.datastructures.GroundTruthIndex;
 
@@ -37,10 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Properties;
 
 /**
  *
@@ -103,35 +102,6 @@ public class BlocksPerformanceWriter {
         this.endpointGraph = endpointGraph;
     }
 
-    private Connection getMySQLconnection(String dbURL) throws IOException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:" + dbURL + "?user=" + dbuser + "&password=" + dbpassword);
-        } catch (Exception ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
-        }
-    }
-
-    private Connection getPostgreSQLconnection(String dbURL) throws IOException {
-        try {
-            final Properties props = new Properties();
-            if (!(dbuser == null)) {
-                props.setProperty("user", dbuser);
-            }
-            if (!(dbpassword == null)) {
-                props.setProperty("password", dbpassword);
-            }
-            if (ssl) {
-                props.setProperty("ssl", "true");
-            }
-            return DriverManager.getConnection("jdbc:" + dbURL, props);
-        } catch (Exception ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
-        }
-    }
-
     private boolean areCooccurring(boolean cleanCleanER, IdDuplicates pairOfDuplicates) {
         final int[] blocks1 = entityIndex.getEntityBlocks(pairOfDuplicates.getEntityId1(), 0);
         if (blocks1 == null) {
@@ -143,8 +113,6 @@ public class BlocksPerformanceWriter {
             return false;
         }
 
-        int noOfBlocks1 = blocks1.length;
-        int noOfBlocks2 = blocks2.length;
         for (int item : blocks1) {
             for (int value : blocks2) {
                 if (value < item) {
@@ -963,7 +931,7 @@ public class BlocksPerformanceWriter {
 
     }
 
-    public void printDetailedResultsToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) throws FileNotFoundException {
+    public void printDetailedResultsToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) {
         if (blocks.isEmpty()) {
             Log.warn("Empty set of blocks was given as input!");
             return;
@@ -1132,7 +1100,7 @@ public class BlocksPerformanceWriter {
 
     }
 
-    public void printDetailedResultsToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) throws FileNotFoundException {
+    public void printDetailedResultsToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) {
         if (blocks.isEmpty()) {
             Log.warn("Empty set of blocks was given as input!");
             return;
@@ -1202,28 +1170,20 @@ public class BlocksPerformanceWriter {
 
         String dbquery = sb.toString();
 
-        try {
-            if (dbuser == null) {
-                Log.error("Database user has not been set!");
-            }
-            if (dbpassword == null) {
-                Log.error("Database password has not been set!");
-            }
-            if (dbtable == null) {
-                Log.error("Database table has not been set!");
-            }
+        if (dbuser == null) {
+            Log.error("Database user has not been set!");
+        }
+        if (dbpassword == null) {
+            Log.error("Database password has not been set!");
+        }
+        if (dbtable == null) {
+            Log.error("Database table has not been set!");
+        }
 
-            Connection conn = null;
-            if (dbURL.startsWith("mysql")) {
-                conn = getMySQLconnection(dbURL);
-            } else if (dbURL.startsWith("postgresql")) {
-                conn = getPostgreSQLconnection(dbURL);
-            } else {
-                Log.error("Only MySQL and PostgreSQL are supported for the time being!");
-            }
-
-            final Statement stmt = conn.createStatement();
-            stmt.executeQuery(dbquery);//retrieve the appropriate table
+        try (Connection conn = DBUtils.getDBConnection(dbURL, dbuser, dbpassword, ssl);
+            Statement stmt = conn.createStatement();) {
+            
+          stmt.execute(dbquery);//retrieve the appropriate table
         } catch (Exception ex) {
             Log.error("Error in db writing!", ex);
         }
@@ -1269,7 +1229,7 @@ public class BlocksPerformanceWriter {
         pw.close();
     }
 
-    public void debugToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) throws FileNotFoundException {
+    public void debugToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) {
         if (blocks.isEmpty()) {
             Log.warn("Empty set of blocks was given as input!");
             return;
@@ -1308,28 +1268,19 @@ public class BlocksPerformanceWriter {
 
         String dbquery = sb.toString();
 
-        try {
-            if (dbuser == null) {
-                Log.error("Database user has not been set!");
-            }
-            if (dbpassword == null) {
-                Log.error("Database password has not been set!");
-            }
-            if (dbtable == null) {
-                Log.error("Database table has not been set!");
-            }
+        if (dbuser == null) {
+            Log.error("Database user has not been set!");
+        }
+        if (dbpassword == null) {
+            Log.error("Database password has not been set!");
+        }
+        if (dbtable == null) {
+            Log.error("Database table has not been set!");
+        }
 
-            Connection conn = null;
-            if (dbURL.startsWith("mysql")) {
-                conn = getMySQLconnection(dbURL);
-            } else if (dbURL.startsWith("postgresql")) {
-                conn = getPostgreSQLconnection(dbURL);
-            } else {
-                Log.error("Only MySQL and PostgreSQL are supported for the time being!");
-            }
-
-            final Statement stmt = conn.createStatement();
-            stmt.executeQuery(dbquery);//retrieve the appropriate table
+        try (Connection conn = DBUtils.getDBConnection(dbURL, dbuser, dbpassword, ssl);
+            Statement stmt = conn.createStatement();) {
+            stmt.execute(dbquery);//retrieve the appropriate table
         } catch (Exception ex) {
             Log.error("Error in db writing!", ex);
         }
@@ -1622,7 +1573,7 @@ public class BlocksPerformanceWriter {
         printWriter.close();
     }
 
-    public void debugToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) throws FileNotFoundException {
+    public void debugToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) {
         if (blocks.isEmpty()) {
             Log.warn("Empty set of blocks was given as input!");
             return;

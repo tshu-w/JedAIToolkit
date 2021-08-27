@@ -43,14 +43,14 @@ public abstract class AbstractGtReader extends AbstractReader implements IGround
     protected final Set<IdDuplicates> idDuplicates;
     protected final TObjectIntMap<String> urlToEntityId1;
     protected final TObjectIntMap<String> urlToEntityId2;
-    protected final SimpleGraph duplicatesGraph;
+    protected final SimpleGraph<Integer, DefaultEdge> duplicatesGraph;
     
     public AbstractGtReader (String filePath) {
         super(filePath);
         idDuplicates = new HashSet<>();
-        duplicatesGraph = new SimpleGraph(DefaultEdge.class);
-        urlToEntityId1 = new TObjectIntHashMap();
-        urlToEntityId2 = new TObjectIntHashMap();
+        duplicatesGraph = new SimpleGraph<>(DefaultEdge.class);
+        urlToEntityId1 = new TObjectIntHashMap<>();
+        urlToEntityId2 = new TObjectIntHashMap<>();
     }
     
     @Override
