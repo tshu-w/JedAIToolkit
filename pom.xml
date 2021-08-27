@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.scify</groupId>
-    <version>3.1</version>
+    <version>3.2.1</version>
     <artifactId>jedai-core</artifactId>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>description</description>
-    <url>http://www.scify.gr/site/en/</url>
+    <url>https://jedai.scify.org/</url>
 
     <licenses>
         <license>
@@ -46,6 +46,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <pitest.execution.skip>true</pitest.execution.skip>
     </properties>
 
     <dependencyManagement>
@@ -245,6 +246,7 @@
                         <outputFormat>HTML</outputFormat>
                         <outputFormat>XML</outputFormat>
                     </outputFormats>
+                    <skip>${pitest.execution.skip}</skip>
                 </configuration>
                 <dependencies>
                     <dependency>
