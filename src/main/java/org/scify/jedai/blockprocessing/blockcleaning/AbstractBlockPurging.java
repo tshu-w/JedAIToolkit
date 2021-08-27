@@ -49,7 +49,7 @@ public abstract class AbstractBlockPurging extends AbstractBlockProcessing {
         setThreshold(newBlocks);
 
         int noOfPurgedBlocks = 0;
-        float totalComparisons = 0;
+        long totalComparisons = 0;
         final Iterator<AbstractBlock> blocksIterator = newBlocks.iterator();
         while (blocksIterator.hasNext()) {
             AbstractBlock aBlock = blocksIterator.next();

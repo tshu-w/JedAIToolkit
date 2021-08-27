@@ -57,10 +57,7 @@ public class SimilarityPairs implements IConstants, Serializable {
     }
 
     private long countComparisons(List<AbstractBlock> blocks) {
-        long comparisons = 0;
-        for (AbstractBlock block : blocks) {
-            comparisons += block.getNoOfComparisons();
-        }
+        long comparisons = blocks.stream().mapToLong(AbstractBlock::getNoOfComparisons).sum();
 
         if (comparisons > MAX_COMPARISONS) {
             throw new IllegalStateException("Very high number of comparisons to be executed. "
