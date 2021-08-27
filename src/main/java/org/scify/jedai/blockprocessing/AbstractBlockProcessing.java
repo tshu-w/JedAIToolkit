@@ -36,6 +36,6 @@ public abstract class AbstractBlockProcessing implements IBlockProcessing {
         }
         
         Log.info("Original blocks\t:\t" + inputBlocks.size());
-        Log.info("Original comparisons\t:\t" + ((long)comparisons));
+        Log.info("Original comparisons\t:\t" + comparisons);
     }
 }

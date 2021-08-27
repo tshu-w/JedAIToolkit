@@ -86,7 +86,7 @@ public class TestSimJoinsWithDirtyERdatasets {
         return sb.toString().trim();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         BasicConfigurator.configure();
 
         float jaccardThreshold = 0.45f;
@@ -119,7 +119,6 @@ public class TestSimJoinsWithDirtyERdatasets {
         PPJoin join = new PPJoin(jaccardThreshold);
 //        SilkMoth join = new SilkMoth(jaccardThreshold);
         SimilarityPairs simPairs = join.executeFiltering("all", profiles);
-        float time1 = System.currentTimeMillis();
 
         final IEntityClustering ec = new ConnectedComponentsClustering(jaccardThreshold);
         final EquivalenceCluster[] clusters = ec.getDuplicates(simPairs);

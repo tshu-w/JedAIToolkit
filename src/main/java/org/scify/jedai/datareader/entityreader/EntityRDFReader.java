@@ -22,7 +22,6 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
 import org.scify.jedai.datamodel.EntityProfile;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -58,7 +57,7 @@ public class EntityRDFReader extends AbstractEntityReader {
         try {
             final Model model = RDFDataMgr.loadModel(inputFilePath);
             readModel(model);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Log.error("Error in entities reading!", ex);
             return null;
         }
@@ -144,7 +143,7 @@ public class EntityRDFReader extends AbstractEntityReader {
         }
     }
 
-    private void readModel(Model m) throws IOException {
+    private void readModel(Model m) {
         //read each ntriples
         //get spo, create a separate profile for each separate subject,
         //with Attribute=predicate and Value=object

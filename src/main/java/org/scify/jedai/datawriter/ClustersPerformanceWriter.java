@@ -21,6 +21,7 @@ import org.rdfhdt.hdt.hdt.HDT;
 import org.rdfhdt.hdt.hdt.HDTManager;
 import org.rdfhdt.hdt.options.HDTSpecification;
 import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
+import org.scify.jedai.utilities.DBUtils;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
@@ -36,10 +37,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Properties;
 
 import org.scify.jedai.datamodel.EntityProfile;
 import org.scify.jedai.datamodel.IdDuplicates;
@@ -93,35 +92,6 @@ public class ClustersPerformanceWriter {
 
     public void setEndpointGraph(String endpointGraph) {
         this.endpointGraph = endpointGraph;
-    }
-
-    private Connection getMySQLconnection(String dbURL) throws IOException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:" + dbURL + "?user=" + dbuser + "&password=" + dbpassword);
-        } catch (Exception ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
-        }
-    }
-
-    private Connection getPostgreSQLconnection(String dbURL) throws IOException {
-        try {
-            final Properties props = new Properties();
-            if (!(dbuser == null)) {
-                props.setProperty("user", dbuser);
-            }
-            if (!(dbpassword == null)) {
-                props.setProperty("password", dbpassword);
-            }
-            if (ssl) {
-                props.setProperty("ssl", "true");
-            }
-            return DriverManager.getConnection("jdbc:" + dbURL, props);
-        } catch (Exception ex) {
-            Log.error("Error with database connection!", ex);
-            return null;
-        }
     }
 
     public int getDetectedDuplicates() {
@@ -939,7 +909,7 @@ public class ClustersPerformanceWriter {
         hdt.close();
     }
 
-    public void printDetailedResultsToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) throws FileNotFoundException {
+    public void printDetailedResultsToSPARQL(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String endpointURL, String GraphName) {
         if (entityClusters.length == 0) {
             Log.warn("Empty set of equivalence clusters given as input!");
             return;
@@ -1442,7 +1412,7 @@ public class ClustersPerformanceWriter {
         printWriter.close();
     }
 
-    public void printDetailedResultsToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) throws FileNotFoundException {
+    public void printDetailedResultsToDB(List<EntityProfile> profilesD1, List<EntityProfile> profilesD2, String dbURL) {
         if (entityClusters.length == 0) {
             Log.warn("Empty set of equivalence clusters given as input!");
             return;
@@ -1556,28 +1526,19 @@ public class ClustersPerformanceWriter {
 
         String dbquery = sb.toString();
 
-        try {
-            if (dbuser == null) {
-                Log.error("Database user has not been set!");
-            }
-            if (dbpassword == null) {
-                Log.error("Database password has not been set!");
-            }
-            if (dbtable == null) {
-                Log.error("Database table has not been set!");
-            }
-
-            Connection conn = null;
-            if (dbURL.startsWith("mysql")) {
-                conn = getMySQLconnection(dbURL);
-            } else if (dbURL.startsWith("postgresql")) {
-                conn = getPostgreSQLconnection(dbURL);
-            } else {
-                Log.error("Only MySQL and PostgreSQL are supported for the time being!");
-            }
-
-            final Statement stmt = conn.createStatement();
-            stmt.executeQuery(dbquery);//retrieve the appropriate table
+        if (dbuser == null) {
+            Log.error("Database user has not been set!");
+        }
+        if (dbpassword == null) {
+            Log.error("Database password has not been set!");
+        }
+        if (dbtable == null) {
+            Log.error("Database table has not been set!");
+        }
+        try (Connection conn = DBUtils.getDBConnection(dbURL, dbuser, dbpassword, ssl);
+            Statement stmt = conn.createStatement();) {
+          
+            stmt.execute(dbquery);//retrieve the appropriate table
         } catch (Exception ex) {
             Log.error("Error in db writing!", ex);
         }

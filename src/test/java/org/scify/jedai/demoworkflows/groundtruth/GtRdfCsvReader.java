@@ -32,6 +32,7 @@ import java.util.Set;
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.graph.DefaultEdge;
 
 /**
  *
@@ -180,10 +181,7 @@ public class GtRdfCsvReader extends AbstractGtReader {
         }
 
         initializeDataStructures(profilesD1, profilesD2);
-        try {
-            // creating reader
-            final BufferedReader br = new BufferedReader(new FileReader(inputFilePath));
-            
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath));) {
             String line;
             if (ignoreFirstRow) {
                 line = br.readLine();
@@ -211,7 +209,7 @@ public class GtRdfCsvReader extends AbstractGtReader {
         Log.info("Total edges in duplicates graph\t:\t" + duplicatesGraph.edgeSet().size());
 
         // get connected components
-        final ConnectivityInspector ci = new ConnectivityInspector(duplicatesGraph);
+        final ConnectivityInspector<Integer, DefaultEdge> ci = new ConnectivityInspector<>(duplicatesGraph);
         final List<Set<Integer>> connectedComponents = ci.connectedSets();
         Log.info("Total connected components in duplicate graph\t:\t" + connectedComponents.size());
 

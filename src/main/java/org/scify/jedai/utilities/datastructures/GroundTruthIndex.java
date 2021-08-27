@@ -71,8 +71,6 @@ public class GroundTruthIndex {
         final int[] blocks2 = entityBlocks[comparison.getEntityId2() + datasetLimit];
 
         boolean firstCommonIndex = false;
-        int noOfBlocks1 = blocks1.length;
-        int noOfBlocks2 = blocks2.length;
         final TIntList indices = new TIntArrayList();
         for (int item : blocks1) {
             for (int value : blocks2) {
@@ -116,8 +114,6 @@ public class GroundTruthIndex {
         final int[] blocks2 = entityBlocks[comparison.getEntityId2() + datasetLimit];
 
         int commonBlocks = 0;
-        int noOfBlocks1 = blocks1.length;
-        int noOfBlocks2 = blocks2.length;
         boolean firstCommonIndex = false;
         for (int item : blocks1) {
             for (int value : blocks2) {

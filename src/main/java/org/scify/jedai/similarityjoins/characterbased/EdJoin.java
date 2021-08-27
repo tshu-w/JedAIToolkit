@@ -229,7 +229,7 @@ public class EdJoin extends AbstractCharacterBasedJoin {
                 }
             }
         }
-        final TIntObjectMap<ListItemPPJ> index = new TIntObjectHashMap();
+        final TIntObjectMap<ListItemPPJ> index = new TIntObjectHashMap<>();
         for (int k = rangeBound; k < noOfEntities; k++) {
             int count = 0;
             int prefix_length = get_prefix_length(tokens[k]);

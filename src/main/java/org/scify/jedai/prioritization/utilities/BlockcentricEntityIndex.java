@@ -314,7 +314,7 @@ public class BlockcentricEntityIndex implements Serializable {
                     return commonBlocksPX;
                 }
                 long[] v = new long[2];
-                v[0] = (long) commonBlocksPX;
+                v[0] = commonBlocksPX;
                 v[1] = getNoOfEntityBlocks(comparison.getEntityId1(), 0) - v[0];
 
                 long[] v_ = new long[2];

@@ -29,11 +29,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
 
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.graph.DefaultEdge;
 
 /**
  *
@@ -97,7 +97,7 @@ public class GtRDFReader extends AbstractGtReader {
         Log.info("Total edges in duplicates graph\t:\t" + duplicatesGraph.edgeSet().size());
 
         // get connected components
-        final ConnectivityInspector ci = new ConnectivityInspector(duplicatesGraph);
+        final ConnectivityInspector<Integer, DefaultEdge> ci = new ConnectivityInspector<>(duplicatesGraph);
         final List<Set<Integer>> connectedComponents = ci.connectedSets();
         Log.info("Total connected components in duplicate graph\t:\t" + connectedComponents.size());
 

@@ -16,7 +16,6 @@
 package org.scify.jedai.demoworkflows;
 
 import org.apache.log4j.BasicConfigurator;
-import org.rdfhdt.hdt.exceptions.ParserException;
 import org.scify.jedai.blockbuilding.IBlockBuilding;
 import org.scify.jedai.blockbuilding.StandardBlocking;
 import org.scify.jedai.blockprocessing.IBlockProcessing;
@@ -49,7 +48,7 @@ import java.util.List;
  */
 public class CsvDblpAcm {
 
-    public static void main(String[] args) throws IOException, ParserException {
+    public static void main(String[] args) throws IOException {
         BasicConfigurator.configure();
         
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator + "DBLP-ACM" + File.separator;

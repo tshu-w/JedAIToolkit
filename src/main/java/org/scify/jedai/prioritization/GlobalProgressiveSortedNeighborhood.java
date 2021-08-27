@@ -47,7 +47,7 @@ public class GlobalProgressiveSortedNeighborhood extends AbstractSimilarityBased
     public GlobalProgressiveSortedNeighborhood(int budget, ProgressiveWeightingScheme pwScheme) {
         super(budget, pwScheme);
 
-        topComps = new PriorityQueue<>((int) (2 * comparisonsBudget), new IncComparisonWeightComparator());
+        topComps = new PriorityQueue<>(2 * comparisonsBudget, new IncComparisonWeightComparator());
         
         gridMaxWindow = new IntGridSearchConfiguration(10, 1, 1);
         randomMaxWindow = new IntRandomSearchConfiguration(10, 1);

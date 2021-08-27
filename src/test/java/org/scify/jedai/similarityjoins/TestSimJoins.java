@@ -88,9 +88,7 @@ public class TestSimJoins {
             maxLines = Integer.parseInt(prop.getProperty("max_lines"));
             simThreshold = Double.parseDouble(prop.getProperty("sim_threshold"));
         } catch (Exception e) {
-            System.out.println("ERROR: Wrong input parameters!");
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException("ERROR: Wrong input parameters.", e);
         }
 
         *//* READ THE INPUT FILES *//*

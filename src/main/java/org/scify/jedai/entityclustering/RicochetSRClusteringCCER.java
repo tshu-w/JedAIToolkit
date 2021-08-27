@@ -83,7 +83,7 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
 
         final TIntSet Center = new TIntHashSet();
         final TIntSet NonCenter = new TIntHashSet();
-        final TIntObjectHashMap<TIntSet> Clusters = new TIntObjectHashMap();
+        final TIntObjectHashMap<TIntSet> Clusters = new TIntObjectHashMap<>();
         final int[] clusterCenter = new int[noOfEntities];
         final float[] simWithCenter = new float[noOfEntities]; // similarity with center
 

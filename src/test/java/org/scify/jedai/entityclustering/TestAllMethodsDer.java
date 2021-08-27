@@ -36,7 +36,6 @@ import org.scify.jedai.utilities.enumerations.EntityClusteringDerMethod;
 import org.scify.jedai.utilities.enumerations.EntityMatchingMethod;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ import java.util.List;
  */
 public class TestAllMethodsDer {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         BasicConfigurator.configure();
 
         String mainDirectory = "data" + File.separator + "cleanCleanErDatasets" + File.separator;

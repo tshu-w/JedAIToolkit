@@ -41,12 +41,7 @@ public class FuzzySetSimJoin {
     float[] elementBounds;
 
     /**
-     * Computes the join between two collections
-     *
-     * @param input1
-     * @param input2
-     * @param simThreshold
-     * @return
+     * Computes the join between two collections.
      */
     public HashMap<String, Float> join(Map<String, List<Set<String>>> input1, Map<String, List<Set<String>>> input2,
             float simThreshold) {
@@ -178,7 +173,7 @@ public class FuzzySetSimJoin {
                 for (int j = 0; j < querySet[i].length; j++) {
                     if (querySet[i][j] == bestToken) {
                         unflattenedSignature[i].add(bestToken);
-                        simUpperBound -= (1.0 / (float) querySet[i].length);
+                        simUpperBound -= (1.0f / querySet[i].length);
                     }
                 }
             }

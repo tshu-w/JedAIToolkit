@@ -29,7 +29,7 @@ import java.util.Set;
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
-
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.graph.SimpleWeightedGraph;
@@ -46,8 +46,8 @@ public class CutClustering extends AbstractEntityClustering {
     
     protected final DblGridSearchConfiguration gridAcap;
     protected final DblRandomSearchConfiguration randomAcap;
-    protected SimpleGraph duplicatesGraph;
-    protected SimpleWeightedGraph weightedGraph;
+    protected SimpleGraph<Integer, DefaultEdge> duplicatesGraph;
+    protected SimpleWeightedGraph<Object, DefaultWeightedEdge> weightedGraph;
 
     public CutClustering() {
         this(0.3f, 0.5f);
@@ -64,7 +64,7 @@ public class CutClustering extends AbstractEntityClustering {
     @Override
     protected EquivalenceCluster[] getConnectedComponents() {
         // get connected components
-        final ConnectivityInspector ci = new ConnectivityInspector(duplicatesGraph);
+        final ConnectivityInspector<Integer, DefaultEdge> ci = new ConnectivityInspector<>(duplicatesGraph);
         final List<Set<Integer>> connectedComponents = ci.connectedSets();
 
         // prepare output
@@ -88,12 +88,12 @@ public class CutClustering extends AbstractEntityClustering {
         while (iterator.hasNext()) {	// add an edge for every pair of entities with a weight higher than the threshold
             Comparison comparison = iterator.next();
             if (threshold < comparison.getUtilityMeasure()) {
-                DefaultWeightedEdge e = (DefaultWeightedEdge) weightedGraph.addEdge(comparison.getEntityId1() + "", (comparison.getEntityId2() + datasetLimit) + "");
+                DefaultWeightedEdge e = weightedGraph.addEdge(comparison.getEntityId1() + "", (comparison.getEntityId2() + datasetLimit) + "");
                 weightedGraph.setEdgeWeight(e, comparison.getUtilityMeasure());
             }
         }
 
-        GomoryHuTree ght = new GomoryHuTree(weightedGraph); //take the minimum cut (Gomory-Hu) tree from the similarity graph
+        GomoryHuTree<Object, DefaultWeightedEdge> ght = new GomoryHuTree<>(weightedGraph); //take the minimum cut (Gomory-Hu) tree from the similarity graph
         duplicatesGraph = ght.MinCutTree();
         duplicatesGraph.removeVertex(noOfEntities); //remove the artificial sink
 
@@ -186,7 +186,7 @@ public class CutClustering extends AbstractEntityClustering {
         for (int i = 0; i < noOfEntities; i++) {
             String edgeLabel = i + "";
             weightedGraph.addVertex(edgeLabel);
-            DefaultWeightedEdge e = (DefaultWeightedEdge) weightedGraph.addEdge(sinkLabel, edgeLabel); // add the capacity edges "a"
+            DefaultWeightedEdge e = weightedGraph.addEdge(sinkLabel, edgeLabel); // add the capacity edges "a"
             weightedGraph.setEdgeWeight(e, Acap); //connecting the artificial sink with all vertices
         }
 

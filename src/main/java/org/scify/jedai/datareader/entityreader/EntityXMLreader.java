@@ -142,7 +142,7 @@ public class EntityXMLreader extends AbstractEntityReader {
         }
     }
 
-    private void readXMLdoc(Document document) throws IOException {
+    private void readXMLdoc(Document document) {
         final Element classElement = document.getRootElement();
 
         final List<Element> dblpRoot = classElement.getChildren();

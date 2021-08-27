@@ -112,7 +112,7 @@ public class TestCleanCleanERBaseline {
             float originalRecall = clp.getRecall();
 
             final IEntityMatching em = new ProfileMatcher(profiles1, profiles2, repModel[i], simMetric[i]);
-            SimilarityPairs sims = new SimilarityPairs(true, (int) allComparisons.size());
+            SimilarityPairs sims = new SimilarityPairs(true, allComparisons.size());
 
             Collections.shuffle(allComparisons);
             for (Comparison comparison : allComparisons) {

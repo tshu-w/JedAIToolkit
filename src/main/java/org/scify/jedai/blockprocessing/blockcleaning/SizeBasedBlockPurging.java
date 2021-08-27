@@ -63,7 +63,7 @@ public class SizeBasedBlockPurging extends AbstractBlockPurging {
             entities.addAll(uBlock.getEntities());
         });
         
-        return (int) Math.round(entities.size()*purgingFactor);
+        return Math.round(entities.size()*purgingFactor);
     }
     
     private int getMaxInnerBlockSize(List<AbstractBlock> blocks) {
@@ -76,7 +76,7 @@ public class SizeBasedBlockPurging extends AbstractBlockPurging {
             d2Entities.addAll(bBlock.getIndex2Entities());
         });
         
-        return (int) Math.round(Math.min(d1Entities.size(), d2Entities.size())*purgingFactor);
+        return Math.round(Math.min(d1Entities.size(), d2Entities.size())*purgingFactor);
     }
     
     @Override

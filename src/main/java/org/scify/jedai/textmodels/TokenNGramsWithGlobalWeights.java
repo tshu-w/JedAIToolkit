@@ -48,7 +48,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
     }
 
     protected float getARCSSimilarity(TokenNGramsWithGlobalWeights oModel) {
-        final Set<String> commonKeys = new HashSet(itemsFrequency.keySet());
+        final Set<String> commonKeys = new HashSet<>(itemsFrequency.keySet());
         commonKeys.retainAll(oModel.getItemsFrequency().keySet());
 
         float similarity = 0;
@@ -62,8 +62,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
                 similarity += 1.0f / (Math.log1p(((float) DOC_FREQ[DATASET_1].get(key)) * DOC_FREQ[DATASET_2].get(key)) / Math.log(2));
             }
         } else {
-            Log.error("Both models come from dataset 1!");
-            System.exit(-1);
+            throw new IllegalStateException("Both models come from dataset 1.");
         }
 
         return similarity;
@@ -103,7 +102,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
         denominator = allKeys.stream().map((key) -> itemsFrequency.get(key) / noOfTotalTerms  * getIdfWeight(key) + 
                 itemVector2.get(key) / totalTerms2 * oModel.getIdfWeight(key)).reduce(denominator, (accumulator, _item) -> accumulator + _item);
 
-        return (float)(numerator / denominator);
+        return numerator / denominator;
     }
 
     @Override
@@ -118,9 +117,8 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
             case SIGMA_SIMILARITY:
                 return getSigmaSimilarity((TokenNGramsWithGlobalWeights) oModel);
             default:
-                Log.error("The given similarity metric is incompatible with the bag representation model!");
-                System.exit(-1);
-                return -1;
+                throw new IllegalStateException(
+                    "The given similarity metric is incompatible with the bag representation model.");
         }
     }
 
@@ -139,7 +137,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
         }
 
         float denominator = getVectorMagnitude() * oModel.getVectorMagnitude();
-        return (float)(numerator / denominator);
+        return numerator / denominator;
     }
 
     protected float getTfIdfGeneralizedJaccardSimilarity(TokenNGramsWithGlobalWeights oModel) {
@@ -162,7 +160,7 @@ public class TokenNGramsWithGlobalWeights extends TokenNGrams {
         denominator = allKeys.stream().map((key) -> Math.max(itemsFrequency.get(key) / noOfTotalTerms  * getIdfWeight(key),
                 itemVector2.get(key) / totalTerms2 * oModel.getIdfWeight(key))).reduce(denominator, (accumulator, _item) -> accumulator + _item);
 
-        return (float)(numerator / denominator);
+        return numerator / denominator;
     }
     
     @Override
