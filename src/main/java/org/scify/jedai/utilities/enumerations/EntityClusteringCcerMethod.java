@@ -24,6 +24,7 @@ import org.scify.jedai.entityclustering.*;
 public enum EntityClusteringCcerMethod {
     UNIQUE_MAPPING_CLUSTERING,
     ROW_COLUMN_ASSIGNMENT_CLUSTERING,
+    ROW_COLUMN_ASSIGNMENT_CLUSTERING_ONLY_EDGES,
     BEST_ASSIGNMENT_HEURISTIC_CLUSTERING,
     CONNECTED_COMPONENTS_CCER,
     BEST_MATCH_CLUSTERING,
@@ -37,6 +38,8 @@ public enum EntityClusteringCcerMethod {
                 return new UniqueMappingClustering();
             case ROW_COLUMN_ASSIGNMENT_CLUSTERING:
                 return new RowColumnClustering();
+            case ROW_COLUMN_ASSIGNMENT_CLUSTERING_ONLY_EDGES:
+                return new RowColumnClusteringOnlyEdges();
             case BEST_ASSIGNMENT_HEURISTIC_CLUSTERING:
                 return new BestAssignmentHeuristic();
             case CONNECTED_COMPONENTS_CCER:

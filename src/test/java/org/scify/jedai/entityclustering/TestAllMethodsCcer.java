@@ -112,6 +112,8 @@ public class TestAllMethodsCcer {
             long time4 = System.currentTimeMillis();
 
             for (EntityClusteringCcerMethod ecMethod : EntityClusteringCcerMethod.values()) {
+                if (ecMethod!=EntityClusteringCcerMethod.ROW_COLUMN_ASSIGNMENT_CLUSTERING_ONLY_EDGES
+                        &&ecMethod!=EntityClusteringCcerMethod.ROW_COLUMN_ASSIGNMENT_CLUSTERING_ONLY_EDGES) continue;
                 long time5 = System.currentTimeMillis();
 
                 IEntityClustering ec = EntityClusteringCcerMethod.getDefaultConfiguration(ecMethod);
