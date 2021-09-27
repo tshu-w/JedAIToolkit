@@ -113,6 +113,12 @@ public class UnilateralDuplicatePropagation extends AbstractDuplicatePropagation
     public boolean isSuperfluous(int entityId1, int entityId2) {
         final IdDuplicates duplicatePair1 = new IdDuplicates(entityId1, entityId2);
         final IdDuplicates duplicatePair2 = new IdDuplicates(entityId2, entityId1);
+        
+        if (detectedDuplicates.contains(duplicatePair1)
+                || detectedDuplicates.contains(duplicatePair2)) {
+            return true;
+        }
+        
         if (duplicates.contains(duplicatePair1)
                 || duplicates.contains(duplicatePair2)) {
             if (entityId1 < entityId2) {
