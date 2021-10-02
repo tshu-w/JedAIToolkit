@@ -63,7 +63,7 @@ public class BAHafterUM extends AbstractCcerEntityClustering {
         int numColumns = matrix[0].length;
         long time2 = System.currentTimeMillis();
         long time3;
-        System.out.println("st");
+        System.out.println("sts");
 
         for (int i = 0; i < numMoves; i++) {
             if (dataset2isbigger) {
