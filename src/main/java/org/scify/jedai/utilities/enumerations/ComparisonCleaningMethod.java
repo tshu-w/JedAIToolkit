@@ -71,4 +71,25 @@ public enum ComparisonCleaningMethod {
                 return new ComparisonPropagation();
         }
     }
+    
+    public static IBlockProcessing getMetablockingMethod(ComparisonCleaningMethod mbMethod, WeightingScheme wScheme) {
+        switch (mbMethod) {
+            case BLAST:
+                return new BLAST(wScheme);
+            case CARDINALITY_EDGE_PRUNING:
+                return new CardinalityEdgePruning(wScheme);
+            case CARDINALITY_NODE_PRUNING:
+                return new CardinalityNodePruning(wScheme);
+            case RECIPROCAL_CARDINALITY_NODE_PRUNING:
+                return new ReciprocalCardinalityNodePruning(wScheme);
+            case RECIPROCAL_WEIGHTING_NODE_PRUNING:
+                return new ReciprocalWeightedNodePruning(wScheme);
+            case WEIGHTED_EDGE_PRUNING:
+                return new WeightedEdgePruning(wScheme);
+            case WEIGHTED_NODE_PRUNING:
+                return new WeightedNodePruning(wScheme);
+            default:
+                return new ComparisonPropagation();
+        }
+    }
 }
