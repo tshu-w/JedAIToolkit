@@ -16,19 +16,15 @@
 package org.scify.jedai.prioritization;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import org.scify.jedai.blockbuilding.IBlockBuilding;
-import org.scify.jedai.blockbuilding.StandardBlocking;
 import org.scify.jedai.blockprocessing.IBlockProcessing;
 import org.scify.jedai.blockprocessing.blockcleaning.BlockFiltering;
 import org.scify.jedai.blockprocessing.blockcleaning.ComparisonsBasedBlockPurging;
-import org.scify.jedai.blockprocessing.comparisoncleaning.CardinalityNodePruning;
 import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.datamodel.Comparison;
-import org.scify.jedai.datamodel.ComparisonIterator;
 import org.scify.jedai.datamodel.EntityProfile;
 import org.scify.jedai.datamodel.IdDuplicates;
 import org.scify.jedai.datareader.entityreader.EntitySerializationReader;
@@ -38,6 +34,8 @@ import org.scify.jedai.datareader.groundtruthreader.IGroundTruthReader;
 import org.scify.jedai.utilities.BlocksPerformance;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
+import org.scify.jedai.utilities.enumerations.BlockBuildingMethod;
+import org.scify.jedai.utilities.enumerations.ComparisonCleaningMethod;
 import org.scify.jedai.utilities.enumerations.WeightingScheme;
 
 /**
@@ -73,80 +71,123 @@ public class TestProgressiveRecall {
 
             float time1 = System.currentTimeMillis();
 
-            final IBlockBuilding blockBuildingMethod = new StandardBlocking();
-            List<AbstractBlock> blocks = blockBuildingMethod.getBlocks(profiles1, profiles2);
-            System.out.println("Original blocks\t:\t" + blocks.size());
+            final List<BlockBuildingMethod> blockingMethods = new ArrayList<>();
+            blockingMethods.add(BlockBuildingMethod.STANDARD_BLOCKING);
+            blockingMethods.add(BlockBuildingMethod.Q_GRAMS_BLOCKING);
+            blockingMethods.add(BlockBuildingMethod.EXTENDED_Q_GRAMS_BLOCKING);
+            blockingMethods.add(BlockBuildingMethod.SUFFIX_ARRAYS);
+            blockingMethods.add(BlockBuildingMethod.EXTENDED_SUFFIX_ARRAYS);
 
-            final IBlockProcessing blockCleaningMethod1 = new ComparisonsBasedBlockPurging(1.00f);
-            blocks = blockCleaningMethod1.refineBlocks(blocks);
+            final List<ComparisonCleaningMethod> metablockingMethods = new ArrayList<>();
+            metablockingMethods.add(ComparisonCleaningMethod.BLAST);
+            metablockingMethods.add(ComparisonCleaningMethod.CARDINALITY_EDGE_PRUNING);
+            metablockingMethods.add(ComparisonCleaningMethod.CARDINALITY_NODE_PRUNING);
+            metablockingMethods.add(ComparisonCleaningMethod.RECIPROCAL_CARDINALITY_NODE_PRUNING);
+            metablockingMethods.add(ComparisonCleaningMethod.RECIPROCAL_WEIGHTING_NODE_PRUNING);
+            metablockingMethods.add(ComparisonCleaningMethod.WEIGHTED_EDGE_PRUNING);
+            metablockingMethods.add(ComparisonCleaningMethod.WEIGHTED_NODE_PRUNING);
 
-            final IBlockProcessing blockCleaningMethod2 = new BlockFiltering();
-            blocks = blockCleaningMethod2.refineBlocks(blocks);
+            for (BlockBuildingMethod bbMethod : blockingMethods) {
+                System.out.println("\n\n\n\n\nCurrent blocking method\t:\t" + bbMethod);
 
-            final IBlockProcessing comparisonCleaningMethod = new CardinalityNodePruning(WeightingScheme.JS);
-            List<AbstractBlock> cnpBlocks = comparisonCleaningMethod.refineBlocks(new ArrayList<>(blocks));
+                final IBlockBuilding blockBuildingMethod = BlockBuildingMethod.getDefaultConfiguration(bbMethod);
+                List<AbstractBlock> blocks = blockBuildingMethod.getBlocks(profiles1, profiles2);
+                System.out.println("Original blocks\t:\t" + blocks.size());
 
-            float time2 = System.currentTimeMillis();
+                final IBlockProcessing blockCleaningMethod1 = new ComparisonsBasedBlockPurging(1.00f);
+                blocks = blockCleaningMethod1.refineBlocks(blocks);
 
-            BlocksPerformance blStats = new BlocksPerformance(cnpBlocks, duplicatePropagation);
-            blStats.setStatistics();
-            blStats.printStatistics(time2 - time1, "", "");
+                final IBlockProcessing blockCleaningMethod2 = new BlockFiltering();
+                blocks = blockCleaningMethod2.refineBlocks(blocks);
 
-            double totalComparisons = blStats.getAggregateCardinality();
-            System.out.println("Total comparisons\t:\t" + totalComparisons);
+                for (ComparisonCleaningMethod mbMethod : metablockingMethods) {
+                    System.out.println("\n\n\n\n\nCurrent meta-blocking method\t:\t" + bbMethod);
+
+                    for (WeightingScheme wScheme : WeightingScheme.values()) {
+                        System.out.println("\n\n\n\n\nCurrent weighting scheme\t:\t" + wScheme);
+
+                        final IBlockProcessing comparisonCleaningMethod = ComparisonCleaningMethod.getMetablockingMethod(mbMethod, wScheme);
+                        List<AbstractBlock> mbBlocks = comparisonCleaningMethod.refineBlocks(new ArrayList<>(blocks));
+
+                        float time2 = System.currentTimeMillis();
+
+                        BlocksPerformance blStats = new BlocksPerformance(mbBlocks, duplicatePropagation);
+                        blStats.setStatistics();
+                        blStats.printStatistics(time2 - time1, "", "");
+
+                        double totalComparisons = blStats.getAggregateCardinality();
+                        System.out.println("Total comparisons\t:\t" + totalComparisons);
+
+                        for (WeightingScheme prScheme : WeightingScheme.values()) {
+                            System.out.println("\n\n\n\n\nCurrent prioritization weighting scheme\t:\t" + wScheme);
+
+                            double averageAUC = 0;
+                            double averageEmitTime = 0;
+                            double averageInitTime = 0;
+                            for (int iteration = 0; iteration < NO_OF_ITERATIONS; iteration++) {
+                                long time3 = System.currentTimeMillis();
 
 //            final IPrioritization prioritization = new ProgressiveBlockScheduling((int) totalComparisons, WeightingScheme.ARCS);
 //            final IPrioritization prioritization = new ProgressiveEntityScheduling((int) totalComparisons, WeightingScheme.ARCS);
 //            final IPrioritization prioritization = new ProgressiveLocalTopComparisons((int) totalComparisons, WeightingScheme.ARCS);
-            final IPrioritization prioritization = new ProgressiveGlobalTopComparisons((int) totalComparisons, WeightingScheme.JS);
+                                final IPrioritization prioritization = new ProgressiveGlobalTopComparisons((int) totalComparisons, prScheme);
 //            final IPrioritization prioritization = new ProgressiveGlobalRandomComparisons((int) totalComparisons);
-            prioritization.developBlockBasedSchedule(cnpBlocks);
+                                prioritization.developBlockBasedSchedule(mbBlocks);
 
-//            final IPrioritization prioritization = new LocalProgressiveSortedNeighborhood(profiles1.size() * profiles2.size(), ProgressiveWeightingScheme.ACF);
-//            final IPrioritization prioritization = new GlobalProgressiveSortedNeighborhood(profiles1.size() * profiles2.size(), ProgressiveWeightingScheme.ACF);
-//            prioritization.developEntityBasedSchedule(profiles1, profiles2);
-            int counter = 0;
-            int detectedMatches = 0;
-            double progressiveRecall = 0;
-            while (prioritization.hasNext()) {
-                counter++;
-                Comparison c = prioritization.next();
-                if (duplicatePairs.contains(new IdDuplicates(c.getEntityId1(), c.getEntityId2()))) {
-                    detectedMatches++;
-                }
-                progressiveRecall += detectedMatches;
-            }
+                                long time4 = System.currentTimeMillis();
 
-            double auc = progressiveRecall / duplicatePairs.size() / (counter + 1.0);
-            System.out.println("AUC (Progressive Recall)\t:\t" + auc);
+                                int counter = 0;
+                                int detectedMatches = 0;
+                                double progressiveRecall = 0;
+                                while (prioritization.hasNext()) {
+                                    counter++;
+                                    Comparison c = prioritization.next();
+                                    if (duplicatePairs.contains(new IdDuplicates(c.getEntityId1(), c.getEntityId2()))) {
+                                        detectedMatches++;
+                                    }
+                                    progressiveRecall += detectedMatches;
+                                }
 
-            //Baseline method
-            List<Comparison> allComparisons = new ArrayList<>();
-            for (AbstractBlock block : cnpBlocks) {
-                final ComparisonIterator cIterator = block.getComparisonIterator();
-                while (cIterator.hasNext()) {
-                    allComparisons.add(cIterator.next());
-                }
-            }
-            System.out.println("Total comparisons\t:\t" + allComparisons.size());
-
-            double averageAUC = 0;
-            for (int iteration = 0; iteration < NO_OF_ITERATIONS; iteration++) {
-                Collections.shuffle(allComparisons);
-
-                counter = 0;
-                detectedMatches = 0;
-                progressiveRecall = 0;
-                for (Comparison c : allComparisons) {
-                    counter++;
-                    if (duplicatePairs.contains(new IdDuplicates(c.getEntityId1(), c.getEntityId2()))) {
-                        detectedMatches++;
+                                long time5 = System.currentTimeMillis();
+                                averageAUC += progressiveRecall / duplicatePairs.size() / (counter + 1.0);
+                                averageEmitTime += time5 - time4;
+                                averageInitTime += time4 - time3;
+                            }
+                            System.out.println("AUC (Progressive Recall)\t:\t" + averageAUC / NO_OF_ITERATIONS);
+                            System.out.println("Average Initialization Time\t:\t" + averageInitTime / NO_OF_ITERATIONS);
+                            System.out.println("Average Emission Time\t:\t" + averageEmitTime / NO_OF_ITERATIONS);
+                        }
+                        
+//                        //Baseline method
+//                        List<Comparison> allComparisons = new ArrayList<>();
+//                        for (AbstractBlock block : mbBlocks) {
+//                            final ComparisonIterator cIterator = block.getComparisonIterator();
+//                            while (cIterator.hasNext()) {
+//                                allComparisons.add(cIterator.next());
+//                            }
+//                        }
+//                        System.out.println("Total comparisons\t:\t" + allComparisons.size());
+//
+//                        double averageAUC = 0;
+//                        for (int iteration = 0; iteration < NO_OF_ITERATIONS; iteration++) {
+//                            Collections.shuffle(allComparisons);
+//
+//                            int counter = 0;
+//                            double detectedMatches = 0;
+//                            double progressiveRecall = 0;
+//                            for (Comparison c : allComparisons) {
+//                                counter++;
+//                                if (duplicatePairs.contains(new IdDuplicates(c.getEntityId1(), c.getEntityId2()))) {
+//                                    detectedMatches++;
+//                                }
+//                                progressiveRecall += detectedMatches;
+//                            }
+//                            averageAUC += progressiveRecall / duplicatePairs.size() / (counter + 1.0);
+//                        }
+//                        System.out.println("Baseline AUC (Progressive Recall)\t:\t" + averageAUC / NO_OF_ITERATIONS);
                     }
-                    progressiveRecall += detectedMatches;
                 }
-                averageAUC += progressiveRecall / duplicatePairs.size() / (counter + 1.0);
             }
-            System.out.println("Baseline AUC (Progressive Recall)\t:\t" + averageAUC / NO_OF_ITERATIONS);
         }
     }
 }
