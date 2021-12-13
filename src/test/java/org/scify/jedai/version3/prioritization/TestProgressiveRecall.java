@@ -117,8 +117,7 @@ public class TestProgressiveRecall {
                 progressiveRecall += detectedMatches;
             }
 
-            int existingDuplicates = blStats.getDetectedDuplicates();
-            double auc = progressiveRecall / existingDuplicates / (counter + 1.0);
+            double auc = progressiveRecall / duplicatePairs.size() / (counter + 1.0);
             System.out.println("AUC (Progressive Recall)\t:\t" + auc);
 
             //Baseline method
@@ -145,7 +144,7 @@ public class TestProgressiveRecall {
                     }
                     progressiveRecall += detectedMatches;
                 }
-                averageAUC += progressiveRecall / existingDuplicates / (counter + 1.0);
+                averageAUC += progressiveRecall / duplicatePairs.size() / (counter + 1.0);
             }
             System.out.println("Baseline AUC (Progressive Recall)\t:\t" + averageAUC / NO_OF_ITERATIONS);
         }
