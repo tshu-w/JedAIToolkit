@@ -104,22 +104,22 @@ public class SuffixArraysBlocking extends StandardBlocking {
     public JsonArray getParameterConfiguration() {
         final JsonObject obj1 = new JsonObject();
         obj1.put("class", "java.lang.Integer");
-        obj1.put("name", getParameterName(0));
-        obj1.put("defaultValue", "6");
+        obj1.put("name", getParameterName(1));
+        obj1.put("defaultValue", "53");
         obj1.put("minValue", "2");
-        obj1.put("maxValue", "6");
+        obj1.put("maxValue", "100");
         obj1.put("stepValue", "1");
-        obj1.put("description", getParameterDescription(0));
+        obj1.put("description", getParameterDescription(1));
 
         final JsonObject obj2 = new JsonObject();
         obj2.put("class", "java.lang.Integer");
-        obj2.put("name", getParameterName(1));
-        obj2.put("defaultValue", "53");
+        obj2.put("name", getParameterName(0));
+        obj2.put("defaultValue", "6");
         obj2.put("minValue", "2");
-        obj2.put("maxValue", "100");
+        obj2.put("maxValue", "6");
         obj2.put("stepValue", "1");
-        obj2.put("description", getParameterDescription(1));
-
+        obj2.put("description", getParameterDescription(0));
+        
         final JsonArray array = new JsonArray();
         array.add(obj1);
         array.add(obj2);
@@ -130,9 +130,9 @@ public class SuffixArraysBlocking extends StandardBlocking {
     public String getParameterDescription(int parameterId) {
         switch (parameterId) {
             case 0:
-                return "The " + getParameterName(0) + " determines the minimum number of characters in a suffix that is used as blocking key.";
+                return "The " + getParameterName(0) + " determines the maximum number of entities that correspond to a valid suffix (i.e., maximum block size).";
             case 1:
-                return "The " + getParameterName(1) + " determines the maximum number of entities that correspond to a valid suffix (i.e., maximum block size).";
+                return "The " + getParameterName(1) + " determines the minimum number of characters in a suffix that is used as blocking key.";
             default:
                 return "invalid parameter id";
         }
@@ -142,9 +142,9 @@ public class SuffixArraysBlocking extends StandardBlocking {
     public String getParameterName(int parameterId) {
         switch (parameterId) {
             case 0:
-                return "Minimum Suffix Length";
-            case 1:
                 return "Maximum Suffix Frequency";
+            case 1:
+                return "Minimum Suffix Length";
             default:
                 return "invalid parameter id";
         }
