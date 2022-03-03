@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-package org.scify.jedai.prioritization;
+package org.scify.jedai.version3.prioritization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,8 @@ import org.scify.jedai.datareader.entityreader.EntitySerializationReader;
 import org.scify.jedai.datareader.entityreader.IEntityReader;
 import org.scify.jedai.datareader.groundtruthreader.GtSerializationReader;
 import org.scify.jedai.datareader.groundtruthreader.IGroundTruthReader;
+import org.scify.jedai.prioritization.IPrioritization;
+import org.scify.jedai.prioritization.ProgressiveGlobalTopComparisons;
 import org.scify.jedai.utilities.BlocksPerformance;
 import org.scify.jedai.utilities.datastructures.AbstractDuplicatePropagation;
 import org.scify.jedai.utilities.datastructures.BilateralDuplicatePropagation;
@@ -69,7 +71,7 @@ public class TestProgressiveRecall {
             AbstractDuplicatePropagation duplicatePropagation = new BilateralDuplicatePropagation(duplicatePairs);
             System.out.println("Existing Duplicates\t:\t" + duplicatePairs.size());
 
-            float time1 = System.currentTimeMillis();
+            long time1 = System.currentTimeMillis();
 
             final List<BlockBuildingMethod> blockingMethods = new ArrayList<>();
             blockingMethods.add(BlockBuildingMethod.STANDARD_BLOCKING);
@@ -109,7 +111,7 @@ public class TestProgressiveRecall {
                         final IBlockProcessing comparisonCleaningMethod = ComparisonCleaningMethod.getMetablockingMethod(mbMethod, wScheme);
                         List<AbstractBlock> mbBlocks = comparisonCleaningMethod.refineBlocks(new ArrayList<>(blocks));
 
-                        float time2 = System.currentTimeMillis();
+                        long time2 = System.currentTimeMillis();
 
                         BlocksPerformance blStats = new BlocksPerformance(mbBlocks, duplicatePropagation);
                         blStats.setStatistics();
