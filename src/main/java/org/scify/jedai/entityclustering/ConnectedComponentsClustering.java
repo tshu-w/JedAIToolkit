@@ -35,6 +35,10 @@ public class ConnectedComponentsClustering extends AbstractEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);

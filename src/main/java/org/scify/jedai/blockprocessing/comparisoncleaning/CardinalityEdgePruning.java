@@ -49,6 +49,10 @@ public class CardinalityEdgePruning extends WeightedEdgePruning {
         nodeCentric = false;
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+		this.weightingScheme = weightingScheme;
+	}
+    
     protected void addDecomposedBlock(Collection<Comparison> comparisons, List<AbstractBlock> newBlocks) {
         if (comparisons.isEmpty()) {
             return;

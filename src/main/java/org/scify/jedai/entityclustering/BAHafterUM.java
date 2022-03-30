@@ -53,6 +53,10 @@ public class BAHafterUM extends AbstractCcerEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     private boolean acceptSwap(float D) {
         return (D < 0.0);
     }

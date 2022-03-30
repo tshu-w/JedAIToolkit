@@ -50,7 +50,11 @@ public class ComparisonsBasedBlockPurging extends AbstractBlockPurging {
         randomSFactor = new DblRandomSearchConfiguration(2.0f, 1.0f);
     }
 
-    @Override
+    public void setSmoothingFactor(float smoothingFactor) {
+		this.smoothingFactor = smoothingFactor;
+	}
+
+	@Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + smoothingFactor;
     }

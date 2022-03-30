@@ -69,7 +69,15 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         randomBndSize = new IntRandomSearchConfiguration(10, 2);
     }
 
-    protected ITextModel[] buildModels(List<EntityProfile> profiles) {
+    public void setBandSize(int bandSize) {
+		this.bandSize = bandSize;
+	}
+
+	public void setBandsNumber(int bandsNumber) {
+		this.bandsNumber = bandsNumber;
+	}
+
+	protected ITextModel[] buildModels(List<EntityProfile> profiles) {
         int counter = 0;
         final ITextModel[] currentModels = new ITextModel[profiles.size()];
         for (EntityProfile profile : profiles) {

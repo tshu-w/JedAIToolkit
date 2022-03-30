@@ -55,7 +55,15 @@ public class SuffixArraysBlocking extends StandardBlocking {
         randomMSLength = new IntRandomSearchConfiguration(6, 2);
     }
 
-    @Override
+    public void setMaximumBlockSize(int maximumBlockSize) {
+		this.maximumBlockSize = maximumBlockSize;
+	}
+
+	public void setMinimumSuffixLength(int minimumSuffixLength) {
+		this.minimumSuffixLength = minimumSuffixLength;
+	}
+
+	@Override
     public List<AbstractBlock> getBlocks(List<EntityProfile> profilesD1,
             List<EntityProfile> profilesD2) {
         final List<AbstractBlock> purgedBlocks = super.getBlocks(profilesD1, profilesD2);

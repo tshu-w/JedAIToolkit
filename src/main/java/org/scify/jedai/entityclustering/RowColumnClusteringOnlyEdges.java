@@ -52,6 +52,10 @@ public class RowColumnClusteringOnlyEdges extends AbstractCcerEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     private int columnWithMin(int rowNumber) {
         int pos = -1;
         float min = Float.MAX_VALUE;

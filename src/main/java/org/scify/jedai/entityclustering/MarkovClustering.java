@@ -61,7 +61,7 @@ public class MarkovClustering extends AbstractEntityClustering {
         randomMSThreshold = new DblRandomSearchConfiguration(0.001f, 0.00001f);
         randomSCLimit = new IntRandomSearchConfiguration(10, 1);
     }
-
+    
     private void addSelfLoop(float[][] a) {
         int m1 = a.length;
         for (int i = 0; i < m1; i++) {
@@ -320,6 +320,10 @@ public class MarkovClustering extends AbstractEntityClustering {
         }
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     public void setClusterThreshold(float clusterThreshold) {
         this.clusterThreshold = clusterThreshold;
     }

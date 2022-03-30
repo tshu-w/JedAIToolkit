@@ -44,6 +44,14 @@ public class ExtendedSuffixArraysBlocking extends SuffixArraysBlocking {
         return suffixes;
     }
 
+    public void setMaximumBlockSize(int maximumBlockSize) {
+        this.maximumBlockSize = maximumBlockSize;
+    }
+
+    public void setMinimumSuffixLength(int minimumSuffixLength) {
+        this.minimumSuffixLength = minimumSuffixLength;
+    }
+
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": it creates one block for every substring (not just suffix) that appears in the tokens of at least two entities.";

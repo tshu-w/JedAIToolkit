@@ -50,6 +50,10 @@ public class ExtendedQGramsBlocking extends QGramsBlocking {
         gridThreshold = new DblGridSearchConfiguration(0.95f, 0.8f, 0.05f);
     }
 
+    public void setnGramSize(int nGramSize) {
+ 		this.nGramSize = nGramSize;
+ 	}
+
     @Override
     protected Set<String> getBlockingKeys(String attributeValue) {
         final Set<String> keys = new HashSet<>();

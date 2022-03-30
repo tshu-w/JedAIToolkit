@@ -57,7 +57,11 @@ public class SizeBasedBlockPurging extends AbstractBlockPurging {
         randomPFactor = new DblRandomSearchConfiguration(0.20f, 0.001f);
     }
     
-    private int getMaxBlockSize(List<AbstractBlock> blocks) {
+    public void setPurgingFactor(float purgingFactor) {
+		this.purgingFactor = purgingFactor;
+	}
+
+	private int getMaxBlockSize(List<AbstractBlock> blocks) {
         final TIntSet entities = new TIntHashSet();
         blocks.stream().map((aBlock) -> (UnilateralBlock) aBlock).forEachOrdered((uBlock) -> {
             entities.addAll(uBlock.getEntities());

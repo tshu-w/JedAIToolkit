@@ -16,15 +16,16 @@
 
 package org.scify.jedai.datamodel;
 
+import java.io.Serializable;
 
 /**
  *
  * @author G.A.P. II
  */
 
-public class SimilarityEdge {
-
-    private final int model1pos;
+public class SimilarityEdge implements Serializable {
+	private static final long serialVersionUID = 3089514150554162680L;
+	private final int model1pos;
     private final int model2pos;
     private final float similarity;
 

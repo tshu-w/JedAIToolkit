@@ -52,6 +52,10 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
         return (D < 0.0);
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     private void execute() {
         long timeout = 120;//IN SECONDS
         Random rand = new Random();

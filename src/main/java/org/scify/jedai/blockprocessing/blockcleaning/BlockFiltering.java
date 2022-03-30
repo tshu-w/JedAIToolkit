@@ -62,7 +62,11 @@ public class BlockFiltering extends AbstractBlockProcessing {
         randomRatio = new DblRandomSearchConfiguration(1.0f, 0.01f);
     }
 
-    protected void countEntities(List<AbstractBlock> blocks) {
+    public void setRatio(float ratio) {
+		this.ratio = ratio;
+	}
+
+	protected void countEntities(List<AbstractBlock> blocks) {
         entitiesD1 = Integer.MIN_VALUE;
         entitiesD2 = Integer.MIN_VALUE;
         if (blocks.get(0) instanceof BilateralBlock) {

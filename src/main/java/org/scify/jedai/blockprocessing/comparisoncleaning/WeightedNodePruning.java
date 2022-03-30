@@ -41,6 +41,10 @@ public class WeightedNodePruning extends WeightedEdgePruning {
         nodeCentric = true;
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+		this.weightingScheme = weightingScheme;
+	}
+    
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": a Meta-blocking method that retains for every entity, the comparisons "

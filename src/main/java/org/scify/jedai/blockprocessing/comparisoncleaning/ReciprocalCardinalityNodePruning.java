@@ -33,6 +33,10 @@ public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
         super(scheme);
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+		this.weightingScheme = weightingScheme;
+	}
+    
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": a Meta-blocking method that retains the comparisons "

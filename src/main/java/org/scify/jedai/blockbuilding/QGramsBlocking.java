@@ -37,7 +37,7 @@ public class QGramsBlocking extends StandardBlocking {
     protected final IntGridSearchConfiguration gridNGSize;
     protected final IntRandomSearchConfiguration randomNGSize;
 
-    public QGramsBlocking() {
+	public QGramsBlocking() {
         this(6);
     }
 
@@ -49,6 +49,10 @@ public class QGramsBlocking extends StandardBlocking {
         randomNGSize = new IntRandomSearchConfiguration(6, 2);
     }
 
+    public void setnGramSize(int nGramSize) {
+		this.nGramSize = nGramSize;
+	}
+    
     @Override
     protected Set<String> getBlockingKeys(String attributeValue) {
         final Set<String> nGrams = new HashSet<>();

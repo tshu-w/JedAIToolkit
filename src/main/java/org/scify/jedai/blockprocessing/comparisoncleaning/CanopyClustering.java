@@ -36,10 +36,10 @@ import org.scify.jedai.datamodel.Comparison;
  */
 public class CanopyClustering extends CardinalityNodePruning {
 	private static final long serialVersionUID = 1170225434020914281L;
-	protected final float inclusiveThreshold;
-    protected final float exclusiveThreshold;
+	protected float inclusiveThreshold;
+    protected float exclusiveThreshold;
     
-    protected TIntSet excludedEntities;
+	protected TIntSet excludedEntities;
 
     public CanopyClustering() {
         this(0.5f, 0.75f, WeightingScheme.ARCS);
@@ -60,6 +60,18 @@ public class CanopyClustering extends CardinalityNodePruning {
         }
     }
 
+    public void setInclusiveThreshold(float inclusiveThreshold) {
+		this.inclusiveThreshold = inclusiveThreshold;
+	}
+
+	public void setExclusiveThreshold(float exclusiveThreshold) {
+		this.exclusiveThreshold = exclusiveThreshold;
+	}
+
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+		this.weightingScheme = weightingScheme;
+	}
+    
     @Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + inclusiveThreshold + ",\t"

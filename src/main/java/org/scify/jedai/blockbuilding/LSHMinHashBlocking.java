@@ -42,8 +42,16 @@ public class LSHMinHashBlocking extends LSHSuperBitBlocking {
         bandSize = bSize;
         bandsNumber = bandsNo;
     }
+    
+    public void setBandSize(int bandSize) {
+		this.bandSize = bandSize;
+	}
 
-    @Override
+	public void setBandsNumber(int bandsNumber) {
+		this.bandsNumber = bandsNumber;
+	}
+
+	@Override
     protected Set<String> getBlockingKeys(int datasetId, int profileId) {
         final MinHashUnigrams model = (MinHashUnigrams) models[datasetId][profileId];
 

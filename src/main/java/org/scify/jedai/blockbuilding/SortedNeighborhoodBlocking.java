@@ -58,7 +58,11 @@ public class SortedNeighborhoodBlocking extends StandardBlocking {
         randomWindow = new IntRandomSearchConfiguration(100, 1);
     }
 
-    @Override
+    public void setWindowSize(int windowSize) {
+		this.windowSize = windowSize;
+	}
+
+	@Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + windowSize;
     }

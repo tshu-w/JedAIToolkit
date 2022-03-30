@@ -49,7 +49,11 @@ public class WeightedEdgePruning extends AbstractMetablocking {
         gridWScheme = new IntGridSearchConfiguration(WeightingScheme.values().length - 1, 0, 1);
         randomWScheme = new IntRandomSearchConfiguration(WeightingScheme.values().length, 0);
     }
-
+    
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+		this.weightingScheme = weightingScheme;
+	}
+    
     @Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + weightingScheme;

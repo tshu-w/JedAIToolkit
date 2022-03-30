@@ -61,7 +61,7 @@ public class CutClustering extends AbstractEntityClustering {
         gridAcap = new DblGridSearchConfiguration(0.95f, 0.1f, 0.05f);
         randomAcap = new DblRandomSearchConfiguration(0.99f, 0.01f);
     }
-
+    
     @Override
     protected EquivalenceCluster[] getConnectedComponents() {
         // get connected components
@@ -194,6 +194,10 @@ public class CutClustering extends AbstractEntityClustering {
         Log.info("Added " + noOfEntities + " nodes in the graph");
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     public void setA(float Acap) {
         this.Acap = Acap;
     }

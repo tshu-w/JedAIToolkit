@@ -53,7 +53,7 @@ public abstract class AbstractEntityClustering implements IEntityClustering {
         randomThreshold = new DblRandomSearchConfiguration(0.99f, 0.01f);
     }
 
-    protected EquivalenceCluster[] getConnectedComponents() {
+	protected EquivalenceCluster[] getConnectedComponents() {
         final ConnectedComponents cc = new ConnectedComponents(similarityGraph);
         final EquivalenceCluster[] connectedComponents = new EquivalenceCluster[cc.count()];
         for (int i = 0; i < cc.count(); i++) {
