@@ -20,8 +20,8 @@ package org.scify.jedai.configuration.gridsearch;
  * @author GAP2
  */
 public class DblGridSearchConfiguration implements IGridSearchConfiguration {
-
-    private final float maximumValue;
+	private static final long serialVersionUID = -4569097244689092078L;
+	private final float maximumValue;
     private final float minimumValue;
     private final float step;
     

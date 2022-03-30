@@ -15,11 +15,13 @@
  */
 package org.scify.jedai.configuration.randomsearch;
 
+import java.io.Serializable;
+
 /**
  *
  * @author GAP2
  */
-public interface IRandomSearchConfiguration {
+public interface IRandomSearchConfiguration extends Serializable {
     
     Object getNextRandomValue();
     

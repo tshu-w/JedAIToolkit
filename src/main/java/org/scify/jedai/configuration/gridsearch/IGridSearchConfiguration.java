@@ -15,11 +15,13 @@
  */
 package org.scify.jedai.configuration.gridsearch;
 
+import java.io.Serializable;
+
 /**
  *
  * @author GAP2
  */
-public interface IGridSearchConfiguration {
+public interface IGridSearchConfiguration extends Serializable {
     
     Object getNumberedValue(int iterationNumber);
     

@@ -20,8 +20,8 @@ package org.scify.jedai.configuration.randomsearch;
  * @author GAP2
  */
 public class IntRandomSearchConfiguration extends AbstractRandomSearchConfiguration {
-
-    private final int interval;
+	private static final long serialVersionUID = 4587972811684746419L;
+	private final int interval;
     private final int maximumValue;
     private final int minimumValue;
 
