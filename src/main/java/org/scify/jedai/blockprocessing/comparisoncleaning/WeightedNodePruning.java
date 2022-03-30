@@ -27,8 +27,8 @@ import java.util.List;
  * @author gap2
  */
 public class WeightedNodePruning extends WeightedEdgePruning {
-
-    protected int firstId;
+	private static final long serialVersionUID = -2453344619247460484L;
+	protected int firstId;
     protected int lastId;
     protected float[] averageWeight;
 

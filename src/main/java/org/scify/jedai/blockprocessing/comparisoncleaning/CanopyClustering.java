@@ -35,8 +35,8 @@ import org.scify.jedai.datamodel.Comparison;
  * @author gap2
  */
 public class CanopyClustering extends CardinalityNodePruning {
-
-    protected final float inclusiveThreshold;
+	private static final long serialVersionUID = 1170225434020914281L;
+	protected final float inclusiveThreshold;
     protected final float exclusiveThreshold;
     
     protected TIntSet excludedEntities;

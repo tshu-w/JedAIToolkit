@@ -23,8 +23,9 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author G.A.P. II
  */
 public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
-    
-    public ReciprocalCardinalityNodePruning() {
+	private static final long serialVersionUID = -6854243558638413610L;
+
+	public ReciprocalCardinalityNodePruning() {
         this(WeightingScheme.ARCS);
     }
     

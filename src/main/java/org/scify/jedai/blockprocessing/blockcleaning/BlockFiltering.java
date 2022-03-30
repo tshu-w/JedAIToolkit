@@ -37,8 +37,9 @@ import java.util.List;
  * @author gap2
  */
 public class BlockFiltering extends AbstractBlockProcessing {
+	private static final long serialVersionUID = -4121232084289963719L;
 
-    protected float ratio;
+	protected float ratio;
 
     protected int entitiesD1;
     protected int entitiesD2;

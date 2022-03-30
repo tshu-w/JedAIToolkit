@@ -34,8 +34,9 @@ import java.util.Queue;
  * @author gap2
  */
 public class CardinalityEdgePruning extends WeightedEdgePruning {
+	private static final long serialVersionUID = 292989752882791840L;
 
-    protected float minimumWeight;
+	protected float minimumWeight;
     
     protected Queue<Comparison> topKEdges;
 

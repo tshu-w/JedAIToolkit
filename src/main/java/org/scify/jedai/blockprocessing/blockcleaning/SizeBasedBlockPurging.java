@@ -38,8 +38,8 @@ import org.scify.jedai.configuration.randomsearch.DblRandomSearchConfiguration;
  */
 
 public class SizeBasedBlockPurging extends AbstractBlockPurging {
-    
-    private boolean isCleanCleanER;
+	private static final long serialVersionUID = -810538773675212468L;
+	private boolean isCleanCleanER;
     private float purgingFactor;
     private float maxEntities;
     

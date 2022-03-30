@@ -31,8 +31,9 @@ import org.scify.jedai.configuration.randomsearch.IntRandomSearchConfiguration;
  * @author gap2
  */
 public class WeightedEdgePruning extends AbstractMetablocking {
+	private static final long serialVersionUID = 4621154328472546492L;
 
-    protected float noOfEdges;
+	protected float noOfEdges;
 
     protected final IntGridSearchConfiguration gridWScheme;
     protected final IntRandomSearchConfiguration randomWScheme;

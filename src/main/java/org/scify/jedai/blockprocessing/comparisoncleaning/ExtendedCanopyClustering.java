@@ -39,8 +39,8 @@ import org.scify.jedai.utilities.comparators.IncComparisonWeightComparator;
  * @author gap2
  */
 public class ExtendedCanopyClustering extends CardinalityNodePruning {
-
-    protected final int inclusiveThreshold;
+	private static final long serialVersionUID = -1774443473844341504L;
+	protected final int inclusiveThreshold;
     protected final int exclusiveThreshold;
     
     protected TIntSet excludedEntities;

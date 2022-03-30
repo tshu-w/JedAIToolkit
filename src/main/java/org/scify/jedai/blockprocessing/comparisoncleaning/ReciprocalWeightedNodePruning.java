@@ -23,8 +23,9 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author G.A.P. II
  */
 public class ReciprocalWeightedNodePruning extends WeightedNodePruning {
-    
-    public ReciprocalWeightedNodePruning() {
+	private static final long serialVersionUID = -4814139206044282753L;
+
+	public ReciprocalWeightedNodePruning() {
         this(WeightingScheme.ARCS);
     }
     
