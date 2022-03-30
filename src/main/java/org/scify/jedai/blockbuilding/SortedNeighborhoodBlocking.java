@@ -37,8 +37,9 @@ import java.util.Set;
  * @author gap2
  */
 public class SortedNeighborhoodBlocking extends StandardBlocking {
+	private static final long serialVersionUID = -7777048266041316326L;
 
-    protected int windowSize;
+	protected int windowSize;
     
     protected IntGridSearchConfiguration gridWindow;
     protected IntRandomSearchConfiguration randomWindow;

@@ -26,8 +26,9 @@ import org.apache.jena.atlas.json.JsonObject;
  * @author gap2
  */
 public class ExtendedSuffixArraysBlocking extends SuffixArraysBlocking {
+	private static final long serialVersionUID = 5169611904842702088L;
 
-    public ExtendedSuffixArraysBlocking() {
+	public ExtendedSuffixArraysBlocking() {
         this(39, 6);
     }
      public ExtendedSuffixArraysBlocking(int maxSize, int minLength) {

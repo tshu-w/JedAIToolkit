@@ -22,13 +22,14 @@ import org.scify.jedai.datamodel.EntityProfile;
 import org.scify.jedai.utilities.IConstants;
 import org.scify.jedai.utilities.IDocumentation;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author G.A.P. II
  */
-public interface IBlockBuilding extends IConfiguration, IConstants, IDocumentation {
+public interface IBlockBuilding extends IConfiguration, IConstants, IDocumentation, Serializable {
 
     String CLUSTER_PREFIX = "#$!cl";
     String CLUSTER_SUFFIX = "#$!en";

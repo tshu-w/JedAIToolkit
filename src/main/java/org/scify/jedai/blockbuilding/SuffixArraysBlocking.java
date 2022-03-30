@@ -31,8 +31,8 @@ import java.util.Set;
  * @author gap2
  */
 public class SuffixArraysBlocking extends StandardBlocking {
-
-    protected int maximumBlockSize;
+	private static final long serialVersionUID = 6357315209923583852L;
+	protected int maximumBlockSize;
     protected int minimumSuffixLength;
 
     protected final IntGridSearchConfiguration gridMBSize;

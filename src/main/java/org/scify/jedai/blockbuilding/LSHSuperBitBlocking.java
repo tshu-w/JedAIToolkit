@@ -38,8 +38,9 @@ import org.scify.jedai.textmodels.SuperBitUnigrams;
  * @author GAP2
  */
 public class LSHSuperBitBlocking extends AbstractBlockBuilding {
+	private static final long serialVersionUID = 357704140172547029L;
 
-    protected boolean d1Indexed;
+	protected boolean d1Indexed;
 
     protected int bandSize;
     protected int bandsNumber;
