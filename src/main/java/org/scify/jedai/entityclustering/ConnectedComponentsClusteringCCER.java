@@ -27,8 +27,9 @@ import java.util.List;
  * @author G.A.P. II
  */
 public class ConnectedComponentsClusteringCCER extends AbstractEntityClustering {
+	private static final long serialVersionUID = -2358377764782428809L;
 
-    public ConnectedComponentsClusteringCCER() {
+	public ConnectedComponentsClusteringCCER() {
         this(0.5f);
     }
     

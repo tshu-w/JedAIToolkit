@@ -34,8 +34,9 @@ import java.util.Queue;
  * @author vefthym
  */
 public class ExactClustering extends AbstractCcerEntityClustering {
+	private static final long serialVersionUID = 315372204805970171L;
 
-    public ExactClustering() {
+	public ExactClustering() {
         this(0.1f);
     }
 

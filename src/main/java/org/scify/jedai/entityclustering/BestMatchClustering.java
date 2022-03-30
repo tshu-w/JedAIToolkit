@@ -36,8 +36,8 @@ import java.util.Queue;
  * @author vefthym
  */
 public class BestMatchClustering extends AbstractCcerEntityClustering {
-
-    private boolean leftDataset;
+	private static final long serialVersionUID = -7108295963579068885L;
+	private boolean leftDataset;
 
     public BestMatchClustering() {
         this(0.1f);

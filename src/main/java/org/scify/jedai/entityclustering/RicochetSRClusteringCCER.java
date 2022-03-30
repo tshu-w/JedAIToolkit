@@ -34,8 +34,9 @@ import java.util.*;
  * @author Manos Thanos
  */
 public class RicochetSRClusteringCCER extends AbstractEntityClustering {
+	private static final long serialVersionUID = 7373785757151206358L;
 
-    public RicochetSRClusteringCCER() {
+	public RicochetSRClusteringCCER() {
         this(0.5f);
     }
 

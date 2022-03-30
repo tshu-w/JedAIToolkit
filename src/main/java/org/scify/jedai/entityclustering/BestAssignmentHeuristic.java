@@ -28,8 +28,9 @@ import java.util.Random;
  * @author Manos
  */
 public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
+	private static final long serialVersionUID = -8017680392912561186L;
 
-    protected float[][] matrix; // inverted similarity matrix (cost matrix)
+	protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
     private int[] selectedColumn;
 

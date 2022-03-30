@@ -30,8 +30,9 @@ import java.util.*;
  * @author vefthym
  */
 public class KiralyMSMApproxClustering extends AbstractCcerEntityClustering {
+	private static final long serialVersionUID = 274454050200034674L;
 
-    class SimilarityEdgeExt extends SimilarityEdge { //extension of similarity edge, just for the needs of this method
+	class SimilarityEdgeExt extends SimilarityEdge { //extension of similarity edge, just for the needs of this method
         boolean isActive;
 
         public SimilarityEdgeExt (int pos1, int pos2, float sim) {

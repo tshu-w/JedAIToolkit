@@ -31,8 +31,9 @@ import java.util.Queue;
  * @author vefthym
  */
 public class UniqueMappingClustering extends AbstractCcerEntityClustering {
+	private static final long serialVersionUID = -2810439668805490140L;
 
-    public UniqueMappingClustering() {
+	public UniqueMappingClustering() {
         this(0.1f);
     }
 

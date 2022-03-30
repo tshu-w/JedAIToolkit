@@ -41,8 +41,9 @@ import org.scify.jedai.configuration.randomsearch.DblRandomSearchConfiguration;
  * @author G.A.P. II
  */
 public class CutClustering extends AbstractEntityClustering {
+	private static final long serialVersionUID = 1390193035942455206L;
 
-    protected float Acap;
+	protected float Acap;
     
     protected final DblGridSearchConfiguration gridAcap;
     protected final DblRandomSearchConfiguration randomAcap;

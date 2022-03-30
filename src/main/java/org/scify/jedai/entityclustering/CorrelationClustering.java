@@ -32,8 +32,8 @@ import java.util.Random;
  * @author G.A.P. II
  */
 public class CorrelationClustering extends AbstractEntityClustering {
-
-    private int[] verticesToClusters;
+	private static final long serialVersionUID = -5316716138615804328L;
+	private int[] verticesToClusters;
     private int numClusters;
     private int maxNumClusters;
     private EquivalenceCluster[] clustersCreated;

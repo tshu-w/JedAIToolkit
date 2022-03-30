@@ -30,8 +30,9 @@ import java.util.List;
  * @author Manos
  */
 public class RowColumnClusteringOnlyEdges extends AbstractCcerEntityClustering {
+	private static final long serialVersionUID = 3375022141607586773L;
 
-    protected float[][] matrix; // inverted similarity matrix (cost matrix)
+	protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
     protected int[] selectedRow, selectedColumn, columnsFromSelectedRow;
 
