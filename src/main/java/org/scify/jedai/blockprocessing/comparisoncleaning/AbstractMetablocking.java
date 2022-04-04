@@ -56,7 +56,11 @@ public abstract class AbstractMetablocking extends AbstractComparisonCleaning im
 
     public AbstractMetablocking(WeightingScheme wScheme) {
         super();
-        chiSquaredTest = new ChiSquareTest();
+        
+        if (wScheme.equals(WeightingScheme.PEARSON_X2)) {
+            chiSquaredTest = new ChiSquareTest();
+        }
+        
         neighbors = new TIntArrayList();
         retainedNeighbors = new TIntArrayList();
         retainedNeighborsWeights = new TIntArrayList();
