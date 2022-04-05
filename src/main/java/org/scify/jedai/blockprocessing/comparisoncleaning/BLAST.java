@@ -23,9 +23,9 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author gap2
  */
 public class BLAST extends WeightedNodePruning {
-	private static final long serialVersionUID = -5165499504728933326L;
+    private static final long serialVersionUID = -5165499504728933326L;
 
-	public BLAST() {
+    public BLAST() {
         this(WeightingScheme.PEARSON_X2);
     }
     
@@ -34,8 +34,8 @@ public class BLAST extends WeightedNodePruning {
     }
 
     public void setWeightingScheme(WeightingScheme weightingScheme) {
-		this.weightingScheme = weightingScheme;
-	}
+        this.weightingScheme = weightingScheme;
+    }
     
     @Override
     public String getMethodInfo() {

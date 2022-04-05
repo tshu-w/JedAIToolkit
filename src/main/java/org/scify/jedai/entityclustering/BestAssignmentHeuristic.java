@@ -28,9 +28,9 @@ import java.util.Random;
  * @author Manos
  */
 public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
-	private static final long serialVersionUID = -8017680392912561186L;
+    private static final long serialVersionUID = -8017680392912561186L;
 
-	protected float[][] matrix; // inverted similarity matrix (cost matrix)
+    protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
     private int[] selectedColumn;
 
@@ -53,8 +53,8 @@ public class BestAssignmentHeuristic extends AbstractCcerEntityClustering {
     }
 
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     private void execute() {
         long timeout = 120;//IN SECONDS

@@ -32,8 +32,8 @@ import java.util.Random;
  * @author G.A.P. II
  */
 public class CorrelationClustering extends AbstractEntityClustering {
-	private static final long serialVersionUID = -5316716138615804328L;
-	private int[] verticesToClusters;
+    private static final long serialVersionUID = -5316716138615804328L;
+    private int[] verticesToClusters;
     private int numClusters;
     private int maxNumClusters;
     private EquivalenceCluster[] clustersCreated;
@@ -55,8 +55,8 @@ public class CorrelationClustering extends AbstractEntityClustering {
     }
     
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {

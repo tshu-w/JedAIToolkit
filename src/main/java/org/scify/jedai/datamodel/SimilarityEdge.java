@@ -24,15 +24,15 @@ import java.io.Serializable;
  */
 
 public class SimilarityEdge implements Serializable {
-	private static final long serialVersionUID = 3089514150554162680L;
-	private final int model1pos;
+    private static final long serialVersionUID = 3089514150554162680L;
+    private final int model1pos;
     private final int model2pos;
     private final float similarity;
 
     public SimilarityEdge (int pos1, int pos2, float sim) {
-    	model1pos = pos1;
-    	model2pos = pos2;
-    	similarity = sim;
+        model1pos = pos1;
+        model2pos = pos2;
+        similarity = sim;
     }
 
     public int getModel1Pos() {

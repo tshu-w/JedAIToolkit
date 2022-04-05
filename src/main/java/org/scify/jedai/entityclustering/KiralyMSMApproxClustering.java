@@ -30,11 +30,11 @@ import java.util.*;
  * @author vefthym
  */
 public class KiralyMSMApproxClustering extends AbstractCcerEntityClustering {
-	private static final long serialVersionUID = 274454050200034674L;
+    private static final long serialVersionUID = 274454050200034674L;
 
-	class SimilarityEdgeExt extends SimilarityEdge { //extension of similarity edge, just for the needs of this method
-		private static final long serialVersionUID = -3489398478601924151L;
-		boolean isActive;
+    class SimilarityEdgeExt extends SimilarityEdge { //extension of similarity edge, just for the needs of this method
+        private static final long serialVersionUID = -3489398478601924151L;
+        boolean isActive;
 
         public SimilarityEdgeExt (int pos1, int pos2, float sim) {
             super(pos1, pos2, sim);
@@ -73,8 +73,8 @@ public class KiralyMSMApproxClustering extends AbstractCcerEntityClustering {
     }
 
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     private boolean accepts_proposal(int w, int ws_fiance, int m, List<SimilarityEdgeExt> ws_preferences, boolean[] isUncertain){
         if (ws_fiance == -1) { // w is free, so she accepts m's proposal

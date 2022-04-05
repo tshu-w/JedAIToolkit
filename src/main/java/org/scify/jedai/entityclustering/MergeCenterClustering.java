@@ -33,9 +33,9 @@ import java.util.Queue;
  * @author G.A.P. II
  */
 public class MergeCenterClustering extends AbstractEntityClustering {
-	private static final long serialVersionUID = -3650549311169996030L;
+    private static final long serialVersionUID = -3650549311169996030L;
 
-	public MergeCenterClustering() {
+    public MergeCenterClustering() {
         this(0.5f);
     }
 
@@ -44,8 +44,8 @@ public class MergeCenterClustering extends AbstractEntityClustering {
     }
     
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {

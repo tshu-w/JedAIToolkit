@@ -31,9 +31,9 @@ import java.util.Random;
  * @author Manos
  */
 public class BAHafterUM extends AbstractCcerEntityClustering {
-	private static final long serialVersionUID = -6575737223474754645L;
+    private static final long serialVersionUID = -6575737223474754645L;
 
-	protected float[][] matrix; // inverted similarity matrix (cost matrix)
+    protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
     private int[] selectedColumn;
 
@@ -54,8 +54,8 @@ public class BAHafterUM extends AbstractCcerEntityClustering {
     }
 
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     private boolean acceptSwap(float D) {
         return (D < 0.0);

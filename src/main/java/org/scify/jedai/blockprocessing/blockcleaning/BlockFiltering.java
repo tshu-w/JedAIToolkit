@@ -37,9 +37,9 @@ import java.util.List;
  * @author gap2
  */
 public class BlockFiltering extends AbstractBlockProcessing {
-	private static final long serialVersionUID = -4121232084289963719L;
+    private static final long serialVersionUID = -4121232084289963719L;
 
-	protected float ratio;
+    protected float ratio;
 
     protected int entitiesD1;
     protected int entitiesD2;
@@ -63,10 +63,10 @@ public class BlockFiltering extends AbstractBlockProcessing {
     }
 
     public void setRatio(float ratio) {
-		this.ratio = ratio;
-	}
+        this.ratio = ratio;
+    }
 
-	protected void countEntities(List<AbstractBlock> blocks) {
+    protected void countEntities(List<AbstractBlock> blocks) {
         entitiesD1 = Integer.MIN_VALUE;
         entitiesD2 = Integer.MIN_VALUE;
         if (blocks.get(0) instanceof BilateralBlock) {

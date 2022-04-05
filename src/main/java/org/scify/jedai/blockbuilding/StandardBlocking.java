@@ -27,9 +27,9 @@ import org.apache.jena.atlas.json.JsonArray;
  * @author gap2
  */
 public class StandardBlocking extends AbstractBlockBuilding {
-	private static final long serialVersionUID = 1873235915732803062L;
+    private static final long serialVersionUID = 1873235915732803062L;
 
-	public StandardBlocking() {
+    public StandardBlocking() {
         super();
     }
 

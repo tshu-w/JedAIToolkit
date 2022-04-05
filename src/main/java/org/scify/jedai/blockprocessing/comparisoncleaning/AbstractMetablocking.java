@@ -36,9 +36,9 @@ import java.util.List;
  * @author G.A.P. II
  */
 public abstract class AbstractMetablocking extends AbstractComparisonCleaning implements IConstants {
-	private static final long serialVersionUID = 8416422399063318708L;
+    private static final long serialVersionUID = 8416422399063318708L;
 
-	protected boolean nodeCentric;
+    protected boolean nodeCentric;
 
     protected int[] flags;
 

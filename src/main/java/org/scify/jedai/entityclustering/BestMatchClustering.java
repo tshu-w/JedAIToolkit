@@ -36,8 +36,8 @@ import java.util.Queue;
  * @author vefthym
  */
 public class BestMatchClustering extends AbstractCcerEntityClustering {
-	private static final long serialVersionUID = -7108295963579068885L;
-	private boolean leftDataset;
+    private static final long serialVersionUID = -7108295963579068885L;
+    private boolean leftDataset;
 
     public BestMatchClustering() {
         this(0.1f);
@@ -49,8 +49,8 @@ public class BestMatchClustering extends AbstractCcerEntityClustering {
     }
 
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {

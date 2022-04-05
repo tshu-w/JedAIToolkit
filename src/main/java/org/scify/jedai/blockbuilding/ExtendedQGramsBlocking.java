@@ -30,9 +30,9 @@ import java.util.Set;
  * @author gap2
  */
 public class ExtendedQGramsBlocking extends QGramsBlocking {
-	private static final long serialVersionUID = 7312257613427982298L;
+    private static final long serialVersionUID = 7312257613427982298L;
 
-	private final static int MAX_Q_GRAMS = 15;
+    private final static int MAX_Q_GRAMS = 15;
 
     private float threshold;
 
@@ -51,8 +51,8 @@ public class ExtendedQGramsBlocking extends QGramsBlocking {
     }
 
     public void setnGramSize(int nGramSize) {
- 		this.nGramSize = nGramSize;
- 	}
+        this.nGramSize = nGramSize;
+    }
 
     @Override
     protected Set<String> getBlockingKeys(String attributeValue) {

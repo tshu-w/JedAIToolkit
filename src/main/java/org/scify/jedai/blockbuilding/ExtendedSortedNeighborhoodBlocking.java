@@ -34,9 +34,9 @@ import java.util.Set;
  * @author gap2
  */
 public class ExtendedSortedNeighborhoodBlocking extends SortedNeighborhoodBlocking {
-	private static final long serialVersionUID = 752230236150088601L;
+    private static final long serialVersionUID = 752230236150088601L;
 
-	public ExtendedSortedNeighborhoodBlocking() {
+    public ExtendedSortedNeighborhoodBlocking() {
         this(2);
     }
 

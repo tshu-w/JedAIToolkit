@@ -31,9 +31,9 @@ import java.util.Queue;
  * @author vefthym
  */
 public class UniqueMappingClustering extends AbstractCcerEntityClustering {
-	private static final long serialVersionUID = -2810439668805490140L;
+    private static final long serialVersionUID = -2810439668805490140L;
 
-	public UniqueMappingClustering() {
+    public UniqueMappingClustering() {
         this(0.1f);
     }
 
@@ -42,8 +42,8 @@ public class UniqueMappingClustering extends AbstractCcerEntityClustering {
     }
 
     public void setThreshold(float threshold) {
-		this.threshold = threshold;
-	}
+        this.threshold = threshold;
+    }
     
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {

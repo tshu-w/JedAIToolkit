@@ -35,8 +35,8 @@ import java.util.Set;
  * @author gap2
  */
 public class CardinalityNodePruning extends CardinalityEdgePruning {
-	private static final long serialVersionUID = 3907895558183619683L;
-	protected int firstId;
+    private static final long serialVersionUID = 3907895558183619683L;
+    protected int firstId;
     protected int lastId;
     
     protected Set<Comparison>[] nearestEntities;
@@ -52,8 +52,8 @@ public class CardinalityNodePruning extends CardinalityEdgePruning {
     }
 
     public void setWeightingScheme(WeightingScheme weightingScheme) {
-		this.weightingScheme = weightingScheme;
-	}
+        this.weightingScheme = weightingScheme;
+    }
     
     @Override
     public String getMethodInfo() {

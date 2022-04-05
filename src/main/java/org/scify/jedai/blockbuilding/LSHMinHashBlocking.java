@@ -27,10 +27,10 @@ import org.scify.jedai.textmodels.MinHashUnigrams;
  * @author GAP2
  */
 public class LSHMinHashBlocking extends LSHSuperBitBlocking {
-	private static final long serialVersionUID = -1213556803021776797L;
-	
+    private static final long serialVersionUID = -1213556803021776797L;
+
     //TODO: Make sure that the entity ids in Unilateral blocks are ordered in increasing id (i.e., smallest first)
-	protected MinHash minhash;
+    protected MinHash minhash;
 
     public LSHMinHashBlocking() {
         this(5, 5);
@@ -44,14 +44,14 @@ public class LSHMinHashBlocking extends LSHSuperBitBlocking {
     }
     
     public void setBandSize(int bandSize) {
-		this.bandSize = bandSize;
-	}
+        this.bandSize = bandSize;
+    }
 
-	public void setBandsNumber(int bandsNumber) {
-		this.bandsNumber = bandsNumber;
-	}
+    public void setBandsNumber(int bandsNumber) {
+        this.bandsNumber = bandsNumber;
+    }
 
-	@Override
+    @Override
     protected Set<String> getBlockingKeys(int datasetId, int profileId) {
         final MinHashUnigrams model = (MinHashUnigrams) models[datasetId][profileId];
 

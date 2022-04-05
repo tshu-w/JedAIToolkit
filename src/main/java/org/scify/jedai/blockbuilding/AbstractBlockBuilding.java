@@ -27,9 +27,9 @@ import java.util.*;
  * @author gap2
  */
 public abstract class AbstractBlockBuilding implements IBlockBuilding {
-	private static final long serialVersionUID = -1009041578742039220L;
+    private static final long serialVersionUID = -1009041578742039220L;
 
-	protected boolean isUsingEntropy;
+    protected boolean isUsingEntropy;
 
     protected int noOfEntitiesD1;
     protected int noOfEntitiesD2;

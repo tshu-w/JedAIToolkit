@@ -23,9 +23,9 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author G.A.P. II
  */
 public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
-	private static final long serialVersionUID = -6854243558638413610L;
+    private static final long serialVersionUID = -6854243558638413610L;
 
-	public ReciprocalCardinalityNodePruning() {
+    public ReciprocalCardinalityNodePruning() {
         this(WeightingScheme.ARCS);
     }
     
@@ -34,8 +34,8 @@ public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
     }
 
     public void setWeightingScheme(WeightingScheme weightingScheme) {
-		this.weightingScheme = weightingScheme;
-	}
+        this.weightingScheme = weightingScheme;
+    }
     
     @Override
     public String getMethodInfo() {

@@ -41,9 +41,9 @@ import org.scify.jedai.configuration.randomsearch.DblRandomSearchConfiguration;
  * @author G.A.P. II
  */
 public class CutClustering extends AbstractEntityClustering {
-	private static final long serialVersionUID = 1390193035942455206L;
+    private static final long serialVersionUID = 1390193035942455206L;
 
-	protected float Acap;
+    protected float Acap;
     
     protected final DblGridSearchConfiguration gridAcap;
     protected final DblRandomSearchConfiguration randomAcap;
@@ -61,7 +61,7 @@ public class CutClustering extends AbstractEntityClustering {
         gridAcap = new DblGridSearchConfiguration(0.95f, 0.1f, 0.05f);
         randomAcap = new DblRandomSearchConfiguration(0.99f, 0.01f);
     }
-    
+
     @Override
     protected EquivalenceCluster[] getConnectedComponents() {
         // get connected components
