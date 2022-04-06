@@ -30,6 +30,7 @@ import org.scify.jedai.configuration.randomsearch.IntRandomSearchConfiguration;
  * @author gap2
  */
 public class QGramsBlocking extends StandardBlocking {
+    private static final long serialVersionUID = -6041703195630324565L;
 
     protected int nGramSize;
 
@@ -48,6 +49,10 @@ public class QGramsBlocking extends StandardBlocking {
         randomNGSize = new IntRandomSearchConfiguration(6, 2);
     }
 
+    public void setnGramSize(int nGramSize) {
+        this.nGramSize = nGramSize;
+    }
+    
     @Override
     protected Set<String> getBlockingKeys(String attributeValue) {
         final Set<String> nGrams = new HashSet<>();

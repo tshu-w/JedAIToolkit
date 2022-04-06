@@ -37,6 +37,7 @@ import java.util.List;
  * @author gap2
  */
 public class BlockFiltering extends AbstractBlockProcessing {
+    private static final long serialVersionUID = -4121232084289963719L;
 
     protected float ratio;
 
@@ -59,6 +60,10 @@ public class BlockFiltering extends AbstractBlockProcessing {
 
         gridRatio = new DblGridSearchConfiguration(1.0f, 0.025f, 0.025f);
         randomRatio = new DblRandomSearchConfiguration(1.0f, 0.01f);
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
     }
 
     protected void countEntities(List<AbstractBlock> blocks) {

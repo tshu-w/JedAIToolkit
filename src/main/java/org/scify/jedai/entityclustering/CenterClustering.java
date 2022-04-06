@@ -33,6 +33,7 @@ import java.util.Queue;
  * @author G.A.P. II
  */
 public class CenterClustering extends AbstractEntityClustering {
+    private static final long serialVersionUID = 9098608992716054547L;
 
     public CenterClustering() {
         this(0.5f);
@@ -42,6 +43,10 @@ public class CenterClustering extends AbstractEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);

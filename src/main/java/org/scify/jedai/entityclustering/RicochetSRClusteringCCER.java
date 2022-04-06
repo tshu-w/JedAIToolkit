@@ -34,6 +34,7 @@ import java.util.*;
  * @author Manos Thanos
  */
 public class RicochetSRClusteringCCER extends AbstractEntityClustering {
+    private static final long serialVersionUID = 7373785757151206358L;
 
     public RicochetSRClusteringCCER() {
         this(0.5f);
@@ -43,6 +44,10 @@ public class RicochetSRClusteringCCER extends AbstractEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);

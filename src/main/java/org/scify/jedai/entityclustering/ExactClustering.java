@@ -34,6 +34,7 @@ import java.util.Queue;
  * @author vefthym
  */
 public class ExactClustering extends AbstractCcerEntityClustering {
+    private static final long serialVersionUID = 315372204805970171L;
 
     public ExactClustering() {
         this(0.1f);
@@ -43,6 +44,10 @@ public class ExactClustering extends AbstractCcerEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         Log.info("Input comparisons\t:\t" + simPairs.getNoOfComparisons());

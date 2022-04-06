@@ -36,6 +36,7 @@ import java.util.List;
  * @author G.A.P. II
  */
 public abstract class AbstractMetablocking extends AbstractComparisonCleaning implements IConstants {
+    private static final long serialVersionUID = 8416422399063318708L;
 
     protected boolean nodeCentric;
 
@@ -55,7 +56,11 @@ public abstract class AbstractMetablocking extends AbstractComparisonCleaning im
 
     public AbstractMetablocking(WeightingScheme wScheme) {
         super();
-        chiSquaredTest = new ChiSquareTest();
+        
+        if (wScheme.equals(WeightingScheme.PEARSON_X2)) {
+            chiSquaredTest = new ChiSquareTest();
+        }
+        
         neighbors = new TIntArrayList();
         retainedNeighbors = new TIntArrayList();
         retainedNeighborsWeights = new TIntArrayList();

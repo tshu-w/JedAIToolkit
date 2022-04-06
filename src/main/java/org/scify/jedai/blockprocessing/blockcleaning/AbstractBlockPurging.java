@@ -31,7 +31,7 @@ import java.util.List;
  */
 
 public abstract class AbstractBlockPurging extends AbstractBlockProcessing {
-
+    private static final long serialVersionUID = 9199463269624218907L;
     public AbstractBlockPurging() {
     }
 

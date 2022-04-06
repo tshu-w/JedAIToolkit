@@ -20,7 +20,7 @@ package org.scify.jedai.configuration.gridsearch;
  * @author GAP2
  */
 public class IntGridSearchConfiguration implements IGridSearchConfiguration {
-
+    private static final long serialVersionUID = -3539335569080429407L;
     private final int maximumValue;
     private final int minimumValue;
     private final int step;

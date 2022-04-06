@@ -24,7 +24,8 @@ import java.util.Random;
  * @author GAP2
  */
 public abstract class AbstractRandomSearchConfiguration implements IRandomSearchConfiguration {
-    
+    private static final long serialVersionUID = -4086517295274043419L;
+
     protected final static Random RANDOM_GEN = new Random();
     
     protected final List<Object> selectedRandomValues;

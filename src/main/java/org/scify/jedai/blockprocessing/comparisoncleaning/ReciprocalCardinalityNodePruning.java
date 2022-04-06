@@ -23,7 +23,8 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author G.A.P. II
  */
 public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
-    
+    private static final long serialVersionUID = -6854243558638413610L;
+
     public ReciprocalCardinalityNodePruning() {
         this(WeightingScheme.ARCS);
     }
@@ -32,6 +33,10 @@ public class ReciprocalCardinalityNodePruning extends CardinalityNodePruning {
         super(scheme);
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": a Meta-blocking method that retains the comparisons "

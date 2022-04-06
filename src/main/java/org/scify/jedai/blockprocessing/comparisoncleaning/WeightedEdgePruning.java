@@ -31,6 +31,7 @@ import org.scify.jedai.configuration.randomsearch.IntRandomSearchConfiguration;
  * @author gap2
  */
 public class WeightedEdgePruning extends AbstractMetablocking {
+    private static final long serialVersionUID = 4621154328472546492L;
 
     protected float noOfEdges;
 
@@ -48,7 +49,11 @@ public class WeightedEdgePruning extends AbstractMetablocking {
         gridWScheme = new IntGridSearchConfiguration(WeightingScheme.values().length - 1, 0, 1);
         randomWScheme = new IntRandomSearchConfiguration(WeightingScheme.values().length, 0);
     }
-
+    
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     @Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + weightingScheme;

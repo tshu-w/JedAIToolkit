@@ -38,7 +38,8 @@ import java.util.List;
  */
 
 public abstract class AbstractComparisonCleaning implements IBlockProcessing {
-    
+    private static final long serialVersionUID = -215890142305328575L;
+
     protected boolean cleanCleanER;
 
     protected int datasetLimit;

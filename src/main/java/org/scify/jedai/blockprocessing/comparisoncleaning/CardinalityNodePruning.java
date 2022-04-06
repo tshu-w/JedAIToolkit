@@ -35,7 +35,7 @@ import java.util.Set;
  * @author gap2
  */
 public class CardinalityNodePruning extends CardinalityEdgePruning {
-
+    private static final long serialVersionUID = 3907895558183619683L;
     protected int firstId;
     protected int lastId;
     
@@ -51,6 +51,10 @@ public class CardinalityNodePruning extends CardinalityEdgePruning {
         nodeCentric = true;
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": a Meta-blocking method that retains for every entity, "

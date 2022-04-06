@@ -34,6 +34,7 @@ import java.util.Queue;
  * @author gap2
  */
 public class CardinalityEdgePruning extends WeightedEdgePruning {
+    private static final long serialVersionUID = 292989752882791840L;
 
     protected float minimumWeight;
     
@@ -48,6 +49,10 @@ public class CardinalityEdgePruning extends WeightedEdgePruning {
         nodeCentric = false;
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     protected void addDecomposedBlock(Collection<Comparison> comparisons, List<AbstractBlock> newBlocks) {
         if (comparisons.isEmpty()) {
             return;

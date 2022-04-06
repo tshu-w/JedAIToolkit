@@ -41,6 +41,7 @@ import org.scify.jedai.configuration.randomsearch.DblRandomSearchConfiguration;
  * @author G.A.P. II
  */
 public class CutClustering extends AbstractEntityClustering {
+    private static final long serialVersionUID = 1390193035942455206L;
 
     protected float Acap;
     
@@ -193,6 +194,10 @@ public class CutClustering extends AbstractEntityClustering {
         Log.info("Added " + noOfEntities + " nodes in the graph");
     }
 
+    public void setThreshold(float threshold) {
+		this.threshold = threshold;
+	}
+    
     public void setA(float Acap) {
         this.Acap = Acap;
     }

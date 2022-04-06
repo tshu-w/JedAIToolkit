@@ -32,7 +32,7 @@ import java.util.Iterator;
  * @author G.A.P. II
  */
 public class MarkovClustering extends AbstractEntityClustering {
-
+    private static final long serialVersionUID = -5802817433513198173L;
     protected float clusterThreshold;//define similarity threshold for including in final graph
     protected float matrixSimThreshold;//define similarity threshold for matrix comparison
     protected int similarityChecksLimit;//define check repetitions limit for the expansion-inflation process
@@ -320,6 +320,10 @@ public class MarkovClustering extends AbstractEntityClustering {
         }
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     public void setClusterThreshold(float clusterThreshold) {
         this.clusterThreshold = clusterThreshold;
     }

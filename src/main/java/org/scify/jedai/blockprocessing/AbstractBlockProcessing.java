@@ -28,7 +28,8 @@ import java.util.List;
  */
 
 public abstract class AbstractBlockProcessing implements IBlockProcessing {
-    
+    private static final long serialVersionUID = 9065475597657477586L;
+
     protected void printOriginalStatistics(List<AbstractBlock> inputBlocks) {
         long comparisons = inputBlocks.stream().mapToLong(AbstractBlock::getNoOfComparisons).sum();
         

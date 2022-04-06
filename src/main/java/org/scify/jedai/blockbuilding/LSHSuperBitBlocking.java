@@ -38,6 +38,7 @@ import org.scify.jedai.textmodels.SuperBitUnigrams;
  * @author GAP2
  */
 public class LSHSuperBitBlocking extends AbstractBlockBuilding {
+    private static final long serialVersionUID = 357704140172547029L;
 
     protected boolean d1Indexed;
 
@@ -66,6 +67,14 @@ public class LSHSuperBitBlocking extends AbstractBlockBuilding {
         gridBndSize = new IntGridSearchConfiguration(10, 3, 1);
         randomBndNumber = new IntRandomSearchConfiguration(100, 20);
         randomBndSize = new IntRandomSearchConfiguration(10, 2);
+    }
+
+    public void setBandSize(int bandSize) {
+        this.bandSize = bandSize;
+    }
+
+    public void setBandsNumber(int bandsNumber) {
+        this.bandsNumber = bandsNumber;
     }
 
     protected ITextModel[] buildModels(List<EntityProfile> profiles) {

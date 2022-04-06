@@ -30,6 +30,7 @@ import java.util.Set;
  * @author gap2
  */
 public class ExtendedQGramsBlocking extends QGramsBlocking {
+    private static final long serialVersionUID = 7312257613427982298L;
 
     private final static int MAX_Q_GRAMS = 15;
 
@@ -47,6 +48,10 @@ public class ExtendedQGramsBlocking extends QGramsBlocking {
         
         randomThreshold = new DblRandomSearchConfiguration(0.99f, 0.8f);
         gridThreshold = new DblGridSearchConfiguration(0.95f, 0.8f, 0.05f);
+    }
+
+    public void setnGramSize(int nGramSize) {
+        this.nGramSize = nGramSize;
     }
 
     @Override

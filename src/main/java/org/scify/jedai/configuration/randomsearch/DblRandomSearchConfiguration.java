@@ -20,7 +20,7 @@ package org.scify.jedai.configuration.randomsearch;
  * @author GAP2
  */
 public class DblRandomSearchConfiguration extends AbstractRandomSearchConfiguration {
-
+    private static final long serialVersionUID = 3687203473661100339L;
     private final float interval;
     private final float maximumValue;
     private final float minimumValue;

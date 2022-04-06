@@ -27,6 +27,7 @@ import java.util.Iterator;
  * @author Manos
  */
 public class RowColumnClustering extends AbstractCcerEntityClustering {
+    private static final long serialVersionUID = 2339477768564905457L;
 
     protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
@@ -44,6 +45,10 @@ public class RowColumnClustering extends AbstractCcerEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     private int columnWithMin(int rowNumber) {
         int pos = -1;
         float min = Float.MAX_VALUE;

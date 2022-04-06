@@ -39,9 +39,9 @@ import org.scify.jedai.utilities.comparators.IncComparisonWeightComparator;
  * @author gap2
  */
 public class ExtendedCanopyClustering extends CardinalityNodePruning {
-
-    protected final int inclusiveThreshold;
-    protected final int exclusiveThreshold;
+    private static final long serialVersionUID = -1774443473844341504L;
+    protected int inclusiveThreshold;
+    protected int exclusiveThreshold;
     
     protected TIntSet excludedEntities;
     
@@ -63,6 +63,18 @@ public class ExtendedCanopyClustering extends CardinalityNodePruning {
         }
     }
 
+    public void setInclusiveThreshold(int inclusiveThreshold) {
+        this.inclusiveThreshold = inclusiveThreshold;
+    }
+
+    public void setExclusiveThreshold(int exclusiveThreshold) {
+        this.exclusiveThreshold = exclusiveThreshold;
+    }
+
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     @Override
     public String getMethodConfiguration() {
         return getParameterName(0) + "=" + inclusiveThreshold + ",\t"

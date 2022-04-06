@@ -30,6 +30,7 @@ import java.util.List;
  * @author Manos
  */
 public class RowColumnClusteringOnlyEdges extends AbstractCcerEntityClustering {
+    private static final long serialVersionUID = 3375022141607586773L;
 
     protected float[][] matrix; // inverted similarity matrix (cost matrix)
 
@@ -51,6 +52,10 @@ public class RowColumnClusteringOnlyEdges extends AbstractCcerEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     private int columnWithMin(int rowNumber) {
         int pos = -1;
         float min = Float.MAX_VALUE;

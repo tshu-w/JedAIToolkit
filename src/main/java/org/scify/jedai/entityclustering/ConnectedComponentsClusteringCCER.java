@@ -27,6 +27,7 @@ import java.util.List;
  * @author G.A.P. II
  */
 public class ConnectedComponentsClusteringCCER extends AbstractEntityClustering {
+    private static final long serialVersionUID = -2358377764782428809L;
 
     public ConnectedComponentsClusteringCCER() {
         this(0.5f);
@@ -36,6 +37,10 @@ public class ConnectedComponentsClusteringCCER extends AbstractEntityClustering 
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         if (simPairs.getNoOfComparisons() == 0) {

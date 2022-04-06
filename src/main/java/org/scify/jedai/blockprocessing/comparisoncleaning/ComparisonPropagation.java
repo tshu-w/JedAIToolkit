@@ -29,6 +29,7 @@ import org.scify.jedai.datamodel.DecomposedBlock;
  * @author gap2
  */
 public class ComparisonPropagation extends AbstractComparisonCleaning {
+    private static final long serialVersionUID = 6874002237570823640L;
 
     public ComparisonPropagation() {
         super();

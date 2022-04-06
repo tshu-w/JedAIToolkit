@@ -23,7 +23,7 @@ import gnu.trove.set.hash.TIntHashSet;
  * @author gap2
  */
 public abstract class AbstractCcerEntityClustering extends AbstractEntityClustering {
-    
+    private static final long serialVersionUID = -3807607496823228662L;
     protected final TIntSet matchedIds; //the ids of entities that have been already matched
     
     public AbstractCcerEntityClustering(float simTh) {

@@ -31,7 +31,7 @@ import java.util.Set;
  * @author gap2
  */
 public class SuffixArraysBlocking extends StandardBlocking {
-
+    private static final long serialVersionUID = 6357315209923583852L;
     protected int maximumBlockSize;
     protected int minimumSuffixLength;
 
@@ -53,6 +53,14 @@ public class SuffixArraysBlocking extends StandardBlocking {
         gridMSLength = new IntGridSearchConfiguration(6, 2, 1);
         randomMBSize = new IntRandomSearchConfiguration(100, 1);
         randomMSLength = new IntRandomSearchConfiguration(6, 2);
+    }
+
+    public void setMaximumBlockSize(int maximumBlockSize) {
+        this.maximumBlockSize = maximumBlockSize;
+    }
+
+    public void setMinimumSuffixLength(int minimumSuffixLength) {
+        this.minimumSuffixLength = minimumSuffixLength;
     }
 
     @Override

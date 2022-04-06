@@ -33,6 +33,7 @@ import org.scify.jedai.utilities.graph.UndirectedGraph;
  * @author G.A.P. II
  */
 public abstract class AbstractEntityClustering implements IEntityClustering {
+    private static final long serialVersionUID = 8778225257965382090L;
 
     protected boolean isCleanCleanER;
 

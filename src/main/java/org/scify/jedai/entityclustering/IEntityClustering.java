@@ -16,6 +16,8 @@
 
 package org.scify.jedai.entityclustering;
 
+import java.io.Serializable;
+
 import org.scify.jedai.configuration.IConfiguration;
 import org.scify.jedai.datamodel.EquivalenceCluster;
 import org.scify.jedai.datamodel.SimilarityPairs;
@@ -26,7 +28,7 @@ import org.scify.jedai.utilities.IDocumentation;
  * @author G.A.P. II
  */
 
-public interface IEntityClustering extends IConfiguration, IDocumentation {
+public interface IEntityClustering extends IConfiguration, IDocumentation, Serializable {
  
     EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs);
     

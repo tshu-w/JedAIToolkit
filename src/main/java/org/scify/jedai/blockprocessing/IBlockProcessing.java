@@ -20,13 +20,14 @@ import org.scify.jedai.datamodel.AbstractBlock;
 import org.scify.jedai.utilities.IConstants;
 import org.scify.jedai.utilities.IDocumentation;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author G.A.P. II
  */
-public interface IBlockProcessing extends IConfiguration, IConstants, IDocumentation {
+public interface IBlockProcessing extends IConfiguration, IConstants, IDocumentation, Serializable {
 
     List<AbstractBlock> refineBlocks(List<AbstractBlock> blocks);
     

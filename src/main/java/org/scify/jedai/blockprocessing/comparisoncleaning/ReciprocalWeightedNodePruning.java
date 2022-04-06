@@ -23,7 +23,8 @@ import org.scify.jedai.utilities.enumerations.WeightingScheme;
  * @author G.A.P. II
  */
 public class ReciprocalWeightedNodePruning extends WeightedNodePruning {
-    
+    private static final long serialVersionUID = -4814139206044282753L;
+
     public ReciprocalWeightedNodePruning() {
         this(WeightingScheme.ARCS);
     }
@@ -32,6 +33,10 @@ public class ReciprocalWeightedNodePruning extends WeightedNodePruning {
         super(scheme);
     }
 
+    public void setWeightingScheme(WeightingScheme weightingScheme) {
+        this.weightingScheme = weightingScheme;
+    }
+    
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": a Meta-blocking method that retains the comparisons "

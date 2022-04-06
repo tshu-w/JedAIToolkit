@@ -25,6 +25,7 @@ import java.util.Iterator;
  * @author G.A.P. II
  */
 public class ConnectedComponentsClustering extends AbstractEntityClustering {
+    private static final long serialVersionUID = -6101403168368512181L;
 
     public ConnectedComponentsClustering() {
         this(0.5f);
@@ -34,6 +35,10 @@ public class ConnectedComponentsClustering extends AbstractEntityClustering {
         super(simTh);
     }
 
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+    
     @Override
     public EquivalenceCluster[] getDuplicates(SimilarityPairs simPairs) {
         initializeData(simPairs);

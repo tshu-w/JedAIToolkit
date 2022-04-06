@@ -32,7 +32,7 @@ import java.util.List;
  * @author gap2
  */
 public class ComparisonsBasedBlockPurging extends AbstractBlockPurging {
-
+    private static final long serialVersionUID = -2210338075526579963L;
     private float smoothingFactor;
     private float maxComparisonsPerBlock;
 
@@ -48,6 +48,10 @@ public class ComparisonsBasedBlockPurging extends AbstractBlockPurging {
 
         gridSFactor = new DblGridSearchConfiguration(2.0f, 1.0f, 0.02f);
         randomSFactor = new DblRandomSearchConfiguration(2.0f, 1.0f);
+    }
+
+    public void setSmoothingFactor(float smoothingFactor) {
+        this.smoothingFactor = smoothingFactor;
     }
 
     @Override

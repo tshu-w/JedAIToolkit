@@ -34,6 +34,7 @@ import java.util.Set;
  * @author gap2
  */
 public class ExtendedSortedNeighborhoodBlocking extends SortedNeighborhoodBlocking {
+    private static final long serialVersionUID = 752230236150088601L;
 
     public ExtendedSortedNeighborhoodBlocking() {
         this(2);
@@ -46,6 +47,10 @@ public class ExtendedSortedNeighborhoodBlocking extends SortedNeighborhoodBlocki
         randomWindow = new IntRandomSearchConfiguration(10, 1);
     }
      
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }
+
     @Override
     public String getMethodInfo() {
         return getMethodName() + ": it improves " + super.getMethodName() + " by sliding the window over the sorted list of blocking keys.";
